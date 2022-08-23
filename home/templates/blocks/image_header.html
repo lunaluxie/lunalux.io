@@ -1,0 +1,20 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% image value.image fill-1200x200 as image %}
+{% image value.cover fill-1200x200 as cover %}
+<style>
+    .image-header{
+        display:flex;
+        align-items: center;
+        color:white;
+        margin-bottom: 3rem;
+        min-height:200px;
+        background-size:cover !important;
+    }
+    .image-header h1 {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+</style>
+<section class="image-header" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url({% if image %}{{image.url}}{% else %}{{cover.url}}{%endif%});">
+    <h1>{{value.title}}</h1>
+</section>

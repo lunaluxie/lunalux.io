@@ -1,0 +1,73 @@
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+<div class="about-blurb">
+    <style>@media screen and (min-width: 400px){
+        .hidden-non-mobile{
+        display:none;
+        }
+
+    }
+    @keyframes wave {
+        from {transform: rotate(-5deg);}
+        to {transform: rotate(10deg);}
+    }
+    #hand{
+        animation: ease-in-out;
+        animation-name: wave;
+        animation-duration: 1s;
+        display: inline-block;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        transform: translateY(1em);
+        transform-origin: 80% 70%;
+    }
+
+    .container {
+          max-width: 1470px;
+          width: 93.3333333333%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+    </style>
+    <spacer class="hidden-non-mobile"></spacer>
+    <div class="container" style="margin-bottom: 3em;" >
+    <h1 align="center">Hi <span id="hand">👋</span> , I'm Luna!</h1>
+    <h3 align="center">{{value.tagline}}</h3>
+
+    </div>
+
+
+
+    <div class="container">
+        <h2>About</h2>
+
+        <style>
+        .about_link{
+            color: #246491;
+            text-decoration: none;
+            transition: border .15s cubic-bezier(.645, .045, .355, 1);
+            border-bottom: 1px solid rgba(0, 0, 0, .1);
+        }
+        .about_link:hover{
+            border-bottom-color: #246491;
+        }
+        </style>
+
+        <div class="" style="display:flex; justify-content: space-between; flex-wrap: wrap;">
+
+            <div style="flex: 0 48%; color:rgba(0,0,0,0.6); max-width: 65ch; margin-top: 0;">
+                {{self.column1_text|richtext}}
+
+            </div>
+            <div style="flex: 0 0 48%; color:rgba(0,0,0,0.6); max-width: 65ch; margin-top: 0;">
+                {{self.column2_text|richtext}}
+            </div>
+
+        </div>
+
+
+        <div style="margin-bottom:5em; margin-top: 1em;">
+        <a class="link" href="{{value.page.url}}">Read more<img style="margin-left: 0.5ch;" src="{% static 'icons/arrow.png' %}" width="9"></a>
+        </div>
+    </div>
+</div>

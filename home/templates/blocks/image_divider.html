@@ -1,0 +1,14 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<style>
+.image-divider{
+    width: 100%;
+    margin: 2.5rem 0;
+    height: 200px;
+    overflow-y: hidden;
+    background-size: cover;
+}
+</style>
+
+{% image value.image fill-1200x200  as img%}
+<section class="image-divider" style="background-image:url({{img.url}})">
+</section>

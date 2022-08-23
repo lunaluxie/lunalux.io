@@ -13,11 +13,14 @@
             {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
             {% endblock %}
         </title>
-        <meta name="description" content="" />
+        <meta name="description" content="{{page.seo_description}}" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'css/lunalux.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/gi.css' %}">
+
+         <link href="https://fonts.googleapis.com/css?family=Lato|Roboto|Montserrat:wght@300;400" rel="stylesheet">
 
         {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
@@ -29,8 +32,13 @@
 
         {% block content %}{% endblock %}
 
+
+        {% include "footer.html" %}
+
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/lunalux.js' %}"></script>
+
+        <script src="https://www.google.com/recaptcha/api.js?render=6Le0-T8hAAAAAMW00j_qGs86mHRIale_sY4b6P6K"></script>
 
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}

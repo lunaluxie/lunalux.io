@@ -1,0 +1,10 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<style>
+    .block-image img{
+        width: 100%;
+        object-fit: contain;
+        min-width: 250px;
+    }
+</style>
+{% image value fill-600x400 %}

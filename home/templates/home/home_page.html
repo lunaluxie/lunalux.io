@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static wagtailcore_tags%}
 
 {% block body_class %}template-homepage{% endblock %}
 
@@ -7,4 +7,9 @@
 {% endblock extra_css %}
 
 {% block content %}
+
+{% if page %}
+{% include_block page.body %}
+{% endif %}
+
 {% endblock content %}

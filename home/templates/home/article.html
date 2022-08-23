@@ -1,0 +1,242 @@
+{% extends "base.html" %} {% load static wagtailcore_tags%}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{instance.title}}",
+  {% if instance.description %}"description":"{{instance.description}}",{% endif %}
+  {% if instance.image %}"image": "https://lunalux.io{{instance.image.url}}",{% endif %}
+  "author": {
+    "@type": "Person",
+    "name": "{{instance.user.get_full_name}}"
+  },
+  "name": "{{instance.slug}}"
+}
+</script>
+{% endblock extra_head %}
+
+{% block content %}
+  <header class="article-header">
+
+  {% include_block page.header %}
+  </header>
+
+  <div class="row">
+    {% if not series %}
+        <style>
+        #sidebar{
+          opacity:0 ;
+          transition: opacity 700ms;
+        }
+        #sidebar.open {
+          opacity:1;
+        }
+      </style>
+      <div class="series-container" style="position:fixed; left:0;margin-left:18rem;">
+        <div id="sidebar" class="series sidebar">
+          <div class="title"><a href=""><h1>My series{{series.title}}</h1></a></div>
+          <div class="entries">
+            {% for entry in series_posts %}
+            <a href="">
+              <div class="entry" id="{% if entry.slug == instance.slug %}active{% endif %}">{{entry.title}}</div>
+            </a>
+            {% endfor %}
+            <a href="">
+              <div class="entry" id="">Title one</div>
+            </a>
+            <a href="">
+              <div class="entry" id="active">Title two</div>
+            </a>
+            <a href="">
+              <div class="entry" id="">title 3</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    <style>
+      .content{
+        max-width:inherit!important;
+      }
+      .content>.block-text{
+        max-width:700px;
+      }
+    </style>
+
+    <div id="article" class="article" {% if not series %}style="margin-left: 20rem;"{% endif %}>
+
+      <div class="title"><h1>{{ self.title }}</h1></div>
+
+      {% if self.search_description %}
+        <div class="description"><p>{{self.search_description}}</p></div>
+      {% endif %}
+
+
+      <div class="content">
+          {% include_block page.body %}
+      </div>
+
+      <div class="byline">
+        <div class="author">
+          {{page.seo_description}}
+            By <a href="" rel="author">{{self.owner.get_full_name}}</a>
+        </div>
+        {% if instance.show_timestamp %}
+        <div class="publish">
+          {{ instance.publish }}
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+  {% if similar %}
+    <div class="similar">
+      <div class="single-col">
+        <div class="section-header">
+          <h1>continue reading</h1>
+        </div>
+        <div class="row">
+            {% for obj in similar %}
+            <div class="col">
+              <div class="card-small">
+                {% if obj.image %}
+                <a href="{{ obj.get_absolute_url }}"><div class="image" style="background-image: url({{ obj.image.url }});"></div></a>
+                {% endif %}
+                <div class="content">
+                    <div class="title">{{ obj.title }}</div>
+                    <div class="body">
+                      {% if obj.description %}
+                        {{ obj.description }}
+                      {% else %}
+                        {{ obj.content|truncatechars_html:80|safe }}
+                      {% endif %}
+                    </div>
+                    <div class="link">
+                      {% if obj.get_class_name == 'Post' %}
+                      <a class="link-text" href="{{ obj.get_absolute_url }}">read essay</a>
+                      {% else %}
+                      <a class="link-text" href="{{ obj.get_absolute_url }}">view {{obj.get_class_name}}</a>
+                      {% endif %}
+                      <img src="{% static 'icons/arrow.png' %}" width="9">
+                    </div>
+                  </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if series %}
+  <div class="series block">
+    <div class="single-col">
+      <div class="section-header">
+        <h1>continue reading</h1>
+      </div>
+
+      <div class="row">
+        <div class="col">
+            <div class="series-end">
+              <div class="title">
+                  <a href="{% url 'series:detail' series_slug=series.slug %}"><h1>{{series.title}}</h1></a>
+              </div>
+              <div class="entries">
+                  {% for entry in series_posts %}
+                  <a href="{% url 'series:post_detail' series_slug=series.slug post_slug=entry.slug %}">
+                    <div class="entry" id="{% if entry.slug == instance.slug %}active{% endif %}">{{entry.title}}</div>
+                  </a>
+                  {% endfor %}
+              </div>
+            </div>
+          </div>
+
+        {% if series_next %}
+          <div class="col">
+            <div class="card-small {% if not series_next.image %}v-center{% endif %}">
+              {% if series_next.image %}
+                <a href="{{series_next_url}}"><div class="image" style="background-image: url({{ series_next.image.url }});"></div></a>
+              {% endif %}
+              <div class="content">
+                  <div class="title">{{ series_next.title }}</div>
+                  <div class="body">
+                    {% if series_next.description %}
+                      {{ series_next.description }}
+                    {% endif %}
+                  </div>
+                  <div class="link">
+                      {% if series_next.get_class_name == 'Post' %}
+                      <a class="link-text" href="{{series_next_url}}">read essay</a>
+                      {% else %}
+                      <a class="link-text" href="{{series_next_url}}">view {{series_next.get_class_name}}</a>
+                      {% endif %}
+                    <img src="{% static 'icons/arrow.png' %}" width="9">
+                  </div>
+                </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+{% endblock content %}
+
+
+{% block extra_js %}
+  <link rel="stylesheet"
+  href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script> // code highlight
+      document.addEventListener("DOMContentLoaded", function(event) {
+        var els = document.getElementsByTagName("pre")
+        for (i=0; i<els.length; i++){
+          block = els[i]
+          hljs.highlightBlock(block)
+        }
+      })
+    </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
+  <script> // katex
+    renderMathInElement(document.body, {"delimiters": [
+    {left: "$$", right: "$$", display: true},
+    {left: "$", right: "$", display: false}
+    ]});
+  </script>
+
+  {% if not series %}
+  <script> // sidebar fixing
+    var sidebar = document.getElementById('sidebar');
+    window.addEventListener("scroll", function(){
+      var articlePosition = document.getElementById('article').offsetTop;
+      var articleBottom = document.getElementById('article').offsetHeight;
+
+      if (window.pageYOffset > articlePosition){
+        //sidebar.classList.add("fixed");
+        sidebar.classList.add("open")
+
+
+      } else {
+        //sidebar.classList.remove("fixed");
+        sidebar.classList.remove("open")
+      }
+
+      {% comment %} if (window.pageYOffset > articleBottom - 70){
+        sidebar.classList.add("bottom");
+      } else {
+        sidebar.classList.remove("bottom");
+      } {% endcomment %}
+    })
+  </script>
+  {% endif %}
+
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+{% endblock extra_js %}

@@ -1,1 +1,24 @@
 {% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static %}
+
+
+<section class="card-list">
+  <div class="wrapper">
+    <div class="more">
+      <a href="#">more essays</a>
+    </div>
+    <div class="container">
+      {% for obj in self.pages %}
+      <a href="{{obj.get_absolute_url}}">
+        <div class="card" {% if obj.image %}style="background-image:linear-gradient(
+            rgba(255, 86, 255, 0.3),
+            rgba(55, 143, 255, 0.3)
+          ),url({{obj.image.url}});"{% endif %}>
+          <div class="content">
+          <h1>{{obj.title}}</h1>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>

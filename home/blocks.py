@@ -41,6 +41,8 @@ class JumbotronCardBlock(blocks.StructBlock):
         template = 'blocks/jumbotron_card.html'
 
 
+
+
 class RecentArticlesBlocks(blocks.StructBlock):
     number_of_articles = blocks.IntegerBlock(min_value=1, default=5)
 
@@ -59,6 +61,18 @@ class RecentProjectsBlocks(blocks.StructBlock):
         label = ""
         admin_text = ''
         template = 'blocks/recent_projects.html'
+
+
+
+# PAGE BLOCKS
+
+class AllProjectsBlocks(blocks.StaticBlock):
+    class Meta:
+        # icon = ""
+        label = ""
+        admin_text = '{label}: configured elsewhere'.format(label=label)
+        template = 'blocks/all_projects.html'
+
 
 
 class ContactForm(blocks.StaticBlock):
@@ -83,12 +97,15 @@ class AboutBlurb(blocks.StructBlock):
         template = 'blocks/about_blurb.html'
 
 
+# LAYOUT
+
 class SpacerBlock(blocks.StaticBlock):
     class Meta:
         icon = ""
         label = "Create a y-margin spacer"
         admin_text = '{label}: configured elsewhere'.format(label=label)
         template = 'blocks/spacer.html'
+
 
 
 

@@ -132,7 +132,7 @@
 
     <div class="col1" style="">
 
-      <a style="color: rgba(0,0,0, 0.4); font-size: 1rem; text-decoration: none;" href="/posts/tag/{{ obj.get_label_url }}">{% if obj.get_label %}{{obj.get_label}}{% elif obj.label %}{{obj.label}}{% endif %}</a></div>
+      <a style="color: rgba(0,0,0, 0.4); font-size: 1rem; text-decoration: none;" href="/posts/tag/{{ obj.get_label_url }}">{{obj.tags.first}}</a></div>
 
 
     <div class="col2 {% if self.include_images %}image{%endif%}">

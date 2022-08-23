@@ -40,11 +40,11 @@
         border-bottom-color: #246491;
     }
 
-    .block-AboutBlurb a.no-style:hover{
-        color:black;
-        border:none:
+    .block-AboutBlurb a.normal-style:hover{
+        color: rgba(0, 0, 0,0.6);
+        text-decoration: underline;
     }
-    .block-AboutBlurb a.no-style{
+    .block-AboutBlurb a.normal-style{
         color:black;
         text-decoration:none;
         border-bottom:none;
@@ -88,7 +88,7 @@
 
 
         <div style="margin-bottom:5em; margin-top: 1em;">
-        <a class="link no-style" href="{{value.page.url}}">Read more<img style="margin-left: 0.5ch;" src="{% static 'icons/arrow.png' %}" width="9"></a>
+        <a class="link normal-style" href="{{value.page.url}}">Read more<img style="margin-left: 0.5ch;" src="{% static 'icons/arrow.png' %}" width="9"></a>
         </div>
     </div>
 </div>

@@ -30,6 +30,7 @@ class AbstractPage(Page):
     )
     promote_panels = Page.promote_panels + [ImageChooserPanel("image")]
 
+    is_project = models.BooleanField(default=False)
 
     def get_context(self, request, *args, **kwargs):
 
@@ -46,6 +47,12 @@ class AbstractPage(Page):
     def get_all_articles(self):
         return Article.objects.all().filter(live=True).order_by('-last_published_at')
 
+    def get_recent_projects(self, n=3):
+        return Page.objects.all().filter(live=True).filter(is_project=True).order_by('-last_published_at')[:n]
+
+    def get_all_projects(self):
+        return Page.objects.all().filter(live=True).filter(is_project=True).order_by('-last_published_at')
+
 
 
 class HomePage(AbstractPage):
@@ -53,6 +60,7 @@ class HomePage(AbstractPage):
 
     content_panels = AbstractPage.content_panels + [
         FieldPanel('body'),
+        FieldPanel("is_project"),
     ]
 
     def get_context(self, request, *args, **kwargs):
@@ -68,11 +76,15 @@ class Article(AbstractPage):
     body = StreamField(article_fields, use_json_field=True,null=True, blank=True)
     tags = ClusterTaggableManager(through=PageTag, blank=True)
 
+    unlisted = models.BooleanField(default=False)
+
 
     content_panels = AbstractPage.content_panels + [
         FieldPanel("header"),
         FieldPanel("body"),
         FieldPanel('tags'),
+        FieldPanel("is_project"),
+        FieldPanel("unlisted"),
     ]
 
     def get_context(self, request, *args, **kwargs):

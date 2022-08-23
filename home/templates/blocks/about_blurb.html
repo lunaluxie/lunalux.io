@@ -28,6 +28,27 @@
           margin-left: auto;
           margin-right: auto;
         }
+
+
+    .block-AboutBlurb a{
+        color: #246491;
+        text-decoration: none;
+        transition: border .15s cubic-bezier(.645, .045, .355, 1);
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
+    }
+    .block-AboutBlurb a:hover{
+        border-bottom-color: #246491;
+    }
+
+    .block-AboutBlurb a.no-style:hover{
+        color:black;
+        border:none:
+    }
+    .block-AboutBlurb a.no-style{
+        color:black;
+        text-decoration:none;
+        border-bottom:none;
+    }
     </style>
     <spacer class="hidden-non-mobile"></spacer>
     <div class="container" style="margin-bottom: 3em;" >
@@ -67,7 +88,7 @@
 
 
         <div style="margin-bottom:5em; margin-top: 1em;">
-        <a class="link" href="{{value.page.url}}">Read more<img style="margin-left: 0.5ch;" src="{% static 'icons/arrow.png' %}" width="9"></a>
+        <a class="link no-style" href="{{value.page.url}}">Read more<img style="margin-left: 0.5ch;" src="{% static 'icons/arrow.png' %}" width="9"></a>
         </div>
     </div>
 </div>

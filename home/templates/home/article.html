@@ -18,6 +18,30 @@
 {% endblock extra_head %}
 
 {% block content %}
+  <style>
+    .article .content {
+        position: relative;
+        /* max-width: 700px; */
+        margin: 0 auto;
+        padding: 0;
+        font-size: 18px;
+        line-height: 1.5em;
+        font-family: 'Lato', sans-serif;
+        font-weight: 400;
+        width: 100vw;
+    }
+
+    .content>.block-text{
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .block-table{
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  </style>
+
   <header class="article-header">
 
   {% include_block page.header %}
@@ -28,13 +52,13 @@
         <style>
         #sidebar{
           opacity:0 ;
-          transition: opacity 700ms;
+          transition: opacity 300ms ease-in-out;
         }
         #sidebar.open {
           opacity:1;
         }
       </style>
-      <div class="series-container" style="position:fixed; left:0;margin-left:18rem;">
+      <div class="series-container" id="series-navbar" style="position:fixed; left:0;margin-left:18rem;">
         <div id="sidebar" class="series sidebar">
           <div class="title"><a href=""><h1>My series{{series.title}}</h1></a></div>
           <div class="entries">
@@ -66,7 +90,7 @@
       }
     </style>
 
-    <div id="article" class="article" {% if not series %}style="margin-left: 20rem;"{% endif %}>
+    <div id="article" class="article">
 
       <div class="title"><h1>{{ self.title }}</h1></div>
 
@@ -228,6 +252,44 @@
         //sidebar.classList.remove("fixed");
         sidebar.classList.remove("open")
       }
+
+
+      var AABB = {
+          collide: function (el1, el2) {
+            var rect1 = el1.getBoundingClientRect();
+            var rect2 = el2.getBoundingClientRect();
+
+            return !(
+              rect1.top > rect2.bottom ||
+              rect1.right < rect2.left ||
+              rect1.bottom < rect2.top ||
+              rect1.left > rect2.right
+            );
+          },
+
+          inside: function (el1, el2) {
+            var rect1 = el1.getBoundingClientRect();
+            var rect2 = el2.getBoundingClientRect();
+
+            return (
+              ((rect2.top <= rect1.top) && (rect1.top <= rect2.bottom)) &&
+              ((rect2.top <= rect1.bottom) && (rect1.bottom <= rect2.bottom)) &&
+              ((rect2.left <= rect1.left) && (rect1.left <= rect2.right)) &&
+              ((rect2.left <= rect1.right) && (rect1.right <= rect2.right))
+            );
+          }
+        };
+
+      let series = document.querySelector("#sidebar")
+      let article = document.querySelectorAll(".content>*")
+      article.forEach(el=>{
+        if (AABB.collide(series,el)){
+          console.log(AABB.collide(series,el))
+          series.classList.remove("open")
+        }
+      })
+
+
 
       {% comment %} if (window.pageYOffset > articleBottom - 70){
         sidebar.classList.add("bottom");

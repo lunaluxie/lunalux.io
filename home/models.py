@@ -32,7 +32,6 @@ class AbstractPage(Page):
 
 
     def get_context(self, request, *args, **kwargs):
-        # context = super(Page, self).get_context(request, *args, **kwargs)
 
         return {}
 

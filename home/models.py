@@ -28,9 +28,11 @@ class AbstractPage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    promote_panels = Page.promote_panels + [ImageChooserPanel("image")]
-
     is_project = models.BooleanField(default=False)
+
+
+    promote_panels = Page.promote_panels + [ImageChooserPanel("image")]
+    settings_panels = Page.settings_panels + [FieldPanel("is_project")]
 
     def get_context(self, request, *args, **kwargs):
 
@@ -60,7 +62,6 @@ class HomePage(AbstractPage):
 
     content_panels = AbstractPage.content_panels + [
         FieldPanel('body'),
-        FieldPanel("is_project"),
     ]
 
     def get_context(self, request, *args, **kwargs):
@@ -83,12 +84,16 @@ class Article(AbstractPage):
         FieldPanel("header"),
         FieldPanel("body"),
         FieldPanel('tags'),
-        FieldPanel("is_project"),
-        FieldPanel("unlisted"),
     ]
+
+
+    settings_panels =AbstractPage.settings_panels + [FieldPanel("unlisted"),]
 
     def get_context(self, request, *args, **kwargs):
         context = super(AbstractPage, self).get_context(request, *args, **kwargs)
+
+        print(Article.objects.all())
+
         return context
 
 class Series(models.Model):

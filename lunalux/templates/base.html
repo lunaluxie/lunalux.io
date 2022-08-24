@@ -30,6 +30,10 @@
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
+        {% block navbar %}
+        {% include 'navbar.html' %}
+        {% endblock navbar %}
+
         {% block content %}{% endblock %}
 
 

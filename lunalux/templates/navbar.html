@@ -1,24 +1,85 @@
 {% load static %}
 <navbar>
-      {% comment %} <div class="logo">
-        <a href="/">
-          <img src="{% static 'icons/logo.svg' %}"/>
-        </a>
-      </div> {% endcomment %}
-      <div class="links">
-        <div class="left">
-          <ul>
-            <li><a class="hidden-sm" href="/">Luna Lux</a></li>
+  {% comment %} <div class="logo">
+    <a href="/">
+      <img src="{% static 'icons/logo.svg' %}"/>
+    </a>
+  </div> {% endcomment %}
+  <div class="links">
+    <div class="left">
+      <ul>
+        <li><a href="/">Luna Lux</a></li>
 
-          </ul>
-        </div>
-        <div class="right">
-          <ul>
-            <li><a href="/articles">essays</a></li>
-            <li><a href="/projects">projects</a></li>
-            <li><a href="/search">search</a></li>
-            <li><a href="">about</a></li>
-          </ul>
-        </div>
-      </div>
-    </navbar>
+      </ul>
+    </div>
+    <div class="right">
+      <ul class="hidden-sm">
+        <li><a href="/articles">essays</a></li>
+        <li><a href="/projects">projects</a></li>
+        <li><a href="/search">search</a></li>
+        <li><a href="/about">about</a></li>
+      </ul>
+      <ul class="hidden-big">
+        <li id="open-modal"><i class="fa-solid fa-bars"></i></li>
+        <li id="close-modal" class="hidden"><i class="fas fa-times"></i></li>
+      </ul>
+    </div>
+  </div>
+</navbar>
+
+
+<style>
+
+.bar-modal {
+    position: absolute;
+    min-height: 100%;
+    width: 100%;
+    background: white;
+}
+
+.bar-modal .modal-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.bar-modal a {
+
+    padding:1rem;
+    display:block;
+
+    color: #000;
+    letter-spacing: 0px;
+    margin-top: 0px;
+    margin-left: 0px;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+</style>
+<modal class="bar-modal hidden " style="z-index:10" id="modal">
+    <div class="modal-container">
+      <a style="position:relative;" href="/articles">essays</a>
+      <a style="position:relative;" href="/projects">projects</a>
+      <a style="position:relative;" href="/search">search</a>
+      <a style="position:relative;" href="/about">about</a>
+
+    </div>
+</modal>
+
+<script>
+  let openModal = document.getElementById("open-modal")
+  let closeModal = document.getElementById("close-modal")
+  let modal = document.getElementById("modal")
+  openModal.addEventListener("click", ()=>{
+    modal.classList.remove("hidden")
+    openModal.classList.add('hidden')
+    closeModal.classList.remove("hidden")
+  })
+  closeModal.addEventListener("click", ()=>{
+    modal.classList.add("hidden")
+    openModal.classList.remove('hidden')
+    closeModal.classList.add("hidden")
+  })
+</script>

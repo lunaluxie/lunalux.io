@@ -134,6 +134,12 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+@media screen and (min-width: 501px) {
+  .hidden-big {
+    display: none !important;
+  }
+}
+
 @media screen and (max-width: 400px) {
   .hidden-xs {
     display: none !important;

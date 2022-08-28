@@ -85,7 +85,7 @@
       }
 
       .posts{
-        margin-top: 3em;
+        margin-top: 5em;
       }
     }
     @media screen and (max-width: 324px) {
@@ -140,9 +140,9 @@
         border-bottom: 2px solid black;
       }
     </style>
-    <li class="li-class"><input name="query" placeholder="" value="{{search_query}}"></li>
+    <li class="li-class"><input style="width:100%" name="query" placeholder="" value="{{search_query}}"></li>
     </form>
-    {% else %}
+    {% else %}/
     <li class="li-class">{% if tag != 'all'%}<a href="/articles" class="faded-xlight">All</a>{%else%}All{%endif%}</li>
     <li class="li-class">{% if tag != 'physics'%}<a class="faded-xlight" href="/articles/tag/physics">Physics</a>{%else%}Physics{%endif%}</li>
     <li class="li-class">{% if tag != 'ai'%}<a class="faded-xlight" href="/articles/tag/ai">AI</a>{%else%}AI{%endif%}</li>

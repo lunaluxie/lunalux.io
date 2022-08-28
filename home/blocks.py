@@ -124,16 +124,3 @@ class ImageDividerBlock(blocks.StructBlock):
     class Meta:
         icon = "image"
         template = "blocks/image_divider.html"
-
-
-class ImageCardBlock(blocks.StructBlock):
-    header = blocks.CharBlock()
-    description = blocks.CharBlock()
-
-    image = ImageChooserBlock()
-    link = blocks.CharBlock()
-    link_text = blocks.CharBlock()
-
-    class Meta:
-        icon = "image"
-        template = "blocks/image_card.html"

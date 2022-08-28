@@ -1,16 +1,10 @@
 # TODO
 
 ## First pass
-- [x] Implement blocks / design from old website.
-    - [] video block
+- fix all template getting thing issues. 
 
+
+
+
+# Finishing touches. 
 - implement pages from old website. 
-- implements tags. 
-
-
-- [] Implement new navbar.
-- [] 
-
-## Second pass
-
-- [] refactor css

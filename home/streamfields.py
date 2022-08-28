@@ -36,7 +36,6 @@ body_fields = [
     ("JumbotronCard",JumbotronCardBlock(group="ImageHeader")),
     ("ImageHeader", ImageHeaderBlock(group="ImageHeader")),
     ("ImageDivider", ImageDividerBlock(group="ImageHeader")),
-    ("ImageCard",ImageCardBlock(group="ImageHeader")),
 
 ] + basic_fields
 

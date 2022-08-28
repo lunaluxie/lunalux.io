@@ -1,9 +1,11 @@
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
-
+from wagtail.coreutils import resolve_model_string
 
 class CardListBlock(blocks.StructBlock):
-    pages = blocks.ListBlock(blocks.PageChooserBlock())
+
+    pages = blocks.ListBlock(
+        blocks.PageChooserBlock())
 
     class Meta:
         # icon = ""
@@ -12,7 +14,9 @@ class CardListBlock(blocks.StructBlock):
         template = 'blocks/card_list.html'
 
 class HorizontalCardList(blocks.StructBlock):
-    pages = blocks.ListBlock(blocks.PageChooserBlock())
+
+    pages = blocks.ListBlock(
+        blocks.PageChooserBlock())
 
     class Meta:
         # icon = ""
@@ -21,7 +25,9 @@ class HorizontalCardList(blocks.StructBlock):
         template = 'blocks/horizontal_card_list.html'
 
 class LinesListBlock(blocks.StructBlock):
-    pages = blocks.ListBlock(blocks.PageChooserBlock())
+
+    pages = blocks.ListBlock(blocks.PageChooserBlock(
+        target_model=["home.HomePage","home.Article"]))
 
     include_images = blocks.BooleanBlock(required=False, default=True)
 
@@ -32,7 +38,8 @@ class LinesListBlock(blocks.StructBlock):
         template = 'blocks/lines_list.html'
 
 class JumbotronCardBlock(blocks.StructBlock):
-    page = blocks.PageChooserBlock()
+
+    jumbotron = blocks.PageChooserBlock()
 
     class Meta:
         # icon = ""
@@ -87,6 +94,7 @@ class AboutBlurb(blocks.StructBlock):
 
     column1_text = blocks.RichTextBlock()
     column2_text = blocks.RichTextBlock()
+
 
     page = blocks.PageChooserBlock()
 

@@ -1,6 +1,14 @@
+{% extends 'home/home_page.html' %}
+
 {% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static %}
 
-<section>
+{% block content %}
+{% include 'blocks/spacer.html'%}
+{% include 'blocks/card_list.html' with pages=projects%}
+{% endblock content %}
+
+
+{% comment %} <section>
   <style>
     .project-item.large {
       flex: 0 0 50%;
@@ -73,33 +81,29 @@
     }
   </style>
 
-  {{projects}}
+
   <div class="container" style="margin: 8em 2em;">
     <div style="display: flex; align-items: flex-start;
     flex-wrap: wrap; position: relative;margin: -0.5em;">
       {% for obj in projects %}
 
-      <div
-        class="project-item {%if forloop.counter|divisibleby:2%}{% if forloop.counter != 6 %} large{%endif%}{%endif%}">
+      <div class="project-item {%if forloop.counter|divisibleby:2%}{% if forloop.counter != 6 %} large{%endif%}{%endif%}">
         <div class="content" style="padding:0.5rem">
-          {% if obj.image %}
-          <a href="{{ obj.get_absolute_url }}"><img
-              style="aspect-ratio: calc({{obj.width_field}}/{{obj.height_field}}); width:100%;"
-              src="{{obj.image.url}}"></a>
-          {% endif %}
-          <a href="{{ obj.get_absolute_url }}" style="text-decoration: none;">
-            <div class="content_">
-              <h3 class="title">{{ obj.title }}</h3>
-              <p class="body" style="color:rgba(0,0,0,0.6)">
-                {{ obj.description }}
-              </p>
-            </div>
-          </a>
-          <a class="link link-text" href="">Learn more<img style="margin-left: 0.5ch;"
+
+          {% image obj.image width-700 as tmp_photo %}
+          <a href="{% pageurl obj %}"><img style="aspect-ratio: calc({{tmp_photo.width}}/{{tmp_photo.height}}); width:100%;" src="{{ tmp_photo.url }}"></a>
+
+          <a href="{%pageurl obj%}" style="text-decoration: none;"><div class="content_">
+            <h3 class="title">{{ obj.title }}</h3>
+            <p class="body" style="color:rgba(0,0,0,0.6)">
+              {{ obj.search_description }}
+            </p>
+          </div></a>
+          <a class="link link-text" href="{%pageurl obj%}">Learn more<img style="margin-left: 0.5ch;"
               src="{% static 'icons/arrow.png' %}" width="9"></a>
         </div>
       </div>
       {% endfor %}
     </div>
   </div>
-</section>
+</section> {% endcomment %}

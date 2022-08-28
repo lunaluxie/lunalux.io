@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static %}
+{% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static define_action %}
 <section>
     <style>
       .project-item.large {
@@ -57,33 +57,36 @@
 
 
     </style>
-    <div class="container"><h2>Projects</h2>
+    <div class="container">
+    <h2>Projects</h2>
     <div style="display: flex; align-items: flex-start;
     flex-wrap: wrap; position: relative;margin: -0.5em;">
-      {% for obj in self.pages %}
+
+      {% if self.pages %}
+          {% pageChooserBlockListToProperPages self.pages as pages %}
+      {% endif %}
+
+      {% for obj in pages %}
 
       <div class="project-item {%if forloop.counter|divisibleby:2%}{% if forloop.counter != 6 %} large{%endif%}{%endif%}">
         <div class="content" style="padding:0.5rem">
 
-          {% image page.image width-700 as tmp_photo %}
-          <a href="{{ obj.get_absolute_url }}"><img style="aspect-ratio: calc({{tmp_photo.width}}/{{tmp_photo.height}}); width:100%;" src="{{ tmp_photo.url }}"></a>
+          {% image obj.image width-700 as tmp_photo %}
+          <a href="{% pageurl obj %}"><img style="aspect-ratio: calc({{tmp_photo.width}}/{{tmp_photo.height}}); width:100%;" src="{{ tmp_photo.url }}"></a>
 
-          <a href="{{ obj.get_absolute_url }}" style="text-decoration: none;"><div class="content_">
+          <a href="{%pageurl obj%}" style="text-decoration: none;"><div class="content_">
             <h3 class="title">{{ obj.title }}</h3>
             <p class="body" style="color:rgba(0,0,0,0.6)">
-              {% if obj.search_description %}
-                {{ obj.search_description }}
-              {% else %}
-                {{ obj.content|truncatechars_html:140|safe }}
-              {% endif %}
+              {{ obj.search_description }}
             </p>
           </div></a>
-          <a class="link link-text" href="{{obj.get_absolute_url}}">Learn more<img style="margin-left: 0.5ch;"
+          <a class="link link-text" href="{%pageurl obj%}">Learn more<img style="margin-left: 0.5ch;"
               src="{% static 'icons/arrow.png' %}" width="9"></a>
         </div>
       </div>
       {% endfor %}
     </div>
+
     <div style="margin-bottom:5em">
       <a class="link" href="">View all projects<img style="margin-left: 0.5ch;"
           src="{% static 'icons/arrow.png' %}" width="9"></a>

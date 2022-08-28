@@ -4,6 +4,7 @@
 - fix all template getting thing issues. 
 
 
+- make sure unlisted works. 
 
 
 # Finishing touches. 

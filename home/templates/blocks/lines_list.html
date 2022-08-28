@@ -113,9 +113,8 @@
 
 <div class="container">
   {% if self.pages %}
-      {% define self.pages as pages %}
+      {% pageChooserBlockListToProperPages self.pages as pages %}
   {% endif %}
-
 
   {% for obj in pages %}
 
@@ -132,10 +131,10 @@
 
     <div class="col1" style="">
 
-      <a style="color: rgba(0,0,0, 0.4); font-size: 1rem; text-decoration: none;" href="/posts/tag/{{ obj.get_label_url }}">{{obj.tags.first}}</a></div>
+      <a style="color: rgba(0,0,0, 0.4); font-size: 1rem; text-decoration: none;" href="/posts/tag/{{ obj.tags.first }}">{{obj.tags.first}}</a></div>
 
 
-    <div class="col2 {% if self.include_images %}image{%endif%}">
+    <div class="col2 {% if obj.include_images %}image{%endif%}">
       <div style="max-width: 30rem;">
         <a href="{% pageurl obj %}" style="text-decoration: none;">
           <h5 class="asdf" style="color: rgba(0,0,0);
@@ -153,10 +152,10 @@
       </div>
     </div>
 
-    {% if self.include_images %}
+    {% if self.include_images or include_images %}
     <div class="col3" style="">
       <a href="{% pageurl obj %}">
-        {% image page.image width-600 as tmp_photo %}
+        {% image obj.image width-600 as tmp_photo %}
         <img style="aspect-ratio: calc({{tmp_photo.width}}/{{tmp_photo.height}}); width:100%;" alt="{{tmp_photo.alt}}" src="{{ tmp_photo.url }}">
       </a>
     </div>

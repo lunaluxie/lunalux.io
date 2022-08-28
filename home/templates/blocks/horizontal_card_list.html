@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static %}
+{% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static define_action %}
 
 
 <section class="card-list">
@@ -7,12 +7,17 @@
       <a href="/articles">more essays</a>
     </div>
     <div class="container">
-      {% for obj in self.pages %}
+      {% if self.pages %}
+          {% pageChooserBlockListToProperPages self.pages as pages %}
+      {% endif %}
+
+      {% for obj in pages %}
       <a href="{{obj.get_absolute_url}}">
+        {% image obj.image height-600 as tmp_photo %}
         <div class="card" {% if obj.image %}style="background-image:linear-gradient(
             rgba(255, 86, 255, 0.3),
             rgba(55, 143, 255, 0.3)
-          ),url({{obj.image.url}});"{% endif %}>
+          ),url({{tmp_photo.url}});"{% endif %}>
           <div class="content">
           <h1>{{obj.title}}</h1>
           </div>

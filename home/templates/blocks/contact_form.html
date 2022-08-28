@@ -45,7 +45,7 @@
 
       <p class="body" style="color:rgba(0,0,0,0.6); max-width: 65ch;">Do you like what you see, and want to talk more? </p>
 
-      <form class="contact-form" id="contact-form" method="POST">
+      <form class="contact-form" id="contact-form" action="{% url 'contact' %}" method="POST">
         {% csrf_token %}
 
         <hr style="opacity: 0.0875;

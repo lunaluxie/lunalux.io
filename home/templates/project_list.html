@@ -72,10 +72,12 @@
       filter: opacity(0.9);
     }
   </style>
+
+  {{projects}}
   <div class="container" style="margin: 8em 2em;">
     <div style="display: flex; align-items: flex-start;
     flex-wrap: wrap; position: relative;margin: -0.5em;">
-      {% for obj in self.get_all_projects %}
+      {% for obj in projects %}
 
       <div
         class="project-item {%if forloop.counter|divisibleby:2%}{% if forloop.counter != 6 %} large{%endif%}{%endif%}">
@@ -93,7 +95,7 @@
               </p>
             </div>
           </a>
-          <a class="link link-text" href="{% pageurl object %}">Learn more<img style="margin-left: 0.5ch;"
+          <a class="link link-text" href="">Learn more<img style="margin-left: 0.5ch;"
               src="{% static 'icons/arrow.png' %}" width="9"></a>
         </div>
       </div>

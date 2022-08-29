@@ -167,23 +167,23 @@
   <div class="row-list" style="margin: .9rem 0; font-family: 'lato';">
 
     <div class="col1" style="">
-
-      <a style="color: rgba(0,0,0, 0.4); font-size: 1rem; text-decoration: none;" href="/posts/tag/{{ obj.get_label_url }}">{% if obj.get_label %}{{obj.get_label}}{% elif obj.label %}{{obj.label}}{% endif %}</a></div>
+      {% if obj.tags.first %}
+      <a style="color: rgba(0,0,0, 0.4); font-size: 1rem; text-decoration: none;" href="/articles/tag/{{obj.tags.first}}">{{obj.tags.first}}</a>
+      {% endif %}
+    </div>
 
     <div class="col2 image">
       <div style="max-width: 30rem;">
-        <a href="{{obj.get_absolute_url}}" style="text-decoration: none;">
+        <a href="{% pageurl obj %}" style="text-decoration: none;">
           <h5 class="asdf" style="color: rgba(0,0,0);
                     margin-top: 0;
                     margin-bottom: 0;
                     font-size: 1rem;
                     letter-spacing: 0.005em;
                     font-weight: normal;">{{ obj.title }}</h5>
-                    {% if obj.post_type == "pr" or not obj.post_type %}
           <p style="font-size: 1rem; margin-bottom: 0;    color: rgba(0,0,0, 0.7); margin-top: 0.5rem;">
           {{ obj.search_description }}
           </p>
-          {% endif %}
         </a>
       </div>
     </div>

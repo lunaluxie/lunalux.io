@@ -91,16 +91,7 @@ class Article(AbstractPage):
         except:
             series = None
 
-        articles = series.articles
-        for article in articles:
-            print (article)
-        # print(context)
-        # print(series)
-        # print(articles)
-
-
         context["series"] = series
-        # context["series_articles"] = articles
 
         return context
 

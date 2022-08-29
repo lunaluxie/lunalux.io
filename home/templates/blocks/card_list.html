@@ -58,7 +58,7 @@
 
     </style>
     <div class="container">
-    <h2>Projects</h2>
+    {% if not hide_title%}<h2>Projects</h2>{% endif %}
     <div style="display: flex; align-items: flex-start;
     flex-wrap: wrap; position: relative;margin: -0.5em;">
 
@@ -86,10 +86,11 @@
       </div>
       {% endfor %}
     </div>
-
+    {% if not hide_view_all_projects %}
     <div style="margin-bottom:5em">
-      <a class="link" href="">View all projects<img style="margin-left: 0.5ch;"
+      <a class="link" href="/projects">View all projects<img style="margin-left: 0.5ch;"
           src="{% static 'icons/arrow.png' %}" width="9"></a>
     </div>
+    {% endif %}
     </div>
   </section>

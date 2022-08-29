@@ -3,8 +3,10 @@
 {% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static %}
 
 {% block content %}
-{% include 'blocks/spacer.html'%}
-{% include 'blocks/card_list.html' with pages=projects%}
+{% comment %} {% include 'blocks/spacer.html'%} {% endcomment %}
+<spacer></spacer>
+
+{% include 'blocks/card_list.html' with pages=projects hide_view_all_projects=True %}
 {% endblock content %}
 
 

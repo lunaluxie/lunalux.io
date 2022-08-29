@@ -32,8 +32,7 @@ def article_tag_list(request, tag):
 
 def project_list(request):
     # TODO Change to single queryset on page???
-    queryset = HomePage.objects.filter(live=True).filter(
-        unlisted=False).filter(is_project=True)
+    queryset = HomePage.objects.filter(live=True).filter(is_project=True)
     queryset2 = Article.objects.filter(live=True).filter(
         unlisted=False).filter(is_project=True)
 

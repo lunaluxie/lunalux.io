@@ -1,3 +1,4 @@
+from argparse import _MutuallyExclusiveGroup
 from tkinter import N
 from django.db import models
 from wagtail.core.fields import StreamField
@@ -93,19 +94,24 @@ class Article(AbstractPage):
         return context
 
 class Series(models.Model):
+    name = models.CharField(max_length=256)
+    description = models.TextField(null=True, blank=True)
+
 
     articles = SortedManyToManyField(Article)
 
-    unlisted = models.BooleanField(default=True)
+    unlisted = models.BooleanField(default=False)
 
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 
-    panels = [FieldPanel("articles"),
+    panels = [FieldPanel("name"),
+              FieldPanel("description"),
+              FieldPanel("articles"),
               FieldPanel('unlisted'),]
 
-    # def __str__(self):
-        # return self.name
+    def __str__(self):
+        return self.name
 
 
 class Contact(models.Model):

@@ -3,14 +3,15 @@ from itertools import chain
 from .models import AbstractPage, HomePage, Article
 
 def article_list(request):
-    queryset = Article.objects.all().filter(live=True)
+    queryset = Article.objects.all().filter(live=True).filter(unlisted=False)
 
     return render(request, "article_list.html",
                   context={"articles":queryset,"tag":"all"})
 
 
 def article_tag_list(request, tag):
-    queryset = Article.objects.all().filter(live=True).filter(tags__name__icontains=tag).distinct()
+    queryset = Article.objects.all().filter(live=True).filter(
+        unlisted=False).filter(tags__name__icontains=tag).distinct()
 
     return render(request, "article_list.html",
                   context={"articles":queryset,"tag":tag.lower()})
@@ -19,8 +20,10 @@ def article_tag_list(request, tag):
 
 def project_list(request):
     # TODO Change to single queryset on page???
-    queryset = HomePage.objects.filter(live=True).filter(is_project=True)
-    queryset2 = Article.objects.filter(live=True).filter(is_project=True)
+    queryset = HomePage.objects.filter(live=True).filter(
+        unlisted=False).filter(is_project=True)
+    queryset2 = Article.objects.filter(live=True).filter(
+        unlisted=False).filter(is_project=True)
 
     def time(instance):
         return instance.first_published_at

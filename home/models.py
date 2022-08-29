@@ -42,10 +42,10 @@ class AbstractPage(Page):
 
 
     def get_recent_articles(self, n=8):
-        return Article.objects.all().filter(live=True).order_by('-last_published_at')[:n]
+        return Article.objects.all().filter(live=True).filter(unlisted=False).order_by('-last_published_at')[:n]
 
     def get_all_articles(self):
-        return Article.objects.all().filter(live=True).order_by('-last_published_at')
+        return Article.objects.all().filter(live=True).filter(unlisted=False).order_by('-last_published_at')
 
     def get_recent_projects(self, n=3):
         return Page.objects.all().filter(live=True).filter(is_project=True).order_by('-last_published_at')[:n]

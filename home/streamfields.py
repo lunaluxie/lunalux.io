@@ -1,3 +1,4 @@
+from tokenize import group
 from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 
@@ -32,6 +33,7 @@ body_fields = [
 
     # structure
     ("spacer",SpacerBlock(group="layout")),
+    ("container", ContainerBlock(group="layout")),
 
     ("JumbotronCard",JumbotronCardBlock(group="ImageHeader")),
     ("ImageHeader", ImageHeaderBlock(group="ImageHeader")),

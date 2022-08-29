@@ -132,3 +132,35 @@ class ImageDividerBlock(blocks.StructBlock):
     class Meta:
         icon = "image"
         template = "blocks/image_divider.html"
+
+
+class ContainerBlock(blocks.StructBlock):
+    content = blocks.StreamBlock([
+        # my thing
+        ("CardList", CardListBlock(group="List")),
+        ("HorizontalCardList", HorizontalCardList(group="List")),
+        ("LinesList", LinesListBlock(group="List")),
+
+
+        ("AboutBlurb", AboutBlurb(group="")),
+        ("ContactForm", ContactForm(group="")),
+
+        # automatic
+        ("recent_articles", RecentArticlesBlocks(group="automatic")),
+        ("recent_projects", RecentProjectsBlocks(group="automatic")),
+
+
+        # structure
+        ("spacer", SpacerBlock(group="layout")),
+
+        ("JumbotronCard", JumbotronCardBlock(group="ImageHeader")),
+        ("ImageHeader", ImageHeaderBlock(group="ImageHeader")),
+        ("ImageDivider", ImageDividerBlock(group="ImageHeader")),
+
+        ("text", blocks.RichTextBlock(group="basic")),
+        ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
+
+    ])
+
+    class Meta:
+        template = "blocks/container.html"

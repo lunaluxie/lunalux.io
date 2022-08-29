@@ -5,11 +5,6 @@ from wagtail.contrib.modeladmin.options import (
 from .models import Series, Contact
 
 
-class SeriesAdmin(ModelAdmin):
-    model = Series
-
-modeladmin_register(SeriesAdmin)
-
 
 class ContactAdmin(ModelAdmin):
     model = Contact

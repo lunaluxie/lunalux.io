@@ -1,5 +1,4 @@
-from argparse import _MutuallyExclusiveGroup
-from tkinter import N
+from wagtail.core import blocks
 from django.db import models
 from wagtail.core.fields import StreamField
 from wagtail.admin.panels import FieldPanel
@@ -8,9 +7,7 @@ from wagtail.models import Page
 from taggit.models import TaggedItemBase
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
-
-from sortedm2m.fields import SortedManyToManyField
-
+from django.shortcuts import redirect
 from .streamfields import body_fields, article_fields, article_header_fields
 
 class PageTag(TaggedItemBase):
@@ -82,36 +79,42 @@ class Article(AbstractPage):
         FieldPanel("body"),
         FieldPanel('tags'),
     ]
-
-
     settings_panels =AbstractPage.settings_panels + [FieldPanel("unlisted"),]
 
     def get_context(self, request, *args, **kwargs):
         context = super(AbstractPage, self).get_context(request, *args, **kwargs)
 
-        print(Article.objects.all())
+        series_id = request.GET.get("series")
+
+        try:
+            series = Series.objects.get(id=series_id)
+        except:
+            series = None
+
+        articles = series.articles
+        for article in articles:
+            print (article)
+        # print(context)
+        # print(series)
+        # print(articles)
+
+
+        context["series"] = series
+        # context["series_articles"] = articles
 
         return context
 
-class Series(models.Model):
-    name = models.CharField(max_length=256)
-    description = models.TextField(null=True, blank=True)
-
-
-    articles = SortedManyToManyField(Article)
-
+class Series(AbstractPage):
+    articles = StreamField([("articles", blocks.ListBlock(blocks.PageChooserBlock()))],
+                            use_json_field=True, null=True, blank=True)
     unlisted = models.BooleanField(default=False)
 
-    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True, auto_now_add=False)
+    content_panels = AbstractPage.content_panels + [FieldPanel("articles"),
+                      FieldPanel('unlisted'),]
 
-    panels = [FieldPanel("name"),
-              FieldPanel("description"),
-              FieldPanel("articles"),
-              FieldPanel('unlisted'),]
-
-    def __str__(self):
-        return self.name
+    def serve(self, request):
+        first_article = self.articles[0].value[0]
+        return redirect(f"{first_article.url}?series={self.id}")
 
 
 class Contact(models.Model):

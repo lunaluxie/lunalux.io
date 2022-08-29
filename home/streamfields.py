@@ -46,4 +46,5 @@ article_fields =  basic_fields + [
 article_header_fields = [
     ("ImageHeader", ImageHeaderBlock()),
     ("ImageDivider", ImageDividerBlock()),
+    ("spacer", SpacerBlock()),
 ]

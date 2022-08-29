@@ -1,12 +1,24 @@
 from django.shortcuts import render
 from itertools import chain
-from .models import AbstractPage, HomePage, Article
+from .models import AbstractPage, HomePage, Article, Series
 
 def article_list(request):
     queryset = Article.objects.all().filter(live=True).filter(unlisted=False)
 
+    queryset2 = list(Series.objects.all().filter(unlisted=False))
+
+    def time(instance):
+        try:
+            return instance.first_published_at
+        except:
+            return instance.timestamp
+
+    queryies_combined = sorted(
+        chain(queryset, queryset2),
+        key=time, reverse=True)
+
     return render(request, "article_list.html",
-                  context={"articles":queryset,"tag":"all"})
+                  context={"articles": queryies_combined, "tag": "all"})
 
 
 def article_tag_list(request, tag):

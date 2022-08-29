@@ -48,38 +48,6 @@
   </header>
 
   <div class="row">
-    {% if not series %}
-        <style>
-        #sidebar{
-          opacity:0 ;
-          transition: opacity 300ms ease-in-out;
-        }
-        #sidebar.open {
-          opacity:1;
-        }
-      </style>
-      <div class="series-container" id="series-navbar" style="position:fixed; left:0;margin-left:18rem;">
-        <div id="sidebar" class="series sidebar">
-          <div class="title"><a href=""><h1>My series{{series.title}}</h1></a></div>
-          <div class="entries">
-            {% for entry in series_posts %}
-            <a href="">
-              <div class="entry" id="{% if entry.slug == instance.slug %}active{% endif %}">{{entry.title}}</div>
-            </a>
-            {% endfor %}
-            <a href="">
-              <div class="entry" id="">Title one</div>
-            </a>
-            <a href="">
-              <div class="entry" id="active">Title two</div>
-            </a>
-            <a href="">
-              <div class="entry" id="">title 3</div>
-            </a>
-          </div>
-        </div>
-      </div>
-    {% endif %}
 
     <style>
       .content{
@@ -116,7 +84,69 @@
       </div>
 
     </div>
+
+
+    {% if series %}
+        <style>
+        #sidebar{
+          opacity:0 ;
+          transition: opacity 300ms ease-in-out;
+        }
+        #sidebar.open {
+          opacity:1;
+        }
+      </style>
+      <div class="series-container" id="series-navbar" style="position:fixed; left:0;">
+        <div id="sidebar" class="series sidebar">
+          <div class="title"><a href=""><h1>{{series.title}}</h1></a></div>
+          <div class="entries">
+            {% for entries in series.articles %}
+            {% for entry in entries.value %}
+            <a href="{% pageurl entry %}?series={{series.id}}">
+              <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
+            </a>
+            {% endfor %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <script>
+        let seriesContainer = document.getElementById("series-navbar")
+        seriesContainer.style.marginLeft = (window.innerWidth-700)/2-280 + "px"
+
+        window.addEventListener("resize",()=>{
+          seriesContainer.style.marginLeft = (window.innerWidth-700)/2-280 + "px"
+        })
+      </script>
+    {% endif %}
+
+
   </div>
+
+  {% if series %}
+  <style>
+    @media screen and (min-width: 1281px){
+      .series-end{
+        display:none;
+      }
+    }
+  </style>
+  <div class="series-end" style="width: 100%; max-width:700px; margin:0 auto;">
+    <div class="title">
+        <a href=""><h1>{{series.title}}</h1></a>
+    </div>
+    <div class="entries">
+        {% for entries in series.articles %}
+        {% for entry in entries.value %}
+        <a href="#">
+          <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
+        </a>
+        {% endfor %}
+        {% endfor %}
+    </div>
+    <spacer></spacer>
+  </div>
+  {% endif %}
 
   {% if similar %}
     <div class="similar">
@@ -157,7 +187,7 @@
     </div>
   {% endif %}
 
-  {% if series %}
+  {% if series and False %}
   <div class="series block">
     <div class="single-col">
       <div class="section-header">
@@ -166,21 +196,23 @@
 
       <div class="row">
         <div class="col">
-            <div class="series-end">
+            <div class="series-end" style="width: 100%;">
               <div class="title">
-                  <a href="{% url 'series:detail' series_slug=series.slug %}"><h1>{{series.title}}</h1></a>
+                  <a href=""><h1>{{series.title}}</h1></a>
               </div>
               <div class="entries">
-                  {% for entry in series_posts %}
-                  <a href="{% url 'series:post_detail' series_slug=series.slug post_slug=entry.slug %}">
-                    <div class="entry" id="{% if entry.slug == instance.slug %}active{% endif %}">{{entry.title}}</div>
+                  {% for entries in series.articles %}
+                  {% for entry in entries.value %}
+                  <a href="#">
+                    <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
                   </a>
+                  {% endfor %}
                   {% endfor %}
               </div>
             </div>
           </div>
 
-        {% if series_next %}
+        {% if  series_next %}
           <div class="col">
             <div class="card-small {% if not series_next.image %}v-center{% endif %}">
               {% if series_next.image %}
@@ -236,7 +268,7 @@
     ]});
   </script>
 
-  {% if not series %}
+  {% if series %}
   <script> // sidebar fixing
     var sidebar = document.getElementById('sidebar');
     window.addEventListener("scroll", function(){

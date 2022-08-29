@@ -31,10 +31,11 @@
 <style>
 
 .bar-modal {
-    position: absolute;
+    position: fixed;
     min-height: 100%;
     width: 100%;
     background: white;
+    top: 55px;
 }
 
 .bar-modal .modal-container {
@@ -72,14 +73,25 @@
   let openModal = document.getElementById("open-modal")
   let closeModal = document.getElementById("close-modal")
   let modal = document.getElementById("modal")
+
   openModal.addEventListener("click", ()=>{
+    let main = document.getElementById("main")
+    let footer = document.getElementById("footer")
+
     modal.classList.remove("hidden")
     openModal.classList.add('hidden')
     closeModal.classList.remove("hidden")
+    main.classList.add("hidden")
+    footer.classList.add("hidden")
   })
   closeModal.addEventListener("click", ()=>{
+    let main = document.getElementById("main")
+    let footer = document.getElementById("footer")
+
     modal.classList.add("hidden")
     openModal.classList.remove('hidden')
     closeModal.classList.add("hidden")
+    main.classList.remove("hidden")
+    footer.classList.remove("hidden")
   })
 </script>

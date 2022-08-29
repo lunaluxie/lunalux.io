@@ -1,5 +1,5 @@
 {% extends 'home/home_page.html' %}
-
+{% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static define_action %}
 
 {% block content %}
 <section class="posts" style="min-height: 90vh;">
@@ -142,7 +142,7 @@
     </style>
     <li class="li-class"><input style="width:100%" name="query" placeholder="" value="{{search_query}}"></li>
     </form>
-    {% else %}/
+    {% else %}
     <li class="li-class">{% if tag != 'all'%}<a href="/articles" class="faded-xlight">All</a>{%else%}All{%endif%}</li>
     <li class="li-class">{% if tag != 'physics'%}<a class="faded-xlight" href="/articles/tag/physics">Physics</a>{%else%}Physics{%endif%}</li>
     <li class="li-class">{% if tag != 'ai'%}<a class="faded-xlight" href="/articles/tag/ai">AI</a>{%else%}AI{%endif%}</li>
@@ -170,7 +170,7 @@
 
       <a style="color: rgba(0,0,0, 0.4); font-size: 1rem; text-decoration: none;" href="/posts/tag/{{ obj.get_label_url }}">{% if obj.get_label %}{{obj.get_label}}{% elif obj.label %}{{obj.label}}{% endif %}</a></div>
 
-    <div class="col2 {% if obj.post_type == "pr" or not obj.post_type %}{% if obj.image %}image{%endif%}{%endif%}">
+    <div class="col2 image">
       <div style="max-width: 30rem;">
         <a href="{{obj.get_absolute_url}}" style="text-decoration: none;">
           <h5 class="asdf" style="color: rgba(0,0,0);
@@ -181,21 +181,19 @@
                     font-weight: normal;">{{ obj.title }}</h5>
                     {% if obj.post_type == "pr" or not obj.post_type %}
           <p style="font-size: 1rem; margin-bottom: 0;    color: rgba(0,0,0, 0.7); margin-top: 0.5rem;">
-          {{ obj.description }}
+          {{ obj.search_description }}
           </p>
           {% endif %}
         </a>
       </div>
     </div>
-    {% if obj.post_type == "pr" or not obj.post_type %}
-    {% if obj.image %}
+
     <div class="col3" style="">
-      <a href="{{ obj.get_absolute_url }}">
-        <img style="aspect-ratio: calc({{obj.width_field}}/{{obj.height_field}}); width:100%;" src="">{% comment %}{{ obj.image.url|media_resize:'header' }}{%endcomment%}
+      <a href="{% pageurl obj %}">
+        {% image obj.image width-600 as tmp_photo %}
+        <img style="aspect-ratio: calc({{tmp_photo.width_field}}/{{tmp_photo.height_field}}); width:100%;" src="{{tmp_photo.url}}">
       </a>
     </div>
-    {%endif%}
-    {% endif %}
   </div>
   {% endfor %}
   <hr style="opacity: 0.0875;

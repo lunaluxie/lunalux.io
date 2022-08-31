@@ -2,6 +2,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.template.response import TemplateResponse
 
 from wagtail.models import Page
+from home.models import AbstractPage, Article,Series
 from wagtail.search.models import Query
 
 
@@ -12,12 +13,22 @@ def search(request):
     # Search
     if search_query:
         search_results = Page.objects.live().search(search_query)
+
+        pages = []
+        for page in search_results:
+            try:
+                pages.append(Article.objects.get(id=page.id))
+            except: pass
+            try:
+                pages.append(Series.objects.get(id=page.id))
+            except: pass
+
         query = Query.get(search_query)
 
         # Record hit
         query.add_hit()
     else:
-        search_results = Page.objects.none()
+        pages = Page.objects.none()
 
     # Pagination
     paginator = Paginator(search_results, 10)
@@ -36,7 +47,7 @@ def search(request):
         "article_list.html",
         {
             "search_query": search_query,
-            "articles": search_results,
+            "articles": pages,
             "is_search": True
         },
     )

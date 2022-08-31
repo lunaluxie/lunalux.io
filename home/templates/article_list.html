@@ -122,25 +122,26 @@
         font-size: 2rem;
         /* border-radius: 5px; */
         border: 0;
-        border-bottom: 2px solid #eee;
+        border-bottom: 2px solid var(--link-color);
         transition: border 300ms;
+        color:var(--body-color)
       }
       .li-class input:hover{
-        border-bottom: 2px solid #ddd;
+        border-bottom: 2px solid var(--link-color-hover);
       }
       .li-class input:focus{
         outline: 0;
         border: 0;
-        border-bottom: 2px solid black;
+        border-bottom: 2px solid var(--link-color-hover);
 
       }
       .li-class input:focus-visible{
         outline: 0;
         border: 0;
-        border-bottom: 2px solid black;
+        border-bottom: 2px solid var(--link-color-hover);
       }
     </style>
-    <li class="li-class"><input style="width:100%" name="query" placeholder="" value="{{search_query}}"></li>
+    <li class="li-class"><input style="width:100%; background: transparent;" name="query" placeholder="" value="{{search_query}}"></li>
     </form>
     {% else %}
     <li class="li-class">{% if tag != 'all'%}<a href="/articles" class="faded-xlight">All</a>{%else%}All{%endif%}</li>

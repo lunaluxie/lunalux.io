@@ -118,7 +118,7 @@ class SpacerBlock(blocks.StaticBlock):
 
 
 class ImageHeaderBlock(blocks.StructBlock):
-    title = blocks.CharBlock()
+    title = blocks.CharBlock(required=False)
     image = ImageChooserBlock()
 
     class Meta:

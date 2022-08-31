@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     'sortedm2m',
+    'wagtailcodeblock',
 ]
 
 MIDDLEWARE = [
@@ -174,3 +175,8 @@ WAGTAILADMIN_BASE_URL = "http://example.com"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+WAGTAIL_CODE_BLOCK_LINE_NUMBERS = False
+WAGTAIL_CODE_BLOCK_COPY_TO_CLIPBOARD = True
+WAGTAIL_CODE_BLOCK_THEME = "default"

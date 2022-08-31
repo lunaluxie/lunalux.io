@@ -40,6 +40,17 @@ class AbstractPage(Page):
     class Meta:
         abstract=True
 
+    def type(self):
+        return self.__class__.__name__
+
+    def include_image_in_article_list(self):
+        if self.is_project:
+            return True
+        if self.type()=="Series":
+            return True
+        else:
+            return False
+
 
     def get_recent_articles(self, n=8):
         return Article.objects.all().filter(live=True).filter(unlisted=False).order_by('-last_published_at')[:n]

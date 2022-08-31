@@ -1721,3 +1721,19 @@ section.newsletter .form>form button:hover {
 .link:hover>img{
   transform: translate(3px, -3px);
 }
+
+
+
+
+/* code highlighting */
+
+.hljs {
+  background: var(--body-bg) !important;
+}
+.code-toolbar {
+  /* box-shadow: 0 5px 10px 0 rgb(0 0 0 / 10%); */
+    max-width: 800px;
+    margin: 1rem auto;
+    border-radius: 10px;
+    border: 1px solid var(--body-color);
+}

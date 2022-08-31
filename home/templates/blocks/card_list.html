@@ -18,17 +18,17 @@
           }
         }
       .link{
-        color:rgba(0, 0, 0,0.8);
+        color:var(--link-color);
         text-decoration: none;
       }
         .link:hover{
-          color:rgba(0, 0, 0,0.6);
+          color:var(--link-color-hover);
           text-decoration: underline;
         }
 
       .link .link-text{
         display: inline-block;
-        color: #000;
+        color: var(--body-color);
         font-size: 12px;
         line-height: 20px;
         font-weight: 500;
@@ -41,16 +41,16 @@
         }
 
       .content>a{
-        color:rgb(0, 0, 0);
+        color:var(--link-color);
         transition: 100ms;
       }
       .content:hover>a{
-        color:rgba(0,0,0,0.6);
+        color:var(--link-color-hover);
       }
       .content img{
         transition: 100ms;
       }
-      .content:hover img{
+      .content:hover img:not(.arrow){
         filter: opacity(0.9);
       }
 
@@ -76,11 +76,11 @@
 
           <a href="{%pageurl obj%}" style="text-decoration: none;"><div class="content_">
             <h3 class="title">{{ obj.title }}</h3>
-            <p class="body" style="color:rgba(0,0,0,0.6)">
+            <p class="body" style="color:var(--color-muted)">
               {{ obj.search_description }}
             </p>
           </div></a>
-          <a class="link link-text" href="{%pageurl obj%}">Learn more<img style="margin-left: 0.5ch;"
+          <a class="link link-text" href="{%pageurl obj%}">Learn more<img class="smart-invert arrow" style="margin-left: 0.5ch;"
               src="{% static 'icons/arrow.png' %}" width="9"></a>
         </div>
       </div>
@@ -88,7 +88,7 @@
     </div>
     {% if not hide_view_all_projects %}
     <div style="margin-bottom:5em">
-      <a class="link" href="/projects">View all projects<img style="margin-left: 0.5ch;"
+      <a class="link" href="/projects">View all projects<img class="smart-invert" style="margin-left: 0.5ch;"
           src="{% static 'icons/arrow.png' %}" width="9"></a>
     </div>
     {% endif %}

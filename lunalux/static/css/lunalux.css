@@ -2,6 +2,88 @@
   GENERAL
 */
 
+:root {
+    --body-bg: #fafafa;
+    --body-color: #121619;
+    --link-color: #222;
+    --link-color-hover: #000;
+    --link-color-background:hsla(225, 75%, 70%, 0.8);
+    --link-color-background-hover:hsla(225, 75%, 75%, 0.8);
+
+    --color-muted: #5f656d;
+
+    --content-link-color:#246491;
+
+    --border-color: rgb(139, 139, 139);
+    --border-color-hover: black;
+
+    --header-color: #5f656d;
+    --secondary-background: hsla(0, 0%, 97%, 1);
+
+    --tertiary-background:hsla(214, 3%, 55%, .1);
+
+    --gradient-background: linear-gradient( rgba(124, 26, 124, 0.4), rgba(22, 90, 173, 0.4));
+
+    --form-button-bg: #7fd3f4;
+    --form-button-bg-hover: #8edcf7;
+    --form-button-red-bg: hsl(0, 84%, 73%);
+    --form-button-red-bg-hover:hsl(0, 87%, 76%);
+
+    --jumbotron-bg: #dceaf5;
+
+
+    --series-primary-color:var(--body-bg);
+    --series-secondary-color:hsla(269, 100%, 90%, 0.3);
+    --series-tertiary-color: hsla(222, 100%, 90%, 0.3)
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --body-bg: #212529;
+        --body-color: #dfdfdf;
+
+        --link-color: #dee2e6;
+        --link-color-hover: #fff;
+
+        --link-color-background:hsla(225, 75%, 70%, 0.8);
+        --link-color-background-hover:hsla(225, 75%, 75%, 0.8);
+
+        --border-color: #939393;
+        --border-color-hover: white;
+
+        --color-muted: #b2bfd0;
+
+        --content-link-color:#246491;
+
+
+        --header-color: #5f656d;
+        --secondary-background: hsla(0, 0%, 97%, 1);
+
+        --tertiary-background:hsla(214, 3%, 55%, .1);
+
+        --gradient-background: linear-gradient( rgba(124, 26, 124, 0.4), rgba(22, 90, 173, 0.4));
+
+        --form-button-bg: #7fd3f4;
+        --form-button-bg-hover: #8edcf7;
+        --form-button-red-bg: hsl(0, 84%, 73%);
+        --form-button-red-bg-hover:hsl(0, 87%, 76%);
+
+        --jumbotron-bg: #dceaf5;
+
+        --series-secondary-color:hsla(0, 0%, 47%, 0.3);
+        --series-tertiary-color: hsla(222, 100%, 90%, 0.3)
+    }
+
+    .smart-invert {
+        filter: invert(1) hue-rotate(180deg);
+    }
+}
+
+body{
+  color:var(--body-color);
+  background-color: var(--body-bg);
+}
+
 /* we switch off the height animation for people who do not want animations */
 
 @media (prefers-reduced-motion) {
@@ -26,7 +108,7 @@ hr {
   max-width: 18px;
   height: 0;
   border-radius: 5px;
-  border-color: rgb(177, 177, 177);
+  border-color: var(--border-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -77,7 +159,7 @@ h1, h2, h3, h4, h5, h6 {
 .section-header>h1 {
   text-transform: capitalize;
   font-weight: 500;
-  color: #5f656d;
+  color: var(--header-color);
   transition: opacity 0.2s;
   font-size: 32px;
   margin-bottom: 10px;
@@ -86,7 +168,7 @@ h1, h2, h3, h4, h5, h6 {
 .section-header>h3 {
   text-transform: capitalize;
   font-weight: 500;
-  color: #5f656d;
+  color: var(--header-color);
   transition: opacity 0.2s;
   font-size: 18px;
   margin-top: 0;
@@ -158,7 +240,7 @@ h1, h2, h3, h4, h5, h6 {
 */
 
 .card-list {
-  background-color: hsla(0, 0%, 97%, 1);
+  background-color: var(--seconday-bg);
   position: relative;
 }
 
@@ -199,7 +281,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-list .more>a {
-  background: hsla(225, 75%, 70%, 0.8);
+  background: var(--link-color-background);
   border-radius: 60px;
   font-size: 14px;
   font-weight: 700;
@@ -208,7 +290,7 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
   padding: 12px 28px;
   white-space: nowrap;
-  color: #fff;
+  color: var(--link-color);
   transform: translateX(20px);
   transition: opacity 325ms ease-in-out, transform 325ms ease-out, background-color 225ms cubic-bezier(.645, .045, .355, 1);
   opacity: 0;
@@ -216,7 +298,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-list .more>a:hover {
-  background: hsla(225, 75%, 75%, 0.8);
+  background: var(--link-color-background-hover);
 }
 
 .card-list .container {
@@ -265,7 +347,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   max-width: 230px;
   height: 300px;
-  background: linear-gradient( rgba(124, 26, 124, 0.4), rgba(22, 90, 173, 0.4));
+  background: var(--gradient-background);
   min-width: 200px;
   border-radius: 5px;
   box-shadow: 0 5px 30px 0 rgba(136, 100, 190, 0.1);
@@ -287,7 +369,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-list .container .card .content h1 {
-  color: hsla(0, 0%, 97%, 1);
+  color: var(--secondary-background);
   text-decoration: none;
   -webkit-user-select: none;
   user-select: none;
@@ -366,13 +448,12 @@ navbar>.links .active {
 }
 
 navbar a {
-  color: #111;
   opacity: .9;
   font-size: 13px;
   letter-spacing: .04rem;
   font-weight: 500;
   text-decoration: none;
-  color: #5f656d;
+  color: var(--color-muted);
   padding: 5px 11px;
   display: block;
   transition: opacity 0.2s;
@@ -474,7 +555,7 @@ spacer {
   max-width: 600px;
   margin: 0 auto;
   padding: 5px 50px 5px;
-  color: #9c9c9c;
+  color: var(--border-color);
   text-align: justify;
   line-height: 1.5em;
 }
@@ -523,26 +604,26 @@ spacer {
   padding: 20px;
   font-style: italic;
   font-size: 24px;
-  color: #a8a8a8;
+  color: var(--border-color);
 }
 
 .article .content>p {
-  color: rgb(30, 30, 30)
+  color: var(--body-color)
 }
 
 .article .content li {
-  color: rgb(30, 30, 30)
+  color: var(--body-color)
 }
 
 .article .content a {
-  color: #246491;
+  color: var(--content-link-color);
   text-decoration: none;
   transition: border .15s cubic-bezier(.645, .045, .355, 1);
   border-bottom: 1px solid rgba(0, 0, 0, .1);
 }
 
 .article .content a:hover {
-  border-bottom-color: #246491;
+  border-bottom-color: var(--content-link-color);
 }
 
 .article .content>p>code {
@@ -551,7 +632,7 @@ spacer {
 
 .article .content>pre {
   border-radius: 5px;
-  background: white;
+  background: var(--body-bg);
   /* box-shadow: 0 0px 50px 0 rgba(0, 0, 0, 0.1); */
   margin: 40px 0;
   padding: 24px;
@@ -559,7 +640,7 @@ spacer {
   overflow: auto;
   font-size: 1rem;
   line-height: 1.2rem;
-  border: 1px solid black;
+  border: 1px solid var(--body-color);
 }
 
 .article .content>pre:hover {
@@ -586,7 +667,7 @@ ARTICLE BYLINE
 */
 
 .article .byline {
-  --byline-text-color: hsla(214, 3%, 55%, .8);
+  --byline-text-color: var(--color-muted);
   margin-top: 4rem;
   padding-top: 3rem;
   display: flex;
@@ -607,7 +688,7 @@ ARTICLE BYLINE
   content: "";
   display: block;
   height: 1px;
-  background: rgba(0, 0, 0, .05);
+  background: var(--body-color);
 }
 
 @media only screen and (max-width: 776.25px) {
@@ -629,12 +710,12 @@ ARTICLE BYLINE
   color: var(--byline-text-color);
   text-decoration: none;
   transition: border .15s cubic-bezier(.645, .045, .355, 1);
-  border-bottom: 1px solid hsla(214, 3%, 55%, 0);
+  border-bottom: 1px solid var(--border-color);
   white-space: nowrap;
 }
 
 .article .byline .author>a:hover {
-  border-bottom-color: hsla(214, 3%, 55%, .4);
+  border-bottom-color: var(--border-color);
 }
 
 .article .byline .publish {
@@ -653,7 +734,7 @@ ARTICLE BYLINE
 footer {
   width: 100%;
   position: relative;
-  background-color: hsla(214, 3%, 55%, .1);
+  background-color: var(--tertiary-background);
   height: 85px;
   align-items: center;
   display: flex;
@@ -715,13 +796,12 @@ footer>.items>div {
 }
 
 footer a {
-  color: #111;
   opacity: .9;
   font-size: 13px;
   letter-spacing: .04rem;
   font-weight: 500;
   text-decoration: none;
-  color: #5f656d;
+  color: var(--color-muted);
   padding: 5px 11px;
   display: block;
   transition: opacity 0.2s;
@@ -778,7 +858,7 @@ footer a {
   padding: 60px;
   margin-top: -170px;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: var(--body-bg);
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
   transition: box-shadow .1s;
   margin-right: 0;
@@ -795,7 +875,7 @@ footer a {
   font-weight: 700;
   margin-bottom: 25px;
   padding-left: 15px;
-  border-left: 2px solid #000;
+  border-left: 2px solid var(--body-color);
   font-family: Poppins, sans-serif;
 }
 
@@ -807,7 +887,7 @@ footer a {
 
 .hero-card .content .body {
   margin-bottom: 10px;
-  color: #85838a;
+  color: var(--color-muted);
   line-height: 22px;
   font-weight: 400;
   letter-spacing: 0.1px;
@@ -820,7 +900,7 @@ footer a {
 
 .hero-card .content .link .link-text {
   display: inline-block;
-  color: #000;
+  color: var(--body-color);
   font-size: 12px;
   line-height: 20px;
   font-weight: 500;
@@ -878,7 +958,7 @@ footer a {
   position: relative;
   display: block;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: var(--body-bg);
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
   transition: box-shadow .5s;
   margin: 20px;
@@ -936,14 +1016,14 @@ footer a {
 
 .card-small .content .body {
   margin-bottom: 10px;
-  color: #85838a;
+  color: var(--color-muted);
   line-height: 22px;
   font-weight: 400;
   letter-spacing: 0.1px;
 }
 
 .card-small .content .body a {
-  color: #85838a;
+  color: var(--color-muted);
   text-decoration: none;
 }
 
@@ -960,7 +1040,7 @@ footer a {
 
 .link-text {
   display: inline-block;
-  color: #000 !important;
+  color: var(--body-color);
   font-size: 12px;
   line-height: 20px;
   font-weight: 500;
@@ -987,8 +1067,8 @@ footer a {
 
 .form>form .field {
   width: 50vw;
-  background: #fff;
-  color: #5f656d;
+  background: var(--body-bg);
+  color: var(--color-muted);
   font: inherit;
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
   border: 0;
@@ -1008,8 +1088,8 @@ footer a {
   border-radius: 5px;
   position: relative;
   margin-left: -96px;
-  background-color: #7fd3f4;
-  color: #fff;
+  background-color: var(--form-button-bg);
+  color: var(--body-bg);
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
   padding: 12px 36px;
   z-index: 5;
@@ -1018,7 +1098,7 @@ footer a {
 }
 
 .form>form button:hover {
-  background-color: #8edcf7;
+  background-color: var(--form-button-bg-hover);
 }
 
 @media screen and (max-width: 650px) {
@@ -1086,7 +1166,7 @@ footer a {
 .jumbotron {
   position: relative;
   height: 45vh;
-  background-color: #dceaf5;
+  background-color: var(--jumbotron-bg);
   width: 100%;
   display: flex;
   align-items: center;
@@ -1101,7 +1181,7 @@ footer a {
 }
 
 .jumbotron .light {
-  color: #fff;
+  color: var(--body-bg);
 }
 
 .jumbotron .dark {
@@ -1114,7 +1194,7 @@ footer a {
 
 .paginator {
   justify-content: center;
-  --byline-text-color: hsla(214, 3%, 55%, .8);
+  --byline-text-color: var(--color-muted);
   margin-top: 4rem;
   padding-top: 1rem;
   display: flex;
@@ -1139,19 +1219,19 @@ footer a {
 }
 
 .paginator a {
-  color: white;
+  color: var(--body-bg);
   margin: 10px;
   padding: 12px 19px;
   text-decoration: none;
   border-radius: 5px;
-  background-color: #7fd3f4;
+  background-color: var(--form-button-bg);
   transition: background-color 0.4s, color 0.3s;
   text-transform: uppercase;
 }
 
 .paginator a:hover {
   box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.1);
-  background-color: #8edcf7;
+  background-color: var(--form-button-bg-hover);
 }
 
 /*
@@ -1160,7 +1240,7 @@ footer a {
 
 .similar {
   padding: 0;
-  background-color: hsl(0, 0%, 97%);
+  background-color: var(--body-bg);
   position: relative;
   padding-bottom: 60px;
 }
@@ -1174,17 +1254,17 @@ footer a {
 */
 
 section.newsletter {
-  background: hsl(225, 50%, 95%);
+  background: var(--body-bg);
   padding: 50px 0 110px;
   position: relative;
 }
 
 section.newsletter .form>form button {
-  background-color: hsl(0, 84%, 73%);
+  background-color: var(--form-button-red-bg);
 }
 
 section.newsletter .form>form button:hover {
-  background-color: hsl(0, 87%, 76%)
+  background-color: var(--form-button-red-bg-hover)
 }
 
 /*
@@ -1209,7 +1289,7 @@ section.newsletter .form>form button:hover {
   font-size: 20px;
   font-family: "Lato";
   margin: 0 auto;
-  color: #9c9c9c;
+  color: var(--color-muted);
   text-align: justify;
   line-height: 1.5em;
 }
@@ -1230,7 +1310,7 @@ section.newsletter .form>form button:hover {
   text-overflow: ellipsis;
   position: relative;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: var(--body-bg);
   box-shadow: 0 10px 100px 0 rgba(0, 0, 0, .1);
   transition: box-shadow .5s;
   margin: 40px 25px;
@@ -1255,7 +1335,7 @@ section.newsletter .form>form button:hover {
 }
 
 .series>.entries .entry .content .description {
-  color: #9c9c9c;
+  color: var(--color-muted);
 }
 
 /*
@@ -1263,15 +1343,15 @@ section.newsletter .form>form button:hover {
 */
 
 .series .primary-color {
-  background-color: white;
+  background-color: var(--series-primary-color);
 }
 
 .series .secondary-color {
-  background-color: hsla(269, 100%, 90%, 0.3);
+  background-color: var(--series-secondary-color);
 }
 
 .series .tertiary-color {
-  background-color: hsla(222, 100%, 90%, 0.3);
+  background-color: var(--series-tertiary-color);
 }
 
 /*
@@ -1295,7 +1375,7 @@ section.newsletter .form>form button:hover {
 
 .series.block {
   padding: 0;
-  background-color: hsl(0, 0%, 97%);
+  background-color: var(--body-bg);
   position: relative;
   padding-bottom: 60px;
 }
@@ -1332,7 +1412,7 @@ section.newsletter .form>form button:hover {
   content: "";
   display: block;
   bottom: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, .05);
+  border-bottom: 1px solid var(--body-color);
   width: 100%;
   margin: 0 auto;
 }
@@ -1344,12 +1424,12 @@ section.newsletter .form>form button:hover {
 
 .series.sidebar .title h1 {
   margin-bottom: 5px;
-  color: rgb(32, 32, 32);
+  color: var(--body-color);
   transition: color 0.2s;
 }
 
 .series.sidebar .title h1:hover {
-  color: black;
+  color: var(--body-color);
 }
 
 .series.sidebar .entries {
@@ -1364,7 +1444,7 @@ section.newsletter .form>form button:hover {
 }
 
 .series.sidebar .entries::-webkit-scrollbar-thumb {
-  background: rgb(220, 220, 220);
+  background: var(--body-bg);
 }
 
 .series.sidebar .entries .entry {
@@ -1378,19 +1458,22 @@ section.newsletter .form>form button:hover {
   border-top: 1px;
   border-style: solid;
   border-radius: 0;
-  border-color: rgba(0, 0, 0, .05);
+  border-color: var(--body-color);
 }
 
 .series.sidebar .entries .entry:first-child {
   border-top: none;
 }
 
+
+
+
 .series.sidebar .entries .entry#active {
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: var(--series-secondary-color);
 }
 
 .series.sidebar .entries .entry:hover {
-  background-color: rgba(0, 0, 0, 0.04) !important;
+  background-color: var(--series-tertiary-color) !important;
 }
 
 /*
@@ -1403,12 +1486,12 @@ section.newsletter .form>form button:hover {
 
 .series-end .title {
   text-transform: capitalize;
-  color: rgb(32, 32, 32);
+  color: var(--body-color);
   transition: color 0.2s;
 }
 
 .series-end .title:hover {
-  color: black;
+  color: var(--body-color);
 }
 
 .series-end .title a {
@@ -1430,52 +1513,18 @@ section.newsletter .form>form button:hover {
   border: 0;
   border-left: 1px;
   border-style: solid;
-  border-color: rgba(0, 0, 0, 0.1);
+  border-color: var(--body-color);
   transition: background-color 0.05s;
 }
 
 .series-end .entries .entry#active {
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: var(--series-secondary-color);
 }
 
 .series-end .entries .entry:hover {
-  background-color: rgba(0, 0, 0, 0.04) !important;
+  background-color: var(--series-tertiary-color) !important;
 }
 
-/*
-  REDIRECT
-*/
-
-.fullscreen-block {
-  height: calc(100vh - 85px);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.fullscreen-block.tall {
-  height: 100vh;
-}
-
-.fullscreen-block a {
-  color: inherit;
-  text-decoration: inherit;
-}
-
-.fullscreen-block h1 {
-  color: white;
-}
-
-.fullscreen-block h1.large-focus-text {
-  font-size: 128px;
-  user-select: none;
-}
-
-.fullscreen-block .url {
-  text-transform: none;
-}
 
 /*
   PRIVACY CONSENT MODAL
@@ -1488,7 +1537,7 @@ section.newsletter .form>form button:hover {
   margin: 50px;
   z-index: 100;
   border-radius: 5px;
-  background-color: white;
+  background-color: var(--body-bg);
   box-shadow: 0 10px 100px 0 rgba(0, 0, 0, .1);
   transition: box-shadow .5s;
 }
@@ -1544,7 +1593,7 @@ section.newsletter .form>form button:hover {
   content: ' ';
   height: 24px;
   width: 2px;
-  background-color: #333;
+  background-color: var(--color-muted);
 }
 
 .consent-modal-container .close:before {
@@ -1554,19 +1603,6 @@ section.newsletter .form>form button:hover {
 .consent-modal-container .close:after {
   transform: rotate(-45deg);
 }
-
-/*
-* Vote
-*/
-
-@media screen and (max-width: 450px) {
-  #vote {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-  }
-}
-
 
 
 

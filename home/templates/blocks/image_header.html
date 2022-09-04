@@ -7,7 +7,12 @@
         align-items: center;
         color:white;
         margin-bottom: 3rem;
+
+        {% if value.large %}
+        min-height:500px;
+        {% else%}
         min-height:200px;
+        {% endif%}
         background-size:cover !important;
     }
     .image-header h1 {

@@ -11,7 +11,7 @@ ALLOWED_HOSTS = ["*"]
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lunalux',
+        'NAME': 'lunaluxio',
         'USER': 'lunalux',
         'PASSWORD': os.environ.get("dbpass"),
         'HOST': 'bacayo.iad1-mysql-e2-2a.dreamhost.com',

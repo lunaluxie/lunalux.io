@@ -115,11 +115,20 @@ class SpacerBlock(blocks.StaticBlock):
         template = 'blocks/spacer.html'
 
 
+class NavMarginBlock(blocks.StaticBlock):
+    class Meta:
+        icon = ""
+        label = "Create a 55px invisible element to skip header"
+        admin_text = '{label}: configured elsewhere'.format(label=label)
+        template = 'blocks/navmarginblock.html'
+
 
 
 class ImageHeaderBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=False)
     image = ImageChooserBlock()
+
+    large = blocks.BooleanBlock(default=False, required=False)
 
     class Meta:
         icon = "image"

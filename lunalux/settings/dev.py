@@ -12,6 +12,17 @@ ALLOWED_HOSTS = ["*"]
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'lunaluxio',
+        'USER': 'lunalux',
+        'PASSWORD': "EDj4kf2Sr9EML35",  # os.environ.get("dbpass"),
+        'HOST': 'bacayo.iad1-mysql-e2-2a.dreamhost.com',
+        'PORT': '3306',
+    }
+}
+
 
 try:
     from .local import *

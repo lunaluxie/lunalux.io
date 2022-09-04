@@ -29,6 +29,7 @@ def search(request):
         query.add_hit()
     else:
         pages = Page.objects.none()
+        search_results = Page.objects.none()
 
     # Pagination
     paginator = Paginator(search_results, 10)

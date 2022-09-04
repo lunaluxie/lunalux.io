@@ -2,7 +2,7 @@
 
 
 
-<section class="posts container">
+<section class="posts ">
 
   <style>
     /* body{
@@ -130,8 +130,8 @@
   <div class="row-list" style="margin: .9rem 0; font-family: 'lato';">
 
     <div class="col1" style="">
-
-      <a style="color: #666; font-size: 1rem; text-decoration: none;" href="/articles/tag/{{ obj.tags.first }}">{{obj.tags.first}}</a></div>
+      {% if obj.tags.first %}<a style="color: #666; font-size: 1rem; text-decoration: none;" href="/articles/tag/{{ obj.tags.first }}">{{obj.tags.first}}</a>{%endif%}
+    </div>
 
 
     <div class="col2 {% if obj.include_images %}image{%endif%}">
@@ -144,9 +144,9 @@
                     letter-spacing: 0.005em;
                     font-weight: normal;">{{ obj.title }}</h5>
                     {% if obj.post_type == "pr" or not obj.post_type %}
-          <p style="font-size: 1rem; margin-bottom: 0;    color: rgba(0,0,0, 0.7); margin-top: 0.5rem;">
+          {% if obj.include_images %}<p style="font-size: 1rem; margin-bottom: 0;    color: rgba(0,0,0, 0.7); margin-top: 0.5rem;">
           {{ obj.search_description }}
-          </p>
+          </p>{% endif %}
           {% endif %}
         </a>
       </div>

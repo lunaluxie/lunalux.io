@@ -1,11 +1,9 @@
 # TODO
-- make sure unlisted works. 
+- make body page be able to mimic article. 
 
 
-- implement series object 
-
-
-- fix project
+- remove unused css 
+- refactor article_list. 
 
 
 # Finishing touches. 

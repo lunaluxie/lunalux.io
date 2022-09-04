@@ -35,12 +35,13 @@ def project_list(request):
     queryset = HomePage.objects.filter(live=True).filter(is_project=True)
     queryset2 = Article.objects.filter(live=True).filter(
         unlisted=False).filter(is_project=True)
+    queryset3 = Series.objects.filter(live=True).filter(unlisted=False).filter(is_project=True)
 
     def time(instance):
         return instance.first_published_at
 
     queryies_combined = sorted(
-        chain(queryset, queryset2),
+        chain(queryset, queryset2, queryset3),
         key=time, reverse=True)
 
     return render(request, "project_list.html",

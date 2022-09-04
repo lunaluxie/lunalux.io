@@ -1,7 +1,7 @@
 from django import template
 register = template.Library()
 
-from home.models import HomePage, Article
+from home.models import HomePage, Article, Series
 
 @register.simple_tag
 def define(val=None):
@@ -23,7 +23,10 @@ def pageChooserBlockListToProperPages(val=None):
     try:
       pages.append(HomePage.objects.get(id=i))
     except:
-      pages.append(Article.objects.get(id=i))
+      try:
+        pages.append(Article.objects.get(id=i))
+      except:
+        pages.append(Series.objects.get(id=i))
 
   return pages
 

@@ -6,7 +6,7 @@
     --body-bg: #fff; /*fafafa*/
     --body-color: #121619;
     --link-color: #222;
-    --link-color-hover: rgba(0,0,0,0.6) !important;;
+    --link-color-hover: rgba(0,0,0,0.6);;
     --link-color-background:hsla(225, 75%, 70%, 0.8);
     --link-color-background-hover:hsla(225, 75%, 75%, 0.8);
 
@@ -42,7 +42,7 @@
         --body-bg: #212529;
         --body-color: #dfdfdf;
 
-        --link-color: #dee2e6;
+        --link-color: #bdbdbd;
         --link-color-hover: #fff;
 
         --link-color-background:hsla(225, 75%, 70%, 0.8);
@@ -53,7 +53,7 @@
 
         --color-muted: #b2bfd0;
 
-        --content-link-color:#246491;
+        --content-link-color:#589ccd;
 
 
         --header-color: #5f656d;
@@ -1638,10 +1638,22 @@ section.newsletter .form>form button:hover {
 
         .asdf {
           transition: 100ms;
+          color: var(--link-color);
+          margin-top: 0;
+          margin-bottom: 0;
+          font-size: 1rem;
+          letter-spacing: 0.005em;
+          font-weight: normal;
         }
 
         .asdf:hover {
-          color: rgba(0, 0, 0, 0.6) !important;
+          color: rgba(0, 0, 0, 0.6);
+        }
+
+        @media (prefers-color-scheme: dark) {
+          .asdf:hover {
+            color:var(--link-color-hover)
+          }
         }
 
         .container {

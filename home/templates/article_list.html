@@ -176,12 +176,7 @@
     <div class="col2 {% if obj.include_image_in_article_list %}image{% endif %}">
       <div style="max-width: 30rem;">
         <a href="{% pageurl obj %}" style="text-decoration: none;">
-          <h5 class="asdf" style="color: var(--link-color);
-                    margin-top: 0;
-                    margin-bottom: 0;
-                    font-size: 1rem;
-                    letter-spacing: 0.005em;
-                    font-weight: normal;">{{ obj.title }}</h5>
+          <h5 class="asdf" style="">{{ obj.title }}</h5>
 
           {% if obj.include_image_in_article_list %}<p style="font-size: 1rem; margin-bottom: 0;    color: var(--link-color-hover); margin-top: 0.5rem;">
           {{ obj.search_description }}

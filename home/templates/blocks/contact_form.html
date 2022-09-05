@@ -39,11 +39,31 @@
       .link:hover>img{
         transform: translate(3px, -3px);
       }
+
+      p.body {
+        color:rgba(0,0,0,0.6);
+      }
+
+      form.contact-form label{
+        color:rgba(0, 0, 0, 0.4)
+      }
+
+       @media (prefers-color-scheme: dark) {
+
+            p.body {
+              color:var(--body-color)
+            }
+
+          form.contact-form label{
+            color:var(--link-color)
+          }
+
+       }
     </style>
   <div class="container">
       <h2>Let's chat</h2>
 
-      <p class="body" style="color:rgba(0,0,0,0.6); max-width: 65ch;">Do you like what you see, and want to talk more? </p>
+      <p class="body" style=" max-width: 65ch;">Do you like what you see, and want to talk more? </p>
 
       <form class="contact-form" id="contact-form" action="{% url 'contact' %}" method="POST">
         {% csrf_token %}
@@ -58,7 +78,7 @@
                 max-width: none;">
         <div class="row-list" style="margin: .9rem 0; font-family: 'lato';">
           <div class="col1" style="">
-              <label for="name" style="color:rgba(0, 0, 0, 0.4)">Name</label>
+              <label for="name" >Name</label>
 
           </div>
 
@@ -78,7 +98,7 @@
                         max-width: none;"> -->
         <div class="row-list" style="margin: .9rem 0; font-family: 'lato';">
           <div class="col1" style="">
-            <label for="email" style="color:rgba(0, 0, 0, 0.4)">Email</label>
+            <label for="email" style="">Email</label>
 
           </div>
 
@@ -98,7 +118,7 @@
                         max-width: none;"> -->
         <div class="row-list" style="margin: .9rem 0; font-family: 'lato';">
           <div class="col1" style="">
-            <label for="message" style="color:rgba(0, 0, 0, 0.4)">Message</label>
+            <label for="message" >Message</label>
 
           </div>
 

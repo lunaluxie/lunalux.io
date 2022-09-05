@@ -13,18 +13,6 @@
       margin-top: 5em;
     }
 
-
-    .faded-xlight{
-      color:rgba(0,0,0);
-      text-decoration: none;
-
-      opacity: .4;
-      transition: 100ms;
-
-    }
-    .faded-xlight:hover{
-      opacity: 1;
-    }
     .li-class{
       font-family: 'Lato', sans-serif;
       font-weight: 400;
@@ -33,7 +21,7 @@
       font-size: 2rem;
     }
     .li-class>a{
-      color:rgb(0,0,0);
+      color:var(--link-color);
       text-decoration:none;
     }
 
@@ -41,7 +29,13 @@
       transition: 100ms;
     }
     .asdf:hover{
-      color: rgba(0,0,0,0.6) !important;
+      color: rgba(0,0,0,0.6);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .asdf:hover {
+        color:var(--link-color-hover)
+      }
     }
 
     .container{
@@ -137,12 +131,7 @@
     <div class="col2 {% if obj.include_images %}image{%endif%}">
       <div style="max-width: 30rem;">
         <a href="{% pageurl obj %}" style="text-decoration: none;">
-          <h5 class="asdf" style="color: rgba(0,0,0);
-                    margin-top: 0;
-                    margin-bottom: 0;
-                    font-size: 1rem;
-                    letter-spacing: 0.005em;
-                    font-weight: normal;">{{ obj.title }}</h5>
+          <h5 class="asdf" style="">{{ obj.title }}</h5>
                     {% if obj.post_type == "pr" or not obj.post_type %}
           {% if obj.include_images %}<p style="font-size: 1rem; margin-bottom: 0;    color: rgba(0,0,0, 0.7); margin-top: 0.5rem;">
           {{ obj.search_description }}

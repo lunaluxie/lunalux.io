@@ -62,7 +62,6 @@ kiwisolver==1.4.4
 l18n==2021.3
 libclang==14.0.6
 lxml==4.9.1
-Markdown==2.6.11
 MarkupSafe==2.1.1
 matplotlib==3.5.3
 matplotlib-inline==0.1.3

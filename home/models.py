@@ -10,6 +10,8 @@ from modelcluster.fields import ParentalKey
 from django.shortcuts import redirect
 from wagtail.search import index
 from .streamfields import body_fields, article_fields, article_header_fields
+from bs4 import BeautifulSoup
+from collections import Counter
 
 class PageTag(TaggedItemBase):
     content_object = ParentalKey(
@@ -83,6 +85,12 @@ class HomePage(AbstractPage):
         return context
 
 
+class InterPageLink(models.Model):
+    from_page = models.ForeignKey(
+        Page, on_delete=models.CASCADE, related_name="from_page_related")
+    to_page = models.ForeignKey(
+        Page, on_delete=models.CASCADE, related_name="to_page_related")
+
 class Article(AbstractPage):
     header = StreamField(article_header_fields, null=True, blank=True)
     body = StreamField(article_fields, use_json_field=True,null=True, blank=True)
@@ -115,7 +123,38 @@ class Article(AbstractPage):
 
         context["series"] = series
 
+        links = InterPageLink.objects.filter(to_page=self).exclude(from_page=self)
+        links = Counter(links).most_common(4)
+
+        context['links'] = links
+
         return context
+
+
+    def add_interpage_links(self):
+        soup = BeautifulSoup(str(self.body), 'html.parser')
+        links = set()
+        for link in soup.findAll("a"):
+            links.add(link['href'])
+
+        # print(links)
+        for link in links:
+            slugList = link.split("/")
+            slug = []
+            for sl in slugList:
+                if sl:
+                    slug.append(sl)
+
+            if slug:
+                try:
+                    p = Article.objects.get(slug=slug[-1])
+
+                    interlink = InterPageLink.objects.get_or_create(from_page=self, to_page=p)
+
+                    # print(p, interlink)
+
+                except:
+                    pass
 
 class Series(AbstractPage):
     articles = StreamField([("articles", blocks.ListBlock(blocks.PageChooserBlock()))],

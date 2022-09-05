@@ -1,8 +1,8 @@
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, modeladmin_register)
+from wagtail.signals import page_published
 
-
-from .models import Series, Contact
+from .models import Article, Series, Contact, InterPageLink
 
 
 
@@ -21,3 +21,17 @@ class ContactAdmin(ModelAdmin):
 
 # Now you just need to register your customised ModelAdmin class with Wagtail
 modeladmin_register(ContactAdmin)
+
+
+class InterPageLinkAdmin(ModelAdmin):
+    model = InterPageLink
+
+modeladmin_register(InterPageLinkAdmin)
+
+
+
+
+def update_interlinks(sender,instance,**kwargs):
+    if isinstance(instance, Article):
+        instance.add_interpage_links()
+page_published.connect(update_interlinks)

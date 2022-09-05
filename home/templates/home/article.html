@@ -149,35 +149,26 @@
   </div>
   {% endif %}
 
-  {% if similar %}
+
+
+  {% if links and not series %}
     <div class="similar">
       <div class="single-col">
         <div class="section-header">
           <h1>continue reading</h1>
         </div>
         <div class="row">
-            {% for obj in similar %}
+            {% for obj, freq in links %}
             <div class="col">
               <div class="card-small">
-                {% if obj.image %}
-                <a href="{{ obj.get_absolute_url }}"><div class="image" style="background-image: url({{ obj.image.url }});"></div></a>
-                {% endif %}
                 <div class="content">
-                    <div class="title">{{ obj.title }}</div>
+                    <div class="title">{{ obj.from_page.title }}</div>
                     <div class="body">
-                      {% if obj.description %}
-                        {{ obj.description }}
-                      {% else %}
-                        {{ obj.content|truncatechars_html:80|safe }}
-                      {% endif %}
+                      {{ obj.from_page.search_description }}
                     </div>
                     <div class="link">
-                      {% if obj.get_class_name == 'Post' %}
-                      <a class="link-text" href="{{ obj.get_absolute_url }}">read essay</a>
-                      {% else %}
-                      <a class="link-text" href="{{ obj.get_absolute_url }}">view {{obj.get_class_name}}</a>
-                      {% endif %}
-                      <img src="{% static 'icons/arrow.png' %}" width="9">
+                      <a class="link-text" href="{% pageurl  obj.from_page %}">read</a>
+                      <img class="smart-invert" src="{% static 'icons/arrow.png' %}" width="9">
                     </div>
                   </div>
               </div>

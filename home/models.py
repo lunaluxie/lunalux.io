@@ -8,6 +8,7 @@ from taggit.models import TaggedItemBase
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
 from django.shortcuts import redirect
+from wagtail.search import index
 from .streamfields import body_fields, article_fields, article_header_fields
 
 class PageTag(TaggedItemBase):
@@ -69,6 +70,11 @@ class HomePage(AbstractPage):
         FieldPanel('body'),
     ]
 
+    search_fields = AbstractPage.search_fields + [
+        index.SearchField('body'),
+    ]
+
+
     def get_context(self, request, *args, **kwargs):
         context = super(AbstractPage, self).get_context(request, *args, **kwargs)
 
@@ -91,6 +97,11 @@ class Article(AbstractPage):
         FieldPanel('tags'),
     ]
     settings_panels =AbstractPage.settings_panels + [FieldPanel("unlisted"),]
+
+    search_fields = AbstractPage.search_fields + [
+        index.SearchField('body'),
+        index.SearchField('tags'),
+    ]
 
     def get_context(self, request, *args, **kwargs):
         context = super(AbstractPage, self).get_context(request, *args, **kwargs)

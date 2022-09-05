@@ -130,20 +130,22 @@
       }
     }
   </style>
-  <div class="series-end" style="width: 100%; max-width:700px; margin:0 auto;">
-    <div class="title">
-        <a href=""><h1>{{series.title}}</h1></a>
+  <div class="series-end" style="">
+    <div style="max-width:700px; margin:0 auto;">
+      <div class="title">
+          <a href=""><h1>{{series.title}}</h1></a>
+      </div>
+      <div class="entries">
+          {% for entries in series.articles %}
+          {% for entry in entries.value %}
+          <a href="{% pageurl entry %}">
+            <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
+          </a>
+          {% endfor %}
+          {% endfor %}
+      </div>
+      <spacer></spacer>
     </div>
-    <div class="entries">
-        {% for entries in series.articles %}
-        {% for entry in entries.value %}
-        <a href="#">
-          <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
-        </a>
-        {% endfor %}
-        {% endfor %}
-    </div>
-    <spacer></spacer>
   </div>
   {% endif %}
 
@@ -186,60 +188,6 @@
     </div>
   {% endif %}
 
-  {% if series and False %}
-  <div class="series block">
-    <div class="single-col">
-      <div class="section-header">
-        <h1>continue reading</h1>
-      </div>
-
-      <div class="row">
-        <div class="col">
-            <div class="series-end" style="width: 100%;">
-              <div class="title">
-                  <a href=""><h1>{{series.title}}</h1></a>
-              </div>
-              <div class="entries">
-                  {% for entries in series.articles %}
-                  {% for entry in entries.value %}
-                  <a href="#">
-                    <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
-                  </a>
-                  {% endfor %}
-                  {% endfor %}
-              </div>
-            </div>
-          </div>
-
-        {% if  series_next %}
-          <div class="col">
-            <div class="card-small {% if not series_next.image %}v-center{% endif %}">
-              {% if series_next.image %}
-                <a href="{{series_next_url}}"><div class="image" style="background-image: url({{ series_next.image.url }});"></div></a>
-              {% endif %}
-              <div class="content">
-                  <div class="title">{{ series_next.title }}</div>
-                  <div class="body">
-                    {% if series_next.description %}
-                      {{ series_next.description }}
-                    {% endif %}
-                  </div>
-                  <div class="link">
-                      {% if series_next.get_class_name == 'Post' %}
-                      <a class="link-text" href="{{series_next_url}}">read essay</a>
-                      {% else %}
-                      <a class="link-text" href="{{series_next_url}}">view {{series_next.get_class_name}}</a>
-                      {% endif %}
-                    <img src="{% static 'icons/arrow.png' %}" width="9">
-                  </div>
-                </div>
-            </div>
-          </div>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-  {% endif %}
 {% endblock content %}
 
 

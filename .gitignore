@@ -1,6 +1,7 @@
 *sqlite3
 venv
-.env
 __pycache__
-static
+.mypy_cache
+.env
+/static
 media

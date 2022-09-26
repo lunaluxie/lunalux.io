@@ -47,6 +47,7 @@ article_fields =  basic_fields + [
     ("ImageDivider", ImageDividerBlock()),
 
     ("GradientDescentWidget", GradientDescentWidget(group="oneoff")),
+    ("StatisticalMurderWidget", StatisticalMurderWidget(group="oneoff")),
 ]
 
 article_header_fields = [

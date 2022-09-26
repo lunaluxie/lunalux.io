@@ -1,0 +1,344 @@
+<style>
+    .murder-widget-container {
+        margin:0.5rem;
+    }
+    .murder-widget {
+        padding:1em;
+        border: solid 1px;
+        border-radius: 5px;
+
+        margin: 0 auto;
+        max-width: 750px;
+    }
+
+    .murder-widget input {
+        padding:1em;
+        border-radius: 5px;
+        border: 1px solid black;
+        {% comment %} width: 100%; {% endcomment %}
+    }
+    .murder-widget select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding:1em;
+        border-radius: 5px;
+        width: 100%;
+    }
+</style>
+<div class="murder-widget-container">
+    <div class="murder-widget">
+        <h2 style="margin-top:0;">How many people are killed from emissions by</h2>
+        <select id="murder-mode">
+            <option value="person">Average person in a country</option>
+            <option disabled>Things</option>
+            <option value="superyact">A superyact</option>
+            <option value="car">A passenger car (emissions)</option>
+            {% comment %} <option value="cars">All passenger cars (emissions)</option> {% endcomment %}
+            {% comment %} <option disabled>Billionaires</option>
+            <option value="musk">Elon Musk</option>
+            <option value="besos">Jeff Besos</option> {% endcomment %}
+            <option disabled>Others</option>
+            <option value="co2e">CO2e</option>
+        </select>
+        <hr style="margin: 20px auto;">
+        <div id='murder-content'>
+            kkjhkj
+        </div>
+
+        <script>
+            let countries = {"China": "7.38", "United States": "15.52", "India": "1.91", "Russia": "11.44", "Japan": "9.70", "Germany": "9.44", "Canada": "18.58", "Iran": "8.08", "South Korea": "11.85", "Indonesia": "2.03", "Saudi Arabia": "15.94", "Brazil": "2.25", "Mexico": "3.58", "Australia": "17.10", "South Africa": "6.95", "Turkey": "4.61", "United Kingdom": "5.55", "Italy": "5.90", "France": "5.13", "Poland": "7.81", "Taiwan": "11.72", "Thailand": "3.93", "Malaysia": "8.68", "Spain": "5.40", "Ukraine": "5.22", "Kazakhstan": "13.01", "Egypt": "2.32", "United Arab Emirates": "23.37", "Vietnam": "2.20", "Argentina": "4.61", "Pakistan": "0.87", "Venezuela": "5.89", "Netherlands": "9.62", "Iraq": "4.44", "Algeria": "3.85", "Philippines": "1.22", "Czech Republic (Czechia)": "10.53", "Uzbekistan": "3.48", "Kuwait": "25.65", "Qatar": "37.29", "Belgium": "8.34", "Oman": "19.61", "Nigeria": "0.44", "Chile": "4.46", "Turkmenistan": "14.00", "Romania": "3.98", "Colombia": "1.61", "Bangladesh": "0.47", "Austria": "8.43", "Greece": "6.39", "Israel": "8.04", "Belarus": "6.63", "North Korea": "2.32", "Morocco": "1.64", "Peru": "1.87", "Libya": "8.12", "Finland": "9.31", "Hungary": "5.23", "Bulgaria": "7.11", "Portugal": "4.86", "Singapore": "8.56", "Hong Kong": "6.50", "Sweden": "4.54", "Norway": "8.28", "Serbia": "4.65", "Ecuador": "2.43", "Switzerland": "4.73", "Ireland": "8.32", "Syria": "2.18", "Denmark": "6.65", "Slovakia": "6.77", "Trinidad and Tobago": "25.39", "Azerbaijan": "3.45", "New Zealand": "7.14", "Angola": "1.06", "Cuba": "2.68", "Tunisia": "2.60", "Bosnia and Herzegovina": "7.58", "Yemen": "0.94", "Bahrain": "17.15", "Dominican Republic": "2.26", "Jordan": "2.38", "Estonia": "17.02", "Lebanon": "3.26", "Bolivia": "1.76", "Croatia": "4.61", "Mongolia": "6.08", "Guatemala": "1.12", "Sri Lanka": "0.88", "Myanmar": "0.31", "Kenya": "0.33", "Montenegro": "25.90", "Slovenia": "7.10", "Ghana": "0.51", "Lithuania": "4.74", "Sudan": "0.33", "Panama": "2.87", "Ethiopia": "0.10", "Luxembourg": "17.51", "Zimbabwe": "0.72", "C\u00f4te d'Ivoire": "0.42", "Afghanistan": "0.28", "Tanzania": "0.18", "Cameroon": "0.40", "Honduras": "1.01", "Papua New Guinea": "1.10", "Jamaica": "3.08", "North Macedonia": "4.28", "Georgia": "2.14", "Costa Rica": "1.70", "Moldova": "2.03", "Senegal": "0.55", "Latvia": "4.13", "Nepal": "0.29", "Brunei ": "18.28", "Kyrgyzstan": "1.14", "Cyprus": "5.87", "El Salvador": "1.08", "DR Congo": "0.08", "Benin": "0.60", "Uruguay": "1.90", "Cambodia": "0.41", "Botswana": "2.98", "Tajikistan": "0.70", "Paraguay": "0.89", "Mozambique": "0.21", "Gabon": "2.84", "Nicaragua": "0.84", "Congo": "1.05", "Albania": "1.80", "Uganda": "0.13", "Armenia": "1.57", "Laos": "0.66", "Bahamas": "11.65", "Zambia": "0.26", "South Sudan": "0.37", "Iceland": "11.81", "Namibia": "1.65", "Guyana": "4.22", "Mauritius": "2.53", "Macao": "5.07", "Haiti": "0.28", "Madagascar": "0.12", "Martinique": "7.21", "Mauritania": "0.62", "Guadeloupe": "6.20", "Burkina Faso": "0.13", "New Caledonia": "8.53", "Togo": "0.31", "Malta": "5.18", "Equatorial Guinea": "1.77", "Suriname": "3.81", "Niger": "0.10", "Guinea": "0.18", "Malawi": "0.11", "Fiji": "1.95", "Bhutan": "2.28", "Chad": "0.11", "Mali": "0.09", "Barbados": "5.39", "Djibouti": "1.62", "French Guiana": "5.50", "Rwanda": "0.12", "Sierra Leone": "0.17", "Somalia": "0.09", "Maldives": "2.59", "R\u00e9union": "1.30", "Belize": "3.02", "Burundi": "0.10", "French Polynesia": "3.65", "Liberia": "0.18", "Puerto Rico": "0.22", "Eritrea": "0.20", "Eswatini": "0.59", "Bermuda": "10.09", "Saint Lucia": "3.38", "Gibraltar": "16.98", "Grenada": "5.03", "Central African Republic": "0.12", "Seychelles": "5.43", "Timor-Leste": "0.41", "Antigua and Barbuda": "4.64", "Cayman Islands": "6.49", "St. Vincent & Grenadines": "3.31", "Solomon Islands": "0.55", "Guinea-Bissau": "0.18", "Lesotho": "0.15", "Aruba": "2.74", "Gambia": "0.12", "Tonga": "2.49", "Western Sahara": "0.39", "Saint Kitts & Nevis": "3.93", "Dominica": "2.61", "Samoa": "0.87", "Vanuatu": "0.49", "Comoros": "0.14", "British Virgin Islands": "3.40", "Cabo Verde": "0.19", "Turks and Caicos": "1.79", "Sao Tome & Principe": "0.28", "Kiribati": "0.47", "Falkland Islands": "16.59", "Palau": "2.35", "Cook Islands": "2.13", "Anguilla": "2.10", "Saint Helena": "2.20", "Saint Pierre & Miquelon": "1.49", "Faeroe Islands": "0.04", "Greenland": "0.03"}
+
+            let totalDeaths = 14000000
+            function computeDeathsRaw(tonnesCO2){
+                let totalTonnesCO2 = 13350000000
+                return totalDeaths * tonnesCO2/totalTonnesCO2
+            }
+
+            let content = document.getElementById("murder-content")
+            let mode = document.getElementById("murder-mode")
+
+
+            function processModeChange() {
+                console.log(mode.value)
+                if (mode.value == "person"){
+                    let html = `
+                        <select id="murder-country">
+                            <option value="China">China</option>
+                            <option value="United States">United States</option>
+                            <option value="India">India</option>
+                            <option value="Russia">Russia</option>
+                            <option value="Japan">Japan</option>
+                            <option value="Germany">Germany</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Iran">Iran</option>
+                            <option value="South Korea">South Korea</option>
+                            <option value="Indonesia">Indonesia</option>
+                            <option value="Saudi Arabia">Saudi Arabia</option>
+                            <option value="Brazil">Brazil</option>
+                            <option value="Mexico">Mexico</option>
+                            <option value="Australia">Australia</option>
+                            <option value="South Africa">South Africa</option>
+                            <option value="Turkey">Turkey</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Italy">Italy</option>
+                            <option value="France">France</option>
+                            <option value="Poland">Poland</option>
+                            <option value="Taiwan">Taiwan</option>
+                            <option value="Thailand">Thailand</option>
+                            <option value="Malaysia">Malaysia</option>
+                            <option value="Spain">Spain</option>
+                            <option value="Ukraine">Ukraine</option>
+                            <option value="Kazakhstan">Kazakhstan</option>
+                            <option value="Egypt">Egypt</option>
+                            <option value="United Arab Emirates">United Arab Emirates</option>
+                            <option value="Vietnam">Vietnam</option>
+                            <option value="Argentina">Argentina</option>
+                            <option value="Pakistan">Pakistan</option>
+                            <option value="Venezuela">Venezuela</option>
+                            <option value="Netherlands">Netherlands</option>
+                            <option value="Iraq">Iraq</option>
+                            <option value="Algeria">Algeria</option>
+                            <option value="Philippines">Philippines</option>
+                            <option value="Czech Republic (Czechia)">Czech Republic (Czechia)</option>
+                            <option value="Uzbekistan">Uzbekistan</option>
+                            <option value="Kuwait">Kuwait</option>
+                            <option value="Qatar">Qatar</option>
+                            <option value="Belgium">Belgium</option>
+                            <option value="Oman">Oman</option>
+                            <option value="Nigeria">Nigeria</option>
+                            <option value="Chile">Chile</option>
+                            <option value="Turkmenistan">Turkmenistan</option>
+                            <option value="Romania">Romania</option>
+                            <option value="Colombia">Colombia</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Austria">Austria</option>
+                            <option value="Greece">Greece</option>
+                            <option value="Israel">Israel</option>
+                            <option value="Belarus">Belarus</option>
+                            <option value="North Korea">North Korea</option>
+                            <option value="Morocco">Morocco</option>
+                            <option value="Peru">Peru</option>
+                            <option value="Libya">Libya</option>
+                            <option value="Finland">Finland</option>
+                            <option value="Hungary">Hungary</option>
+                            <option value="Bulgaria">Bulgaria</option>
+                            <option value="Portugal">Portugal</option>
+                            <option value="Singapore">Singapore</option>
+                            <option value="Hong Kong">Hong Kong</option>
+                            <option value="Sweden">Sweden</option>
+                            <option value="Norway">Norway</option>
+                            <option value="Serbia">Serbia</option>
+                            <option value="Ecuador">Ecuador</option>
+                            <option value="Switzerland">Switzerland</option>
+                            <option value="Ireland">Ireland</option>
+                            <option value="Syria">Syria</option>
+                            <option value="Denmark">Denmark</option>
+                            <option value="Slovakia">Slovakia</option>
+                            <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                            <option value="Azerbaijan">Azerbaijan</option>
+                            <option value="New Zealand">New Zealand</option>
+                            <option value="Angola">Angola</option>
+                            <option value="Cuba">Cuba</option>
+                            <option value="Tunisia">Tunisia</option>
+                            <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                            <option value="Yemen">Yemen</option>
+                            <option value="Bahrain">Bahrain</option>
+                            <option value="Dominican Republic">Dominican Republic</option>
+                            <option value="Jordan">Jordan</option>
+                            <option value="Estonia">Estonia</option>
+                            <option value="Lebanon">Lebanon</option>
+                            <option value="Bolivia">Bolivia</option>
+                            <option value="Croatia">Croatia</option>
+                            <option value="Mongolia">Mongolia</option>
+                            <option value="Guatemala">Guatemala</option>
+                            <option value="Sri Lanka">Sri Lanka</option>
+                            <option value="Myanmar">Myanmar</option>
+                            <option value="Kenya">Kenya</option>
+                            <option value="Montenegro">Montenegro</option>
+                            <option value="Slovenia">Slovenia</option>
+                            <option value="Ghana">Ghana</option>
+                            <option value="Lithuania">Lithuania</option>
+                            <option value="Sudan">Sudan</option>
+                            <option value="Panama">Panama</option>
+                            <option value="Ethiopia">Ethiopia</option>
+                            <option value="Luxembourg">Luxembourg</option>
+                            <option value="Zimbabwe">Zimbabwe</option>
+                            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                            <option value="Afghanistan">Afghanistan</option>
+                            <option value="Tanzania">Tanzania</option>
+                            <option value="Cameroon">Cameroon</option>
+                            <option value="Honduras">Honduras</option>
+                            <option value="Papua New Guinea">Papua New Guinea</option>
+                            <option value="Jamaica">Jamaica</option>
+                            <option value="North Macedonia">North Macedonia</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Costa Rica">Costa Rica</option>
+                            <option value="Moldova">Moldova</option>
+                            <option value="Senegal">Senegal</option>
+                            <option value="Latvia">Latvia</option>
+                            <option value="Nepal">Nepal</option>
+                            <option value="Brunei ">Brunei </option>
+                            <option value="Kyrgyzstan">Kyrgyzstan</option>
+                            <option value="Cyprus">Cyprus</option>
+                            <option value="El Salvador">El Salvador</option>
+                            <option value="DR Congo">DR Congo</option>
+                            <option value="Benin">Benin</option>
+                            <option value="Uruguay">Uruguay</option>
+                            <option value="Cambodia">Cambodia</option>
+                            <option value="Botswana">Botswana</option>
+                            <option value="Tajikistan">Tajikistan</option>
+                            <option value="Paraguay">Paraguay</option>
+                            <option value="Mozambique">Mozambique</option>
+                            <option value="Gabon">Gabon</option>
+                            <option value="Nicaragua">Nicaragua</option>
+                            <option value="Congo">Congo</option>
+                            <option value="Albania">Albania</option>
+                            <option value="Uganda">Uganda</option>
+                            <option value="Armenia">Armenia</option>
+                            <option value="Laos">Laos</option>
+                            <option value="Bahamas">Bahamas</option>
+                            <option value="Zambia">Zambia</option>
+                            <option value="South Sudan">South Sudan</option>
+                            <option value="Iceland">Iceland</option>
+                            <option value="Namibia">Namibia</option>
+                            <option value="Guyana">Guyana</option>
+                            <option value="Mauritius">Mauritius</option>
+                            <option value="Macao">Macao</option>
+                            <option value="Haiti">Haiti</option>
+                            <option value="Madagascar">Madagascar</option>
+                            <option value="Martinique">Martinique</option>
+                            <option value="Mauritania">Mauritania</option>
+                            <option value="Guadeloupe">Guadeloupe</option>
+                            <option value="Burkina Faso">Burkina Faso</option>
+                            <option value="New Caledonia">New Caledonia</option>
+                            <option value="Togo">Togo</option>
+                            <option value="Malta">Malta</option>
+                            <option value="Equatorial Guinea">Equatorial Guinea</option>
+                            <option value="Suriname">Suriname</option>
+                            <option value="Niger">Niger</option>
+                            <option value="Guinea">Guinea</option>
+                            <option value="Malawi">Malawi</option>
+                            <option value="Fiji">Fiji</option>
+                            <option value="Bhutan">Bhutan</option>
+                            <option value="Chad">Chad</option>
+                            <option value="Mali">Mali</option>
+                            <option value="Barbados">Barbados</option>
+                            <option value="Djibouti">Djibouti</option>
+                            <option value="French Guiana">French Guiana</option>
+                            <option value="Rwanda">Rwanda</option>
+                            <option value="Sierra Leone">Sierra Leone</option>
+                            <option value="Somalia">Somalia</option>
+                            <option value="Maldives">Maldives</option>
+                            <option value="Réunion">Réunion</option>
+                            <option value="Belize">Belize</option>
+                            <option value="Burundi">Burundi</option>
+                            <option value="French Polynesia">French Polynesia</option>
+                            <option value="Liberia">Liberia</option>
+                            <option value="Puerto Rico">Puerto Rico</option>
+                            <option value="Eritrea">Eritrea</option>
+                            <option value="Eswatini">Eswatini</option>
+                            <option value="Bermuda">Bermuda</option>
+                            <option value="Saint Lucia">Saint Lucia</option>
+                            <option value="Gibraltar">Gibraltar</option>
+                            <option value="Grenada">Grenada</option>
+                            <option value="Central African Republic">Central African Republic</option>
+                            <option value="Seychelles">Seychelles</option>
+                            <option value="Timor-Leste">Timor-Leste</option>
+                            <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                            <option value="Cayman Islands">Cayman Islands</option>
+                            <option value="St. Vincent & Grenadines">St. Vincent & Grenadines</option>
+                            <option value="Solomon Islands">Solomon Islands</option>
+                            <option value="Guinea-Bissau">Guinea-Bissau</option>
+                            <option value="Lesotho">Lesotho</option>
+                            <option value="Aruba">Aruba</option>
+                            <option value="Gambia">Gambia</option>
+                            <option value="Tonga">Tonga</option>
+                            <option value="Western Sahara">Western Sahara</option>
+                            <option value="Saint Kitts & Nevis">Saint Kitts & Nevis</option>
+                            <option value="Dominica">Dominica</option>
+                            <option value="Samoa">Samoa</option>
+                            <option value="Vanuatu">Vanuatu</option>
+                            <option value="Comoros">Comoros</option>
+                            <option value="British Virgin Islands">British Virgin Islands</option>
+                            <option value="Cabo Verde">Cabo Verde</option>
+                            <option value="Turks and Caicos">Turks and Caicos</option>
+                            <option value="Sao Tome & Principe">Sao Tome & Principe</option>
+                            <option value="Kiribati">Kiribati</option>
+                            <option value="Falkland Islands">Falkland Islands</option>
+                            <option value="Palau">Palau</option>
+                            <option value="Cook Islands">Cook Islands</option>
+                            <option value="Anguilla">Anguilla</option>
+                            <option value="Saint Helena">Saint Helena</option>
+                            <option value="Saint Pierre & Miquelon">Saint Pierre & Miquelon</option>
+                            <option value="Faeroe Islands">Faeroe Islands</option>
+                            <option value="Greenland">Greenland</option>
+                        </select>
+
+                        <p id='murder-text'></p>
+                    `
+                    content.innerHTML =  html
+
+
+                    let countrySelector = document.getElementById("murder-country")
+                    let selectCountry = () => {
+                        console.log(countrySelector)
+                        console.log(countrySelector.value,countries[countrySelector.value])
+                        document.getElementById("murder-text").innerText = `An average person in ${countrySelector.value} emits ${countries[countrySelector.value]} tonnes CO2e per year which is responsible for ${Math.round(computeDeathsRaw(countries[countrySelector.value])*1000000) } micro-deaths per year, or ${Math.round(computeDeathsRaw(countries[countrySelector.value])*1000000)*80 } micro-deaths through their whole life assuming 80 year life expectancy.`
+                    }
+
+                    selectCountry()
+                    countrySelector.addEventListener("change", ()=>{
+                        selectCountry()
+                    })
+                }
+                else if (mode.value == "superyact") {
+                    let html = `<p>${Math.round(computeDeathsRaw(5300))}-${Math.round(computeDeathsRaw(22440))} people are killed per year from emissions by a single superyact.</p>`
+                    content.innerHTML =  html
+                }
+                else if (mode.value == "cars") {
+                    let html = `<p>${Math.round(computeDeathsRaw(3e+9))} people are killed each year by emissions from passenger cars.</p>`
+                    content.innerHTML =  html
+
+                }
+                else if (mode.value == "car") {
+                    let html = `<p>${Math.round(computeDeathsRaw(4.6)*1000000)} micro-deaths per year from the emissions of a single high-mileage passenger car.</p>`
+                    content.innerHTML =  html
+
+                }
+                else if (mode.value == "musk") {
+
+                }
+                else if (mode.value == "co2e") {
+                    html = `Tonnes CO2e per year <input placeholder="1000" id="murder-co2e" type='number'><p id='murder-text'></p>`
+                    content.innerHTML =  html
+
+                    let co2e = document.getElementById("murder-co2e")
+
+                    function processCO2e(){
+                        let deaths = computeDeathsRaw(co2e.value)
+                        let microDeaths = Math.round(deaths*1000000)
+                        deaths = Math.round(deaths)
+
+                        document.getElementById("murder-text").innerText = `${co2e.value} results in ${deaths} statistical murders or ${microDeaths} micro-deaths per year.`
+
+                    }
+
+
+                    co2e.addEventListener("keyup",()=>{
+                        processCO2e()
+                    })
+                    co2e.addEventListener("change",()=>{
+                        processCO2e()
+                    })
+                }
+            }
+
+            processModeChange()
+            mode.addEventListener("change",(e)=>{
+                processModeChange()
+            })
+        </script>
+
+    </div>
+</div>

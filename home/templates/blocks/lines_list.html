@@ -161,5 +161,13 @@
     background-color: currentColor;
     max-width: none;">
 
+
+  {% if link_to_blog %}
+    <div style="margin-top:2rem;margin-bottom: 5rem;">
+      <a class="link" href="/articles">View all articles<img class="smart-invert" style="margin-left: 0.5ch;"
+          src="{% static 'icons/arrow.png' %}" width="9"></a>
+    </div>
+  {% endif %}
+
 </div>
 </section>

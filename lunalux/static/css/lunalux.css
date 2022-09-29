@@ -1751,3 +1751,8 @@ pre {
     border-radius: 10px!important;
     border: 1px solid var(--body-color)!important;
 }
+
+
+img.richtext-image {
+  height:auto;
+}

@@ -45,6 +45,14 @@
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/lunalux.js' %}"></script>
 
+        <script src="https://cdn.cookiecook.io/core/cc.js"></script>
+        <script>cc = new CC("450ad205c5a44a228c74c1dfdcfc30b5")</script>
+        <style>
+        .cc-badge{
+            display:none;
+        }
+        </style>
+
         <script src="https://www.google.com/recaptcha/api.js?render=6Le0-T8hAAAAAMW00j_qGs86mHRIale_sY4b6P6K"></script>
 
         {% block extra_js %}

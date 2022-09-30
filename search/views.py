@@ -28,7 +28,7 @@ def search(request):
         # Record hit
         query.add_hit()
     else:
-        pages = Page.objects.none()
+        pages = Article.objects.live().order_by('-first_published_at')
         search_results = Page.objects.none()
 
     # Pagination

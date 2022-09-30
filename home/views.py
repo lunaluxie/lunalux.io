@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from itertools import chain
+from urllib.parse import unquote
 from .models import AbstractPage, HomePage, Article, Series
 
 def article_list(request):
@@ -22,6 +23,7 @@ def article_list(request):
 
 
 def article_tag_list(request, tag):
+    tag = unquote(tag)
     queryset = Article.objects.all().filter(live=True).filter(
         unlisted=False).filter(tags__name__icontains=tag).distinct()
 

@@ -34,7 +34,9 @@
             <option disabled>Things</option>
             <option value="superyact">A superyact</option>
             <option value="car">A passenger car (emissions)</option>
-            {% comment %} <option value="cars">All passenger cars (emissions)</option> {% endcomment %}
+            <option value="cars">All passenger cars (emissions)</option>
+            <option value="meat">Eating meat</option>
+            <option value="space">11 minute space trip</option>
             {% comment %} <option disabled>Billionaires</option>
             <option value="musk">Elon Musk</option>
             <option value="besos">Jeff Besos</option> {% endcomment %}
@@ -43,11 +45,11 @@
         </select>
         <hr style="margin: 20px auto;">
         <div id='murder-content'>
-            kkjhkj
         </div>
+        <p><sub>1 million micro-deaths = 1 death. Similar to a <a href="https://en.wikipedia.org/wiki/Micromort">micro-mort</a>.</sub></p>
 
         <script>
-            let countries = {"China": "7.38", "United States": "15.52", "India": "1.91", "Russia": "11.44", "Japan": "9.70", "Germany": "9.44", "Canada": "18.58", "Iran": "8.08", "South Korea": "11.85", "Indonesia": "2.03", "Saudi Arabia": "15.94", "Brazil": "2.25", "Mexico": "3.58", "Australia": "17.10", "South Africa": "6.95", "Turkey": "4.61", "United Kingdom": "5.55", "Italy": "5.90", "France": "5.13", "Poland": "7.81", "Taiwan": "11.72", "Thailand": "3.93", "Malaysia": "8.68", "Spain": "5.40", "Ukraine": "5.22", "Kazakhstan": "13.01", "Egypt": "2.32", "United Arab Emirates": "23.37", "Vietnam": "2.20", "Argentina": "4.61", "Pakistan": "0.87", "Venezuela": "5.89", "Netherlands": "9.62", "Iraq": "4.44", "Algeria": "3.85", "Philippines": "1.22", "Czech Republic (Czechia)": "10.53", "Uzbekistan": "3.48", "Kuwait": "25.65", "Qatar": "37.29", "Belgium": "8.34", "Oman": "19.61", "Nigeria": "0.44", "Chile": "4.46", "Turkmenistan": "14.00", "Romania": "3.98", "Colombia": "1.61", "Bangladesh": "0.47", "Austria": "8.43", "Greece": "6.39", "Israel": "8.04", "Belarus": "6.63", "North Korea": "2.32", "Morocco": "1.64", "Peru": "1.87", "Libya": "8.12", "Finland": "9.31", "Hungary": "5.23", "Bulgaria": "7.11", "Portugal": "4.86", "Singapore": "8.56", "Hong Kong": "6.50", "Sweden": "4.54", "Norway": "8.28", "Serbia": "4.65", "Ecuador": "2.43", "Switzerland": "4.73", "Ireland": "8.32", "Syria": "2.18", "Denmark": "6.65", "Slovakia": "6.77", "Trinidad and Tobago": "25.39", "Azerbaijan": "3.45", "New Zealand": "7.14", "Angola": "1.06", "Cuba": "2.68", "Tunisia": "2.60", "Bosnia and Herzegovina": "7.58", "Yemen": "0.94", "Bahrain": "17.15", "Dominican Republic": "2.26", "Jordan": "2.38", "Estonia": "17.02", "Lebanon": "3.26", "Bolivia": "1.76", "Croatia": "4.61", "Mongolia": "6.08", "Guatemala": "1.12", "Sri Lanka": "0.88", "Myanmar": "0.31", "Kenya": "0.33", "Montenegro": "25.90", "Slovenia": "7.10", "Ghana": "0.51", "Lithuania": "4.74", "Sudan": "0.33", "Panama": "2.87", "Ethiopia": "0.10", "Luxembourg": "17.51", "Zimbabwe": "0.72", "C\u00f4te d'Ivoire": "0.42", "Afghanistan": "0.28", "Tanzania": "0.18", "Cameroon": "0.40", "Honduras": "1.01", "Papua New Guinea": "1.10", "Jamaica": "3.08", "North Macedonia": "4.28", "Georgia": "2.14", "Costa Rica": "1.70", "Moldova": "2.03", "Senegal": "0.55", "Latvia": "4.13", "Nepal": "0.29", "Brunei ": "18.28", "Kyrgyzstan": "1.14", "Cyprus": "5.87", "El Salvador": "1.08", "DR Congo": "0.08", "Benin": "0.60", "Uruguay": "1.90", "Cambodia": "0.41", "Botswana": "2.98", "Tajikistan": "0.70", "Paraguay": "0.89", "Mozambique": "0.21", "Gabon": "2.84", "Nicaragua": "0.84", "Congo": "1.05", "Albania": "1.80", "Uganda": "0.13", "Armenia": "1.57", "Laos": "0.66", "Bahamas": "11.65", "Zambia": "0.26", "South Sudan": "0.37", "Iceland": "11.81", "Namibia": "1.65", "Guyana": "4.22", "Mauritius": "2.53", "Macao": "5.07", "Haiti": "0.28", "Madagascar": "0.12", "Martinique": "7.21", "Mauritania": "0.62", "Guadeloupe": "6.20", "Burkina Faso": "0.13", "New Caledonia": "8.53", "Togo": "0.31", "Malta": "5.18", "Equatorial Guinea": "1.77", "Suriname": "3.81", "Niger": "0.10", "Guinea": "0.18", "Malawi": "0.11", "Fiji": "1.95", "Bhutan": "2.28", "Chad": "0.11", "Mali": "0.09", "Barbados": "5.39", "Djibouti": "1.62", "French Guiana": "5.50", "Rwanda": "0.12", "Sierra Leone": "0.17", "Somalia": "0.09", "Maldives": "2.59", "R\u00e9union": "1.30", "Belize": "3.02", "Burundi": "0.10", "French Polynesia": "3.65", "Liberia": "0.18", "Puerto Rico": "0.22", "Eritrea": "0.20", "Eswatini": "0.59", "Bermuda": "10.09", "Saint Lucia": "3.38", "Gibraltar": "16.98", "Grenada": "5.03", "Central African Republic": "0.12", "Seychelles": "5.43", "Timor-Leste": "0.41", "Antigua and Barbuda": "4.64", "Cayman Islands": "6.49", "St. Vincent & Grenadines": "3.31", "Solomon Islands": "0.55", "Guinea-Bissau": "0.18", "Lesotho": "0.15", "Aruba": "2.74", "Gambia": "0.12", "Tonga": "2.49", "Western Sahara": "0.39", "Saint Kitts & Nevis": "3.93", "Dominica": "2.61", "Samoa": "0.87", "Vanuatu": "0.49", "Comoros": "0.14", "British Virgin Islands": "3.40", "Cabo Verde": "0.19", "Turks and Caicos": "1.79", "Sao Tome & Principe": "0.28", "Kiribati": "0.47", "Falkland Islands": "16.59", "Palau": "2.35", "Cook Islands": "2.13", "Anguilla": "2.10", "Saint Helena": "2.20", "Saint Pierre & Miquelon": "1.49", "Faeroe Islands": "0.04", "Greenland": "0.03"}
+            let countries = {"World":"4.79", "China": "7.38", "United States": "15.52", "India": "1.91", "Russia": "11.44", "Japan": "9.70", "Germany": "9.44", "Canada": "18.58", "Iran": "8.08", "South Korea": "11.85", "Indonesia": "2.03", "Saudi Arabia": "15.94", "Brazil": "2.25", "Mexico": "3.58", "Australia": "17.10", "South Africa": "6.95", "Turkey": "4.61", "United Kingdom": "5.55", "Italy": "5.90", "France": "5.13", "Poland": "7.81", "Taiwan": "11.72", "Thailand": "3.93", "Malaysia": "8.68", "Spain": "5.40", "Ukraine": "5.22", "Kazakhstan": "13.01", "Egypt": "2.32", "United Arab Emirates": "23.37", "Vietnam": "2.20", "Argentina": "4.61", "Pakistan": "0.87", "Venezuela": "5.89", "Netherlands": "9.62", "Iraq": "4.44", "Algeria": "3.85", "Philippines": "1.22", "Czech Republic (Czechia)": "10.53", "Uzbekistan": "3.48", "Kuwait": "25.65", "Qatar": "37.29", "Belgium": "8.34", "Oman": "19.61", "Nigeria": "0.44", "Chile": "4.46", "Turkmenistan": "14.00", "Romania": "3.98", "Colombia": "1.61", "Bangladesh": "0.47", "Austria": "8.43", "Greece": "6.39", "Israel": "8.04", "Belarus": "6.63", "North Korea": "2.32", "Morocco": "1.64", "Peru": "1.87", "Libya": "8.12", "Finland": "9.31", "Hungary": "5.23", "Bulgaria": "7.11", "Portugal": "4.86", "Singapore": "8.56", "Hong Kong": "6.50", "Sweden": "4.54", "Norway": "8.28", "Serbia": "4.65", "Ecuador": "2.43", "Switzerland": "4.73", "Ireland": "8.32", "Syria": "2.18", "Denmark": "6.65", "Slovakia": "6.77", "Trinidad and Tobago": "25.39", "Azerbaijan": "3.45", "New Zealand": "7.14", "Angola": "1.06", "Cuba": "2.68", "Tunisia": "2.60", "Bosnia and Herzegovina": "7.58", "Yemen": "0.94", "Bahrain": "17.15", "Dominican Republic": "2.26", "Jordan": "2.38", "Estonia": "17.02", "Lebanon": "3.26", "Bolivia": "1.76", "Croatia": "4.61", "Mongolia": "6.08", "Guatemala": "1.12", "Sri Lanka": "0.88", "Myanmar": "0.31", "Kenya": "0.33", "Montenegro": "25.90", "Slovenia": "7.10", "Ghana": "0.51", "Lithuania": "4.74", "Sudan": "0.33", "Panama": "2.87", "Ethiopia": "0.10", "Luxembourg": "17.51", "Zimbabwe": "0.72", "C\u00f4te d'Ivoire": "0.42", "Afghanistan": "0.28", "Tanzania": "0.18", "Cameroon": "0.40", "Honduras": "1.01", "Papua New Guinea": "1.10", "Jamaica": "3.08", "North Macedonia": "4.28", "Georgia": "2.14", "Costa Rica": "1.70", "Moldova": "2.03", "Senegal": "0.55", "Latvia": "4.13", "Nepal": "0.29", "Brunei ": "18.28", "Kyrgyzstan": "1.14", "Cyprus": "5.87", "El Salvador": "1.08", "DR Congo": "0.08", "Benin": "0.60", "Uruguay": "1.90", "Cambodia": "0.41", "Botswana": "2.98", "Tajikistan": "0.70", "Paraguay": "0.89", "Mozambique": "0.21", "Gabon": "2.84", "Nicaragua": "0.84", "Congo": "1.05", "Albania": "1.80", "Uganda": "0.13", "Armenia": "1.57", "Laos": "0.66", "Bahamas": "11.65", "Zambia": "0.26", "South Sudan": "0.37", "Iceland": "11.81", "Namibia": "1.65", "Guyana": "4.22", "Mauritius": "2.53", "Macao": "5.07", "Haiti": "0.28", "Madagascar": "0.12", "Martinique": "7.21", "Mauritania": "0.62", "Guadeloupe": "6.20", "Burkina Faso": "0.13", "New Caledonia": "8.53", "Togo": "0.31", "Malta": "5.18", "Equatorial Guinea": "1.77", "Suriname": "3.81", "Niger": "0.10", "Guinea": "0.18", "Malawi": "0.11", "Fiji": "1.95", "Bhutan": "2.28", "Chad": "0.11", "Mali": "0.09", "Barbados": "5.39", "Djibouti": "1.62", "French Guiana": "5.50", "Rwanda": "0.12", "Sierra Leone": "0.17", "Somalia": "0.09", "Maldives": "2.59", "R\u00e9union": "1.30", "Belize": "3.02", "Burundi": "0.10", "French Polynesia": "3.65", "Liberia": "0.18", "Puerto Rico": "0.22", "Eritrea": "0.20", "Eswatini": "0.59", "Bermuda": "10.09", "Saint Lucia": "3.38", "Gibraltar": "16.98", "Grenada": "5.03", "Central African Republic": "0.12", "Seychelles": "5.43", "Timor-Leste": "0.41", "Antigua and Barbuda": "4.64", "Cayman Islands": "6.49", "St. Vincent & Grenadines": "3.31", "Solomon Islands": "0.55", "Guinea-Bissau": "0.18", "Lesotho": "0.15", "Aruba": "2.74", "Gambia": "0.12", "Tonga": "2.49", "Western Sahara": "0.39", "Saint Kitts & Nevis": "3.93", "Dominica": "2.61", "Samoa": "0.87", "Vanuatu": "0.49", "Comoros": "0.14", "British Virgin Islands": "3.40", "Cabo Verde": "0.19", "Turks and Caicos": "1.79", "Sao Tome & Principe": "0.28", "Kiribati": "0.47", "Falkland Islands": "16.59", "Palau": "2.35", "Cook Islands": "2.13", "Anguilla": "2.10", "Saint Helena": "2.20", "Saint Pierre & Miquelon": "1.49", "Faeroe Islands": "0.04", "Greenland": "0.03"}
 
             let totalDeaths = 14000000
             function computeDeathsRaw(tonnesCO2){
@@ -64,6 +66,7 @@
                 if (mode.value == "person"){
                     let html = `
                         <select id="murder-country">
+                            <option value="World">World</option>
                             <option value="China">China</option>
                             <option value="United States">United States</option>
                             <option value="India">India</option>
@@ -276,6 +279,9 @@
                         </select>
 
                         <p id='murder-text'></p>
+
+                        <p><sub>Source: <a href="https://www.worldometers.info/co2-emissions/co2-emissions-per-capita/">Worldmeters</a>.</sub></p>
+
                     `
                     content.innerHTML =  html
 
@@ -293,18 +299,34 @@
                     })
                 }
                 else if (mode.value == "superyact") {
-                    let html = `<p>${Math.round(computeDeathsRaw(5300))}-${Math.round(computeDeathsRaw(22440))} people are killed per year from emissions by a single superyact.</p>`
+                    let html = `<p>${Math.round(computeDeathsRaw(5300))}-${Math.round(computeDeathsRaw(22440))} people are killed per year from emissions by a single superyact.</p>
+                    <p><sub>Source: <a href="https://www.dw.com/en/superyachts-symbolize-climate-breakdown/a-61245302/">DW</a>.</sub></p>
+                    `
                     content.innerHTML =  html
                 }
                 else if (mode.value == "cars") {
-                    let html = `<p>${Math.round(computeDeathsRaw(3e+9))} people are killed each year by emissions from passenger cars.</p>`
+                    let html = `<p>${Math.round(computeDeathsRaw(3e+9))} people are killed each year by emissions from passenger cars.</p>
+                    <p><sub>Source: <a href="https://www.epa.gov/greenvehicles/greenhouse-gas-emissions-typical-passenger-vehicle#:~:text=typical%20passenger%20vehicle%3F-,A%20typical%20passenger%20vehicle%20emits%20about%204.6%20metric%20tons%20of,8%2C887%20grams%20of%20CO2">EPA</a>.</sub></p>`
                     content.innerHTML =  html
 
                 }
                 else if (mode.value == "car") {
-                    let html = `<p>${Math.round(computeDeathsRaw(4.6)*1000000)} micro-deaths per year from the emissions of a single high-mileage passenger car.</p>`
+                    let html = `<p>${Math.round(computeDeathsRaw(4.6)*1000000)} micro-deaths per year from the emissions of a single high-mileage passenger car.</p>
+                     <p><sub>Source: <a href="https://www.epa.gov/greenvehicles/greenhouse-gas-emissions-typical-passenger-vehicle#:~:text=typical%20passenger%20vehicle%3F-,A%20typical%20passenger%20vehicle%20emits%20about%204.6%20metric%20tons%20of,8%2C887%20grams%20of%20CO2">EPA</a>.</sub></p>`
                     content.innerHTML =  html
 
+                }
+                else if (mode.value == "meat") {
+                    let html = `<p>${Math.round(computeDeathsRaw(3.7)*1000000)}-${Math.round(computeDeathsRaw(6.2)*1000000)} micro-deaths per year from eating meat equivalent to the level of a typical American.</p>
+                    <p>0.${Math.round(computeDeathsRaw(3.7)*80*10)}-0.${Math.round(computeDeathsRaw(6.2)*80*10)} deaths per year from eating meat for a whole lifetime.</p>
+
+                    <p><sub>Source: <a href="https://denstoreklimadatabase.dk/">DTU</a>.</sub></p>`
+                    content.innerHTML = html
+                }
+                else if (mode.value == "space"){
+                    let html = `An 11 minute space trip statistically statistically kills 0.${Math.round(computeDeathsRaw(250)*10)}-${Math.round(computeDeathsRaw(1000))} people through pollution.
+                    <p><sub>Source: <a href="https://earth.org/billionaires-single-space-flight-produces-a-lifetimes-worth-of-carbon-footprint-report/">Earth.org</a>.</sub></p>`
+                    content.innerHTML = html
                 }
                 else if (mode.value == "musk") {
 

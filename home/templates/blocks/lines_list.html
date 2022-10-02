@@ -133,7 +133,7 @@
         <a href="{% pageurl obj %}" style="text-decoration: none;">
           <h5 class="asdf" style="">{{ obj.title }}</h5>
                     {% if obj.post_type == "pr" or not obj.post_type %}
-          {% if obj.include_images %}<p style="font-size: 1rem; margin-bottom: 0;    color: rgba(0,0,0, 0.7); margin-top: 0.5rem;">
+          {% if obj.include_images %}<p style="font-size: 1rem; margin-bottom: 0;    color: var(--color-muted); margin-top: 0.5rem;">
           {{ obj.search_description }}
           </p>{% endif %}
           {% endif %}

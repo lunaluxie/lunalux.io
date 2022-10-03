@@ -48,6 +48,7 @@ article_fields =  basic_fields + [
 
     ("GradientDescentWidget", GradientDescentWidget(group="oneoff")),
     ("StatisticalMurderWidget", StatisticalMurderWidget(group="oneoff")),
+    ("IRTWidget", IRTWidget(group="oneoff")),
 ]
 
 article_header_fields = [

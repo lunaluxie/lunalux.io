@@ -1,0 +1,215 @@
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.js"></script>
+<style>
+    .ctrl{
+        margin-top:1em;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        border-radius: 5px;
+        position: relative;
+        box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
+        padding: 12px 36px;
+        z-index: 5;
+        text-transform: uppercase;
+        text-decoration: none;
+        display: inline-block;
+        background-color:hsla(264, 55%, 70%, 1);
+        color:white;
+        font: inherit;
+        border: 0;
+        outline: 0;
+        transition: box-shadow 0.4s;
+    }
+    .ctrl:hover{
+        box-shadow: 5px 5px 20px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 15px;
+      border-radius: 5px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: hsla(264, 55%, 70%, 1);
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: hsla(264, 55%, 70%, 1);
+      cursor: pointer;
+    }
+
+    input.graph{
+
+        padding:1em;
+        border-radius: 5px;
+        border-style: solid;
+        border-width: 1px;
+    }
+    select.graph{
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding:1em;
+        border-radius: 5px;
+        width: 100%;
+
+    }
+
+    .chart{
+        padding:1em;
+        border: solid 1px;
+        border-radius: 5px;
+    }
+    .hidden{display:none;}
+</style>
+<div class="chart" style="margin: 0 auto; max-width: 750px;">
+<div style="padding-left: 3em; padding-right: 3em;"><canvas id="myChart" width="400" height="200"></canvas></div>
+<script>
+if (document.documentElement.clientWidth < 600) {
+  document.getElementById("myChart").height = 400;
+}
+
+</script>
+
+
+
+<p>Difficulty (<span id="difficulty">0</span>):  <input  type="range" min="-3" max="3" step="0.1" value="0.06" class="slider" id="d"></p>
+
+<p>Discrimination (<span id="discrimination">1</span>):  <input type="range" min="0" max="10" step="0.1" value="1" class="slider" id="a"></p>
+
+<p id="warning" class="hidden" style="color:hsla(340, 100%, 52.25%, 1);">Slip factor should be larger than guess factor.</p>
+<p>Guess factor (<span id="guess">0</span>):  <input type="range" min="0" max="1" step="0.01" value="0" class="slider" id="c"></p>
+<p>Slip factor (<span id="slip">1</span>):  <input type="range" min="0" max="1" step="0.01" value="1" class="slider" id="b"></p>
+
+<p><button id="reset" style="background-color:hsla(340, 55%, 70%, 1);" class="ctrl">Reset</button>
+</div>
+<script type="application/javascript">
+function linspace(startValue, stopValue, cardinality) {
+  let arr = [];
+  let step = (stopValue - startValue) / (cardinality - 1);
+  for (let i = 0; i < cardinality; i++) {
+    arr.push(startValue + (step * i));
+  }
+  return arr;
+}
+
+function convert_to_chartjs(xs,ys){
+    let result = [];
+
+    for (let i=0; i<xs.length; i++){
+        result.push({
+            "x":xs[i],
+            "y":ys[i]
+        });
+    }
+    return result;
+}
+
+let xs = linspace(-3.5,3.5,200);
+
+// init graph
+function pl4Model(theta, d,a,c,b){
+  return c+(b-c)*1/(1+Math.exp(-a*(theta-d)))
+}
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'scatter',
+    data: {
+        datasets: [{
+            type: 'scatter',
+            label: '4pl Model',
+            data: convert_to_chartjs(xs, xs.map((x)=> pl4Model(x, 0, 1, 0, 1))),
+
+            backgroundColor: 'hsla(264, 55%, 70%, 1)',
+            borderColor: 'hsla(264, 55%, 70%, 1)',
+            pointRadius: 0,
+            showLine: true,
+            showPoint: false,
+        }, {
+            type: 'scatter',
+            label: `Neutral Problem`,
+            data: convert_to_chartjs(xs, xs.map((x) => pl4Model(x, 0, 1, 0, 1))),
+            pointRadius: 0,
+            showLine: true,
+            borderWidth: 3
+          }],
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                max:1,
+            },
+            x: {
+                min: -3.5,
+                max: 3.5,
+            }
+        },
+        animation: {
+            duration: 500,
+        },
+    }
+});
+
+
+function updateChart(){
+  let difficulty = parseFloat(document.getElementById("d").value);
+  let discrimination = parseFloat(document.getElementById("a").value);
+  let guess_factor = parseFloat(document.getElementById("c").value);
+  let slip_factor = parseFloat(document.getElementById("b").value);
+
+  // console.log(difficulty, discrimination, guess_factor, slip_factor)
+
+  if (slip_factor < guess_factor){
+    document.getElementById('warning').classList.remove("hidden")
+  } else {
+     document.getElementById('warning').classList.add("hidden")
+  }
+
+  document.getElementById("difficulty").innerText= difficulty
+  document.getElementById("discrimination").innerText= discrimination
+  document.getElementById("guess").innerText= guess_factor
+  document.getElementById("slip").innerText= slip_factor
+
+
+  myChart.data.datasets[0].data = convert_to_chartjs(xs, xs.map((x) => pl4Model(x, difficulty, discrimination, guess_factor, slip_factor)))
+  myChart.update();
+}
+
+  document.getElementById("d").addEventListener("input",()=>{updateChart()});
+  document.getElementById("a").addEventListener("input",()=>{updateChart()});
+  document.getElementById("c").addEventListener("input",()=>{updateChart()});
+  document.getElementById("b").addEventListener("input",()=>{updateChart()});
+
+
+function reset(){
+  document.getElementById("d").value = 0
+  document.getElementById("a").value = 1
+  document.getElementById("c").value = 0
+  document.getElementById("b").value = 1
+
+  updateChart()
+}
+
+document.getElementById("reset").addEventListener("click",()=>{reset()})
+
+</script>

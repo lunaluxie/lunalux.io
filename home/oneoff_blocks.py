@@ -14,3 +14,11 @@ class StatisticalMurderWidget(blocks.StaticBlock):
         label = "Statistical Murder Widget"
         admin_text = '{label}: configured elsewhere'.format(label=label)
         template = 'oneoff_blocks/statistical_murder_widget.html'
+
+
+class IRTWidget(blocks.StaticBlock):
+    class Meta:
+        icon = ""
+        label = "IRT Widget"
+        admin_text = '{label}: configured elsewhere'.format(label=label)
+        template = 'oneoff_blocks/irt.html'

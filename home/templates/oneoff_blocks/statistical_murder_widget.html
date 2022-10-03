@@ -37,6 +37,9 @@
             <option value="cars">All passenger cars (emissions)</option>
             <option value="meat">Eating meat</option>
             <option value="space">11 minute space trip</option>
+            <option disabled>Military</option>
+            <option value="us-military">US military (emissions)</option>
+            <option value="global-militaries">Global military (emissions)</option>
             {% comment %} <option disabled>Billionaires</option>
             <option value="musk">Elon Musk</option>
             <option value="besos">Jeff Besos</option> {% endcomment %}
@@ -326,6 +329,16 @@
                 else if (mode.value == "space"){
                     let html = `An 11 minute space trip statistically kills 0.${Math.round(computeDeathsRaw(250)*10)}-${Math.round(computeDeathsRaw(1000))} people through pollution.
                     <p><sub>Source: <a href="https://earth.org/billionaires-single-space-flight-produces-a-lifetimes-worth-of-carbon-footprint-report/">Earth.org</a>.</sub></p>`
+                    content.innerHTML = html
+                }
+                else if (mode.value == "us-military"){
+                    let html = `<p>The US military kills ${Math.round(computeDeathsRaw(75000000)/100)*100} civilians per year through emissions alone.</p>
+                    <p><sub>Source: <a href="https://www.theguardian.com/us-news/2022/mar/10/pentagon-us-military-emissions-climate-crisis#:~:text=Between%202001%20and%202017%20the,total%20oil%20consumption%20of%20Finland.">The Guardian</a>.</sub></p>`
+                    content.innerHTML = html
+                }
+                else if (mode.value = "global-militaries") {
+                    let html = `<p>The global military sector kills ${Math.round(computeDeathsRaw(1890000000)/100)*100} civilians per year through emissions alone.</p>
+                    <p><sub>Source: <a href="https://www.theguardian.com/environment/2021/nov/11/worlds-militaries-avoiding-scrutiny-over-emissions">The Guardian</a>.</sub></p>`
                     content.innerHTML = html
                 }
                 else if (mode.value == "musk") {

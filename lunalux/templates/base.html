@@ -71,7 +71,7 @@
 
         <!-- Google tag (gtag.js) -->
         <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script>
+        {% comment %} <script>
             // Define dataLayer and the gtag function.
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -84,7 +84,7 @@
             gtag('consent', 'update', {
                 'analytics_storage': cc.hasConsented("performance") ? 'granted' : 'denied',
             });
-        </script>
+        </script> {% endcomment %}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFV1NFBRY4"></script>
         <script>
         window.dataLayer = window.dataLayer || [];

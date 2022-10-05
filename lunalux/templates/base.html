@@ -29,6 +29,16 @@
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFV1NFBRY4"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-CFV1NFBRY4');
+        </script>
+
         {% wagtailuserbar %}
 
         {% block navbar %}
@@ -68,30 +78,5 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js" integrity="sha512-8pHNiqTlsrRjVD4A/3va++W1sMbUHwWxxRPWNyVlql3T+Hgfd81Qc6FC5WMXDC+tSauxxzp1tgiAvSKFu1qIlA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-        <!-- Google tag (gtag.js) -->
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        {% comment %} <script>
-            // Define dataLayer and the gtag function.
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-
-            gtag('consent', 'default', {
-                'analytics_storage': 'denied',
-                'wait_for_update': 500,
-            })
-
-            gtag('consent', 'update', {
-                'analytics_storage': cc.hasConsented("performance") ? 'granted' : 'denied',
-            });
-        </script> {% endcomment %}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFV1NFBRY4"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-CFV1NFBRY4');
-        </script>
     </body>
 </html>

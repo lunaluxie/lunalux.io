@@ -53,6 +53,7 @@ article_fields =  basic_fields + [
 ]
 
 article_header_fields = [
+    ("JumbotronImageBlock", JumbotronImageBlock(group="ImageHeader")),
     ("ImageHeader", ImageHeaderBlock()),
     ("ImageDivider", ImageDividerBlock()),
     ("spacer", SpacerBlock()),

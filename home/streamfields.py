@@ -37,6 +37,7 @@ body_fields = [
     ("container", ContainerBlock(group="layout")),
     ("skipNavMargin", NavMarginBlock(group="layout")),
 
+    ("JumbotronImageBlock", JumbotronImageBlock(group="ImageHeader")),
     ("JumbotronCard",JumbotronCardBlock(group="ImageHeader")),
     ("ImageHeader", ImageHeaderBlock(group="ImageHeader")),
     ("ImageDivider", ImageDividerBlock(group="ImageHeader")),

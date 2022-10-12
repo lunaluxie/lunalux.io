@@ -47,6 +47,14 @@ class JumbotronCardBlock(blocks.StructBlock):
         admin_text = 'header on start site'
         template = 'blocks/jumbotron_card.html'
 
+class JumbotronImageBlock(blocks.StructBlock):
+    image = ImageChooserBlock()
+
+    class Meta:
+        # icon = ""
+        label = "Jumbotron image block"
+        admin_text = 'header on start site'
+        template = 'blocks/jumbotron_image.html'
 
 
 

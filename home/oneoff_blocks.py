@@ -22,3 +22,11 @@ class IRTWidget(blocks.StaticBlock):
         label = "IRT Widget"
         admin_text = '{label}: configured elsewhere'.format(label=label)
         template = 'oneoff_blocks/irt.html'
+
+
+class WealthEnergyWidget(blocks.StaticBlock):
+    class Meta:
+        icon = ""
+        label = "Wealth v Energy Model Widget"
+        admin_text = '{label}: configured elsewhere'.format(label=label)
+        template = 'oneoff_blocks/wealth_energy_model_widget.html'

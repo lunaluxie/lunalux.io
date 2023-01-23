@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.urls import include, path
 from django.contrib import admin
+import django
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail import urls as wagtail_urls
@@ -26,6 +27,11 @@ if settings.DEBUG:
     # Serve static and media files from development server
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    def custom_page_not_found(request):
+        return django.views.defaults.page_not_found(request, None)
+
+    urlpatterns += [path("404/", custom_page_not_found, name="404")]
 
 urlpatterns = urlpatterns + [
 

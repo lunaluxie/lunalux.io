@@ -4,8 +4,15 @@
 
 {% block body_class %}template-404{% endblock %}
 
+
 {% block content %}
+<div class="container" style="height:100vh; margin-top:5rem;">
+<div class="article">
+<div class="content" style="max-width:100%; padding:0;">
 <h1>Page not found</h1>
 
 <h2>Sorry, this page could not be found.</h2>
+
+<p>Go back <a href="/">home</a> or try <a href="/search">searching</a> for what you're looking for.</p>
+</div></div></div>
 {% endblock %}

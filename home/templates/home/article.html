@@ -143,7 +143,7 @@
       <div class="entries">
           {% for entries in series.articles %}
           {% for entry in entries.value %}
-          <a href="{% pageurl entry %}">
+          <a href="{% pageurl entry %}?series={{series.id}}">
             <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
           </a>
           {% endfor %}

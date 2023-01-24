@@ -4,8 +4,3 @@
 
 - remove unused css 
 - refactor article_list. 
-
-
-# Finishing touches. 
-- start new database
-- implement pages from old website. 

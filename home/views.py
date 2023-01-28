@@ -30,7 +30,6 @@ def article_tag_list(request, tag):
     return render(request, "article_list.html",
                   context={"articles":queryset,"tag":tag.lower()})
 
-#.filter(is_project=True)
 
 def project_list(request):
     # TODO Change to single queryset on page???

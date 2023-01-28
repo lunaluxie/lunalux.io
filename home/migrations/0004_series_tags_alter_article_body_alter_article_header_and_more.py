@@ -13,7 +13,6 @@ import wagtail.images.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('taggit', '0005_auto_20220424_2025'),
         ('home', '0003_alter_article_body_alter_article_header_and_more'),
     ]
 

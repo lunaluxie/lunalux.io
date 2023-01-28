@@ -4,6 +4,7 @@
 {% block title %}Articles{% endblock %}
 
 {% block content %}
+
 <section class="posts" style="min-height: 90vh;">
   <style>
     /* body{
@@ -159,7 +160,9 @@
   </div>
 </div>
 
-<div class="container">
+
+{% include 'blocks/lines_list.html' with pages=articles include_images=True link_to_blog=False %}
+{% comment %} <div class="container">
   {% for obj in articles %}
   <hr style="opacity: 0.0875;
     border: 0;
@@ -206,8 +209,8 @@
     padding: 0;
     width: 100%;
     height: 1px;
-    {% comment %} background-color: currentColor; {% endcomment %}
+    background-color: currentColor;
     max-width: none;">
-</div>
+</div> {% endcomment %}
 </section>
 {% endblock content %}

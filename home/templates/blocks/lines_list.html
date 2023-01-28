@@ -128,14 +128,14 @@
     </div>
 
 
-    <div class="col2 {% if obj.include_images %}image{%endif%}">
+    <div class="col2 {% if include_images %}image{%endif%}">
       <div style="max-width: 30rem;">
         <a href="{% pageurl obj %}" style="text-decoration: none;">
           <h5 class="asdf" style="">{{ obj.title }}</h5>
-                    {% if obj.post_type == "pr" or not obj.post_type %}
-          {% if obj.include_images %}<p style="font-size: 1rem; margin-bottom: 0;    color: var(--color-muted); margin-top: 0.5rem;">
+
+          {% if include_images %}<p style="font-size: 1rem; margin-bottom: 0;    color: var(--color-muted); margin-top: 0.5rem;">
           {{ obj.search_description }}
-          </p>{% endif %}
+          </p>
           {% endif %}
         </a>
       </div>

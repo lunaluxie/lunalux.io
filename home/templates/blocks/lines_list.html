@@ -128,12 +128,12 @@
     </div>
 
 
-    <div class="col2 {% if include_images and obj.image %}image{%endif%}">
+    <div class="col2 {% if include_images and obj.image and obj.include_image_in_article_list %}image{%endif%}">
       <div style="max-width: 30rem;">
         <a href="{% pageurl obj %}" style="text-decoration: none;">
           <h5 class="asdf" style="">{{ obj.title }}</h5>
 
-          {% if include_images and obj.image %}<p style="font-size: 1rem; margin-bottom: 0;    color: var(--color-muted); margin-top: 0.5rem;">
+          {% if include_images and obj.image and obj.include_image_in_article_list %}<p style="font-size: 1rem; margin-bottom: 0;    color: var(--color-muted); margin-top: 0.5rem;">
           {{ obj.search_description }}
           </p>
           {% endif %}
@@ -141,7 +141,7 @@
       </div>
     </div>
 
-    {% if self.include_images or include_images %}
+    {% if include_images and obj.image and obj.include_image_in_article_list %}
     <div class="col3" style="">
       <a href="{% pageurl obj %}">
         {% image obj.image width-600 as tmp_photo %}

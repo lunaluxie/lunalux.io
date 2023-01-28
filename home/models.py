@@ -158,17 +158,11 @@ class Series(AbstractPage):
     articles = StreamField([("articles", blocks.ListBlock(blocks.PageChooserBlock()))],
                             use_json_field=True, null=True, blank=True)
     unlisted = models.BooleanField(default=False)
-    tags = ClusterTaggableManager(through=PageTag, blank=True)
 
     content_panels = AbstractPage.content_panels + [
                     FieldPanel("articles"),
                     FieldPanel('unlisted'),
-                    FieldPanel('tags'),]
-
-
-    search_fields = AbstractPage.search_fields + [
-        index.SearchField('tags'),
-    ]
+            ]
 
     def serve(self, request):
         first_article = self.articles[0].value[0]

@@ -13,7 +13,7 @@ basic_fields = [
     ("text", blocks.RichTextBlock(group="basic")),
     ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
     ('table', TableBlock(group="basic")),
-    # ("code", CodeBlock(label='Code', group="basic")),
+    ("code", CodeBlock(label='Code', group="basic")),
 ]
 
 body_fields = [

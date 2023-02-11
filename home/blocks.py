@@ -1,6 +1,14 @@
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
+class CodeBlock(blocks.StructBlock):
+    language = blocks.CharBlock(required=False)
+    code = blocks.TextBlock()
+
+    class Meta:
+        icon = "code"
+        template = "blocks/code_block.html"
+
 class CardListBlock(blocks.StructBlock):
 
     pages = blocks.ListBlock(

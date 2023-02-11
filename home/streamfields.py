@@ -4,7 +4,6 @@ from wagtail.fields import StreamField
 
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.contrib.table_block.blocks import TableBlock
-from wagtailcodeblock.blocks import CodeBlock
 from .blocks import *
 from .oneoff_blocks import *
 
@@ -13,7 +12,7 @@ basic_fields = [
     ("text", blocks.RichTextBlock(group="basic")),
     ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
     ('table', TableBlock(group="basic")),
-    ("code", CodeBlock(label='Code', group="basic")),
+    ("code", CodeBlock(group="basic")),
 ]
 
 body_fields = [

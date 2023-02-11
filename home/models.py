@@ -1,6 +1,6 @@
-from wagtail.core import blocks
+from wagtail import blocks
 from django.db import models
-from wagtail.core.fields import StreamField
+from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.models import Page
@@ -32,7 +32,7 @@ class AbstractPage(Page):
     is_project = models.BooleanField(default=False)
 
 
-    promote_panels = Page.promote_panels + [ImageChooserPanel("image")]
+    promote_panels = Page.promote_panels + [FieldPanel("image")]
     settings_panels = Page.settings_panels + [FieldPanel("is_project")]
 
     def get_context(self, request, *args, **kwargs):

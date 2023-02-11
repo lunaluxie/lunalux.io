@@ -1,6 +1,5 @@
-from wagtail.core import blocks
+from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.coreutils import resolve_model_string
 
 class CardListBlock(blocks.StructBlock):
 

@@ -90,8 +90,8 @@ class InterPageLink(models.Model):
         Page, on_delete=models.CASCADE, related_name="to_page_related")
 
 class Article(AbstractPage):
-    header = StreamField(article_header_fields, null=True, blank=True)
-    body = StreamField(article_fields, use_json_field=True,null=True, blank=True)
+    header = StreamField(article_header_fields, use_json_field=True, null=True, blank=True)
+    body = StreamField(article_fields, use_json_field=True, null=True, blank=True)
     tags = ClusterTaggableManager(through=PageTag, blank=True)
 
     unlisted = models.BooleanField(default=False)

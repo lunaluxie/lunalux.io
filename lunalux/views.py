@@ -1,7 +1,7 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import redirect, get_object_or_404
 import requests
-from home.models import HomePage, Contact
+from home.models import HomePage, Article, Contact
 import os
 
 
@@ -20,7 +20,7 @@ def contact(request):
         if data["success"]:
             Contact.objects.create(name=name, email=email, message=message)
 
-        page = get_object_or_404(HomePage, slug="contact")
+        page = get_object_or_404(Article, slug="contact")
         return redirect(page.get_url())
 
     return HttpResponseNotFound()

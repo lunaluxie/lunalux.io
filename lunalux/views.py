@@ -20,7 +20,7 @@ def contact(request):
         if data["success"]:
             Contact.objects.create(name=name, email=email, message=message)
 
-        page = get_object_or_404(HomePage, slug="contact-success")
+        page = get_object_or_404(HomePage, slug="contact")
         return redirect(page.get_url())
 
     return HttpResponseNotFound()

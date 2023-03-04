@@ -2,6 +2,7 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import redirect, get_object_or_404
 import requests
 from home.models import HomePage, Contact
+import os
 
 
 def contact(request):
@@ -13,7 +14,7 @@ def contact(request):
 
         r = requests.post('https://www.google.com/recaptcha/api/siteverify',
                         data={'response': request.POST.get("g-recaptcha-response"),
-                                'secret': "6Le0-T8hAAAAAMW00j_qGs86mHRIale_sY4b6P6K"})
+                                'secret': os.environ.get("RECHAPTA_SECRET")})
 
         data = r.json()
         if data["success"]:

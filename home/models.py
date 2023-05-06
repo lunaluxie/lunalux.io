@@ -79,6 +79,9 @@ class AbstractPage(Page):
                 except:
                     pass
 
+        if not queryset_with_proper_pages:
+            return self.get_recent_articles(n=n)
+
         return queryset_with_proper_pages
 
     def get_all_articles(self):

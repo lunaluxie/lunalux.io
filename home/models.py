@@ -11,6 +11,8 @@ from django.shortcuts import redirect
 from wagtail.search import index
 from .streamfields import body_fields, article_fields, article_header_fields
 from bs4 import BeautifulSoup
+import datetime
+from django.utils import timezone
 from collections import Counter
 
 class PageTag(TaggedItemBase):
@@ -57,6 +59,27 @@ class AbstractPage(Page):
 
     def get_recent_articles(self, n=8):
         return Article.objects.all().filter(live=True).filter(unlisted=False).order_by('-last_published_at')[:n]
+
+    def get_trending_articles(self, n=8):
+        queryset = PageHit.objects.all().order_by('-timestamp').filter(page__live=True)
+        queryset.filter(timestamp__gte=timezone.now() - datetime.timedelta(days=7))
+
+        queryset = [x.page for x in queryset]
+        queryset = [x[0] for x in Counter(queryset).most_common(n)]
+
+        queryset_with_proper_pages = []
+        for page in queryset:
+            try:
+                p = Series.objects.get(pk=page.pk)
+                queryset_with_proper_pages.append(p)
+            except:
+                try:
+                    p = Article.objects.get(pk=page.pk)
+                    queryset_with_proper_pages.append(p)
+                except:
+                    pass
+
+        return queryset_with_proper_pages
 
     def get_all_articles(self):
         return Article.objects.all().filter(live=True).filter(unlisted=False).order_by('-last_published_at')

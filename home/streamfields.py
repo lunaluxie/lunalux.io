@@ -27,6 +27,7 @@ body_fields = [
     ("ContactForm", ContactForm(group="")),
 
     # automatic
+    ("trending_articles", TrendingArticlesBlock(group="automatic")),
     ("recent_articles", RecentArticlesBlocks(group="automatic")),
     ("recent_projects", RecentProjectsBlocks(group="automatic")),
 

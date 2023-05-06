@@ -75,6 +75,16 @@ class RecentArticlesBlocks(blocks.StructBlock):
         template = 'blocks/recent_articles.html'
 
 
+class TrendingArticlesBlock(blocks.StructBlock):
+    number_of_articles = blocks.IntegerBlock(min_value=1, default=5)
+
+    class Meta:
+        # icon = ""
+        label = "Trending Articles"
+        admin_text = ''
+        template = 'blocks/trending_articles.html'
+
+
 class RecentProjectsBlocks(blocks.StructBlock):
     number_of_projects = blocks.IntegerBlock(min_value=1, default=3)
 

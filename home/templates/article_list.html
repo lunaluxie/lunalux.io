@@ -9,43 +9,47 @@
 <div class="container mt-3">
   <ul class="" style="padding: 0; margin-bottom: 2em; font-size: 1.6666666667rem;">
     {% if is_search %}
-    <form style="display:inline-block;" action="/search" method="GET" >
-    <li class="li-class"><button type="submit" style="background:inherit; border:inherit; padding:inherit; color:inherit; font:inherit; cursor:pointer;">Search</button></li>
-    <style>
-      .li-class input {
-        font-family: 'Lato', sans-serif;
-        font-weight: 400;
-        display: inline-block !important;
-        margin-right: 0.4666666667rem !important;
-        font-size: 2rem;
-        /* border-radius: 5px; */
-        border: 0;
-        border-bottom: 2px solid var(--link-color);
-        transition: border 300ms;
-        color:var(--body-color)
-      }
-      .li-class input:hover{
-        border-bottom: 2px solid var(--link-color-hover);
-      }
-      .li-class input:focus{
-        outline: 0;
-        border: 0;
-        border-bottom: 2px solid var(--link-color-hover);
+      <form style="display:inline-block;" action="/search" method="GET" >
+      <li class="li-class"><button type="submit" style="background:inherit; border:inherit; padding:inherit; color:inherit; font:inherit; cursor:pointer;">Search</button></li>
+      <style>
+        .li-class input {
+          font-family: 'Lato', sans-serif;
+          font-weight: 400;
+          display: inline-block !important;
+          margin-right: 0.4666666667rem !important;
+          font-size: 2rem;
+          /* border-radius: 5px; */
+          border: 0;
+          border-bottom: 2px solid var(--link-color);
+          transition: border 300ms;
+          color:var(--body-color)
+        }
+        .li-class input:hover{
+          border-bottom: 2px solid var(--link-color-hover);
+        }
+        .li-class input:focus{
+          outline: 0;
+          border: 0;
+          border-bottom: 2px solid var(--link-color-hover);
 
-      }
-      .li-class input:focus-visible{
-        outline: 0;
-        border: 0;
-        border-bottom: 2px solid var(--link-color-hover);
-      }
-    </style>
-    <li class="li-class"><input style="width:100%; background: transparent;" name="query" placeholder="" value="{{search_query}}"></li>
-    </form>
+        }
+        .li-class input:focus-visible{
+          outline: 0;
+          border: 0;
+          border-bottom: 2px solid var(--link-color-hover);
+        }
+      </style>
+      <li class="li-class"><input style="width:100%; background: transparent;" name="query" placeholder="" value="{{search_query}}"></li>
+      </form>
     {% else %}
-    <li class="li-class">{% if tag != 'all'%}<a href="/articles" class="faded-xlight">All</a>{%else%}All{%endif%}</li>
-    <li class="li-class">{% if tag != 'physics'%}<a class="faded-xlight" href="/articles/tag/physics">Physics</a>{%else%}Physics{%endif%}</li>
-    <li class="li-class">{% if tag != 'ai'%}<a class="faded-xlight" href="/articles/tag/ai">AI</a>{%else%}AI{%endif%}</li>
-    {% if tag != 'all'%}{% if tag != 'physics' %}{% if tag != 'ai' %}<li style="text-transform: capitalize;" class="li-class">{{tag}}</li>{%endif%}{%endif%}{%endif%}
+      {% if tag == "Trending" %}
+        <li class="li-class">Trending</li>
+      {% else %}
+        <li class="li-class">{% if tag != 'all'%}<a href="/articles" class="faded-xlight">All</a>{%else%}All{%endif%}</li>
+        <li class="li-class">{% if tag != 'physics'%}<a class="faded-xlight" href="/articles/tag/physics">Physics</a>{%else%}Physics{%endif%}</li>
+        <li class="li-class">{% if tag != 'ai'%}<a class="faded-xlight" href="/articles/tag/ai">AI</a>{%else%}AI{%endif%}</li>
+        {% if tag != 'all'%}{% if tag != 'physics' %}{% if tag != 'ai' %}<li style="text-transform: capitalize;" class="li-class">{{tag}}</li>{%endif%}{%endif%}{%endif%}
+      {% endif %}
     {% endif %}
   </ul>
   <div class="" style="margin-bottom: 0.8em;">

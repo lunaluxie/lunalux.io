@@ -89,6 +89,14 @@ class InterPageLink(models.Model):
     to_page = models.ForeignKey(
         Page, on_delete=models.CASCADE, related_name="to_page_related")
 
+
+class PageHit(models.Model):
+    page = models.ForeignKey(Page, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.page.title} - {self.timestamp}"
+
 class Article(AbstractPage):
     header = StreamField(article_header_fields, use_json_field=True, null=True, blank=True)
     body = StreamField(article_fields, use_json_field=True, null=True, blank=True)
@@ -128,6 +136,12 @@ class Article(AbstractPage):
 
         return context
 
+    def serve(self, request):
+
+        # create pageview
+        PageHit.objects.create(page=self)
+        return super().serve(request)
+
 
     def add_interpage_links(self):
         soup = BeautifulSoup(str(self.body), 'html.parser')
@@ -165,6 +179,9 @@ class Series(AbstractPage):
             ]
 
     def serve(self, request):
+        # add pageview
+        PageHit.objects.create(page=self)
+
         first_article = self.articles[0].value[0]
         return redirect(f"{first_article.url}?series={self.id}")
 

@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from itertools import chain
 from urllib.parse import unquote
-from .models import AbstractPage, HomePage, Article, Series
+import datetime
+from django.utils import timezone
+from collections import Counter
+from .models import AbstractPage, HomePage, Article, Series, PageHit
 
 def article_list(request):
     queryset = Article.objects.all().filter(live=True).filter(unlisted=False)
@@ -20,6 +23,31 @@ def article_list(request):
 
     return render(request, "article_list.html",
                   context={"articles": queryies_combined, "tag": "all"})
+
+def article_trending_list(request):
+    # highest number of hits in the last 7 days
+    queryset = PageHit.objects.all().order_by('-timestamp').filter(page__live=True)
+    queryset.filter(timestamp__gte=timezone.now() - datetime.timedelta(days=7))
+
+    queryset = [x.page for x in queryset]
+    queryset = [x[0] for x in Counter(queryset).most_common()]
+
+    queryset_with_proper_pages = []
+    for page in queryset:
+        try:
+            p = Series.objects.get(pk=page.pk)
+            queryset_with_proper_pages.append(p)
+        except:
+            try:
+                p = Article.objects.get(pk=page.pk)
+                queryset_with_proper_pages.append(p)
+            except:
+                pass
+
+    return render(request, "article_list.html",
+                  context={"articles": queryset_with_proper_pages, "tag": "Trending", "trending":True})
+
+
 
 
 def article_tag_list(request, tag):

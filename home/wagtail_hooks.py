@@ -2,7 +2,7 @@ from wagtail.contrib.modeladmin.options import (
     ModelAdmin, modeladmin_register)
 from wagtail.signals import page_published
 
-from .models import Article, Series, Contact, InterPageLink
+from .models import Article, Series, Contact, InterPageLink, PageHit
 
 
 
@@ -28,6 +28,11 @@ class InterPageLinkAdmin(ModelAdmin):
 
 modeladmin_register(InterPageLinkAdmin)
 
+
+# class PageHitAdmin(ModelAdmin):
+#     model = PageHit
+
+# modeladmin_register(PageHitAdmin)
 
 
 

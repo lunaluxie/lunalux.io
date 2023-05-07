@@ -2,7 +2,6 @@ from wagtail import blocks
 from django.db import models
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.models import Page
 from taggit.models import TaggedItemBase
 from modelcluster.contrib.taggit import ClusterTaggableManager

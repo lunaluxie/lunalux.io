@@ -4,7 +4,7 @@ from urllib.parse import unquote
 import datetime
 from django.utils import timezone
 from collections import Counter
-from .models import AbstractPage, HomePage, Article, Series, PageHit
+from .models import AbstractPage, HomePage, Article, Series, PageHit, PageTag
 
 def article_list(request):
     queryset = Article.objects.all().filter(live=True).filter(unlisted=False)
@@ -54,8 +54,12 @@ def article_trending_list(request):
 
 def article_tag_list(request, tag):
     tag = unquote(tag)
-    queryset = Article.objects.all().filter(live=True).filter(
-        unlisted=False).filter(tags__name__icontains=tag).distinct().order_by('-first_published_at')
+    # queryset = Article.objects.all().filter(live=True).filter(
+    #     unlisted=False).filter(tags__name__icontains=tag).distinct().order_by('-first_published_at')
+
+    queryset = PageTag.objects.filter(tag__name__icontains=tag).filter(content_object__live=True).filter(content_object__unlisted=False)
+    queryset = queryset.distinct().order_by('-content_object__first_published_at')
+    queryset = [x.content_object for x in queryset]
 
     return render(request, "article_list.html",
                   context={"articles":queryset,"tag":tag.lower()})

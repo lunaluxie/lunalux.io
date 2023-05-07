@@ -61,7 +61,7 @@ class AbstractPage(Page):
         return Article.objects.all().filter(live=True).filter(unlisted=False).order_by('-last_published_at')[:n]
 
     def get_trending_articles(self, n=8):
-        queryset = PageHit.objects.all().order_by('-timestamp').filter(page__live=True)
+        queryset = PageHit.objects.all().order_by('-timestamp').filter(page__live=True).filter(page__unlisted=False)
         queryset.filter(timestamp__gte=timezone.now() - datetime.timedelta(days=7))
 
         queryset = [x.page for x in queryset]

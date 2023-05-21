@@ -61,7 +61,7 @@ class AbstractPage(Page):
 
     def get_trending_articles(self, n=8):
         queryset = PageHit.objects.all().order_by('-timestamp').filter(page__live=True)
-        queryset.filter(timestamp__gte=timezone.now() - datetime.timedelta(days=7))
+        queryset.filter(timestamp__gte=timezone.now() - datetime.timedelta(days=7)).limit(n)
 
         queryset = [x.page for x in queryset]
         queryset = [x[0] for x in Counter(queryset).most_common(n)]
@@ -69,12 +69,12 @@ class AbstractPage(Page):
         queryset_with_proper_pages = []
         for page in queryset:
             try:
-                p = Series.objects.get(pk=page.pk)
+                p = Article.objects.get(pk=page.pk)
                 if not p.unlisted:
                     queryset_with_proper_pages.append(p)
             except:
                 try:
-                    p = Article.objects.get(pk=page.pk)
+                    p = Series.objects.get(pk=page.pk)
                     if not p.unlisted:
                         queryset_with_proper_pages.append(p)
                 except:

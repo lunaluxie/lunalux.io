@@ -36,6 +36,7 @@ if settings.DEBUG:
 urlpatterns = urlpatterns + [
 
     path("", include(('home.urls', "home"))),
+    path("problems/", include(('problems.urls', "problems"))),
 
     path('sitemap.xml', sitemap),
 

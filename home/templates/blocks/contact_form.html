@@ -21,6 +21,23 @@
     .contact-form textarea:hover{
       border-color:black;
     }
+
+    @media (prefers-color-scheme: dark) {
+        .contact-form input, select, textarea {
+          background-color: var(--body-bg);
+          color: var(--body-color)
+          border: 1px solid rgb(200, 200, 200);
+        }
+        .contact-form input:hover{
+          border-color: white;
+        }
+        .contact-form select:hover{
+          border-color: white;
+        }
+        .contact-form textarea:hover{
+          border-color: white;
+        }
+    }
   </style>
   <style>
       @media screen and (max-width: 767px) {

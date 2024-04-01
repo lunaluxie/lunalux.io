@@ -14,7 +14,7 @@ DATABASES = {
         'NAME': 'lunaluxio',
         'USER': 'lunalux',
         'PASSWORD': os.environ.get("dbpass"),
-        'HOST': 'bacayo.iad1-mysql-e2-2b.dreamhost.com',
+        'HOST': 'bacayo.iad1-mysql-e2-2a.dreamhost.com',
         'PORT': '3306',
     }
 }

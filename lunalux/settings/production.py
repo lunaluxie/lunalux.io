@@ -5,7 +5,8 @@ DEBUG = True
 # change this
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*", "lunalux.io"]
+CSRF_TRUSTED_ORIGINS = ['*','https://lunalux.io']
 
 
 DATABASES = {

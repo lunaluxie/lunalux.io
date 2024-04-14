@@ -27,7 +27,8 @@ root = "/home/kasfre2/cdn.lunalux.io/public"
 STATIC_ROOT = os.path.join(root, "static")
 MEDIA_ROOT = os.path.join(root, "media")
 
-STATIC_URL = 'https://cdn.lunalux.io/'
+STATIC_URL = 'https://cdn.lunalux.io/static'
+MEDIA_URL = 'https://cdn.lunalux.io/media'
 
 
 try:

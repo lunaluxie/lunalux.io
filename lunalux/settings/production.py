@@ -23,7 +23,7 @@ DATABASES = {
 
 
 # change these to fit.
-root = "/home/kasfre2/lunalux.io/public"
+root = "/home/kasfre2/cdn.lunalux.io/public"
 STATIC_ROOT = os.path.join(root, "static")
 MEDIA_ROOT = os.path.join(root, "media")
 

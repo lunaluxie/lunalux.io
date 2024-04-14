@@ -7,7 +7,7 @@
   "@type": "Article",
   "headline": "{{instance.title}}",
   {% if instance.description %}"description":"{{instance.description}}",{% endif %}
-  {% if instance.image %}"image": "https://lunalux.io{{instance.image.url}}",{% endif %}
+  {% if instance.image %}"image": "https://cdn.lunalux.io{{instance.image.url}}",{% endif %}
   "author": {
     "@type": "Person",
     "name": "{{instance.user.get_full_name}}"

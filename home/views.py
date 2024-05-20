@@ -25,29 +25,10 @@ def article_list(request):
                   context={"articles": queryies_combined, "tag": "all"})
 
 def article_trending_list(request):
-    # highest number of hits in the last 7 days
-    queryset = PageHit.objects.all().order_by('-timestamp').filter(page__live=True)
-    queryset.filter(timestamp__gte=timezone.now() - datetime.timedelta(days=7))
-
-    queryset = [x.page for x in queryset]
-    queryset = [x[0] for x in Counter(queryset).most_common()]
-
-    queryset_with_proper_pages = []
-    for page in queryset:
-        try:
-            p = Article.objects.get(pk=page.pk)
-            if not p.unlisted:
-                queryset_with_proper_pages.append(p)
-        except:
-            try:
-                p = Series.objects.get(pk=page.pk)
-                if not p.unlisted:
-                    queryset_with_proper_pages.append(p)
-            except:
-                pass
+    articles= Article.objects.first().get_trending_articles()
 
     return render(request, "article_list.html",
-                  context={"articles": queryset_with_proper_pages, "tag": "Trending", "trending":True})
+                  context={"articles": articles, "tag": "Trending", "trending":True})
 
 
 

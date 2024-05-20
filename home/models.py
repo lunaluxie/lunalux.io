@@ -15,6 +15,7 @@ from django.utils import timezone
 from collections import Counter
 from wagtail.search import index
 from django.db.models import Count, F, Q
+from django.db.models import Case, When
 
 class PageTag(TaggedItemBase):
     content_object = ParentalKey(
@@ -63,7 +64,7 @@ class AbstractPage(Page):
 
     def get_trending_articles(self, n=8):
         # Get the queryset of PageHit objects
-        queryset = PageHit.objects.filter(page__live=True)
+        queryset = PageHit.objects.all()
 
         # Filter the queryset to include only the PageHits from the last 7 days
         queryset = queryset.filter(timestamp__gte=timezone.now() - datetime.timedelta(days=7))
@@ -74,10 +75,15 @@ class AbstractPage(Page):
         # Get the top n pages with the highest count
         top_pages = page_counts.order_by('-count')[:n]
 
+        # preserve order of top_pages
+        # https://gist.github.com/balazs-endresz/fd4efda41d4581631f4c
+        ordering = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(top_pages.values_list('page', flat=True))])
+
         # Get the queryset of Article and Series objects with the proper pages
         queryset_with_proper_pages = Article.objects.filter(
-            Q(pk__in=top_pages.values('page')) & ~Q(unlisted=True)
-        )
+            Q(pk__in=top_pages.values('page')),
+            ~Q(unlisted=True)
+        ).order_by(ordering)
 
         if not queryset_with_proper_pages:
             return self.get_recent_articles(n=n)

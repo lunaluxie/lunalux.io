@@ -25,7 +25,7 @@ def article_list(request):
                   context={"articles": queryies_combined, "tag": "all"})
 
 def article_trending_list(request):
-    articles= Article.objects.first().get_trending_articles()
+    articles= Article.objects.first().get_trending_articles(n=15)
 
     return render(request, "article_list.html",
                   context={"articles": articles, "tag": "Trending", "trending":True})

@@ -73,7 +73,7 @@ class AbstractPage(Page):
         page_counts = queryset.values('page').annotate(count=Count('page'))
 
         # Get the top n pages with the highest count
-        top_pages = page_counts.order_by('-count')[:n]
+        top_pages = page_counts.order_by('-count')
 
         # preserve order of top_pages
         # https://gist.github.com/balazs-endresz/fd4efda41d4581631f4c
@@ -83,7 +83,9 @@ class AbstractPage(Page):
         queryset_with_proper_pages = Article.objects.filter(
             Q(pk__in=top_pages.values('page')),
             ~Q(unlisted=True)
-        ).order_by(ordering)
+        ).order_by(ordering)[:n]
+
+        print(queryset_with_proper_pages.query)
 
         if not queryset_with_proper_pages:
             return self.get_recent_articles(n=n)

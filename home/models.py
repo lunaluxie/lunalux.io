@@ -14,6 +14,7 @@ import datetime
 from django.utils import timezone
 from collections import Counter
 from wagtail.search import index
+from django.db.models import Count, F, Q
 
 class PageTag(TaggedItemBase):
     content_object = ParentalKey(
@@ -61,25 +62,22 @@ class AbstractPage(Page):
         return Article.objects.all().filter(live=True).filter(unlisted=False).order_by('-last_published_at')[:n]
 
     def get_trending_articles(self, n=8):
-        queryset = PageHit.objects.all().order_by('-timestamp').filter(page__live=True)
-        queryset.filter(timestamp__gte=timezone.now() - datetime.timedelta(days=7))
+        # Get the queryset of PageHit objects
+        queryset = PageHit.objects.filter(page__live=True)
 
-        queryset = [x.page for x in queryset]
-        queryset = [x[0] for x in Counter(queryset).most_common(n)]
+        # Filter the queryset to include only the PageHits from the last 7 days
+        queryset = queryset.filter(timestamp__gte=timezone.now() - datetime.timedelta(days=7))
 
-        queryset_with_proper_pages = []
-        for page in queryset:
-            try:
-                p = Article.objects.get(pk=page.pk)
-                if not p.unlisted:
-                    queryset_with_proper_pages.append(p)
-            except:
-                try:
-                    p = Series.objects.get(pk=page.pk)
-                    if not p.unlisted:
-                        queryset_with_proper_pages.append(p)
-                except:
-                    pass
+        # Count the number of occurrences of each page
+        page_counts = queryset.values('page').annotate(count=Count('page'))
+
+        # Get the top n pages with the highest count
+        top_pages = page_counts.order_by('-count')[:n]
+
+        # Get the queryset of Article and Series objects with the proper pages
+        queryset_with_proper_pages = Article.objects.filter(
+            Q(pk__in=top_pages.values('page')) & ~Q(unlisted=True)
+        )
 
         if not queryset_with_proper_pages:
             return self.get_recent_articles(n=n)

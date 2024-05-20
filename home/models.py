@@ -85,8 +85,6 @@ class AbstractPage(Page):
             ~Q(unlisted=True)
         ).order_by(ordering)[:n]
 
-        print(queryset_with_proper_pages.query)
-
         if not queryset_with_proper_pages:
             return self.get_recent_articles(n=n)
 

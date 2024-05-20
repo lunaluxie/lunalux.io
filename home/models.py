@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 import datetime
 from django.utils import timezone
 from collections import Counter
+from wagtail.search import index
 
 class PageTag(TaggedItemBase):
     content_object = ParentalKey(
@@ -142,6 +143,7 @@ class Article(AbstractPage):
     search_fields = AbstractPage.search_fields + [
         index.SearchField('body'),
         index.SearchField('tags'),
+        index.FilterField('unlisted')
     ]
 
     def get_context(self, request, *args, **kwargs):

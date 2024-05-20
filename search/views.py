@@ -12,24 +12,14 @@ def search(request):
 
     # Search
     if search_query:
-        search_results = Page.objects.live().search(search_query)
-
-        pages = []
-        for page in search_results:
-            try:
-                pages.append(Article.objects.get(id=page.id))
-            except: pass
-            try:
-                pages.append(Series.objects.get(id=page.id))
-            except: pass
+        search_results = Article.objects.filter(unlisted=False).live().search(search_query)
 
         query = Query.get(search_query)
 
         # Record hit
         query.add_hit()
     else:
-        pages = Article.objects.live().order_by('-first_published_at')
-        search_results = Page.objects.none()
+        search_results = Article.objects.filter(unlisted=False).live().order_by('-first_published_at')
 
     # Pagination
     paginator = Paginator(search_results, 10)
@@ -48,7 +38,7 @@ def search(request):
         "article_list.html",
         {
             "search_query": search_query,
-            "articles": pages,
+            "articles": search_results,
             "is_search": True
         },
     )

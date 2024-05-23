@@ -22,7 +22,7 @@ The main content pages are `HomePage`, and `Article` which are located in [home/
 Whenever an `Article` is saved, the body is scanned for internal links (see `add_interpage_links` on `Article`) to other articles. If an internal link is found, a `InterPageLink` is created between the two articles. This is used to create a "Continue Reading" section at the bottom of each article.
 
 ### Trending pages
-Whenever a page is rendered, we save a `PageHit` object to the database. We use these to find the trending pages on the site by counting the number of hits in the last 7 days (see `AbstractPage.get_trending_articles`). This is used to create the "Trending" section on the index page.
+Whenever a page is rendered, we save a `PageHit` object to the database. We use these to find the trending pages on the site by counting the number of hits in the last 7 days (see `AbstractPage.get_trending_articles`). This is used to create the "[Trending](https://lunalux.io/articles/trending)" section on the index page.
 
 ### Interactive widgets
 In some articles, I include interactive widgets such as in [Gradient Descent](https://lunalux.io/gradient-descent-how-machines-learn/?series=14). These are one-off components located in [home/templates/oneoff_blocks](home/templates/oneoff_blocks).

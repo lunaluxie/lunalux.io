@@ -13,10 +13,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get("dbname"),
-        'USER': os.environ.get('dbuser'),
+        'USER': os.environ.get("dbuser"),
         'PASSWORD': os.environ.get("dbpass"),
         'HOST': os.environ.get("dbhost"),
-        'PORT': os.environ.get("dbport"),
+        'PORT': int(os.environ.get("dbport")),
     }
 }
 

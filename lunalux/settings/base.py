@@ -170,12 +170,7 @@ WAGTAILSEARCH_BACKENDS = {
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = "http://example.com"
+WAGTAILADMIN_BASE_URL = "http://lunalux.io"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-
-WAGTAIL_CODE_BLOCK_LINE_NUMBERS = False
-WAGTAIL_CODE_BLOCK_COPY_TO_CLIPBOARD = False
-WAGTAIL_CODE_BLOCK_THEME = None

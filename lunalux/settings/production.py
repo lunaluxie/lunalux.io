@@ -5,25 +5,25 @@ DEBUG = False
 # change this
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-ALLOWED_HOSTS = ["*", "lunalux.io"]
-CSRF_TRUSTED_ORIGINS = ['*','https://lunalux.io']
+ALLOWED_HOSTS = ["lunalux.io"]
+CSRF_TRUSTED_ORIGINS = ['https://lunalux.io']
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lunaluxio',
-        'USER': 'lunalux',
+        'NAME': os.environ.get("dbname"),
+        'USER': os.environ.get('dbuser'),
         'PASSWORD': os.environ.get("dbpass"),
-        'HOST': 'bacayo.iad1-mysql-e2-2a.dreamhost.com',
-        'PORT': '3306',
+        'HOST': os.environ.get("dbhost"),
+        'PORT': os.environ.get("dbport"),
     }
 }
 
 
 
 # change these to fit.
-root = "/home/kasfre2/cdn.lunalux.io/public"
+root = "$HOME/cdn.lunalux.io/public"
 STATIC_ROOT = os.path.join(root, "static")
 MEDIA_ROOT = os.path.join(root, "media")
 

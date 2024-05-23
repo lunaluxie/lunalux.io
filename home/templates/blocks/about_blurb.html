@@ -84,11 +84,12 @@
         <h2>About</h2>
         <div class="" style="display:flex; justify-content: space-between; flex-wrap: wrap;">
 
-            <div class="about-text" style="flex: 0 48%;  max-width: 65ch; margin-top: 0;">
+            {% comment %} Potentially add: max-width: 65ch; {% endcomment %}
+            <div class="about-text" style="flex: 0 48%; margin-top: 0;">
                 {{self.column1_text|richtext}}
 
             </div>
-            <div class="about-text" style="flex: 0 0 48%;  max-width: 65ch; margin-top: 0;">
+            <div class="about-text" style="flex: 0 0 48%; margin-top: 0;">
                 {{self.column2_text|richtext}}
             </div>
 

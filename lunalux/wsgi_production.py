@@ -11,7 +11,8 @@ import os
 from dotenv import load_dotenv
 from django.core.wsgi import get_wsgi_application
 
-load_dotenv("~/lunalux.io/.env")
+HOME = os.environ.get("HOME")
+load_dotenv(os.path.join(HOME, "/lunalux.io/.env"))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lunalux.settings.production")
 

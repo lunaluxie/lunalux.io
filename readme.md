@@ -35,7 +35,7 @@ Make sure that you have one of the following Python versions `3.8, 3.9, 3.10, 3.
 1: Create a virtual environment and install the dependencies:
 
 ```bash
-python3 -m venv venv
+python3 -m virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```

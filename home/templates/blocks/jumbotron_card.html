@@ -11,7 +11,7 @@
       {% image jumbotron.image width-700 as tmp_photo %}
       <div class="image" style="background-image: url({{tmp_photo.url}}),linear-gradient(rgba(255, 86, 255, 0.3),rgba(55, 143, 255, 0.3));"></div>
       <div class="content">
-        <h1 class="title">{{jumbotron.title}}</h1>
+        <p class="title">{{jumbotron.title}}</p>
 
         <a class="link link-text" href="{% pageurl jumbotron%}">read<img class="arrow smart-invert" style="margin-left: 0.5ch;" src="{% static 'icons/arrow.png' %}" width="9"></a>
 

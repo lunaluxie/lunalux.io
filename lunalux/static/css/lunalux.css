@@ -877,6 +877,10 @@ footer a {
   padding-left: 15px;
   border-left: 2px solid var(--body-color);
   font-family: Poppins, sans-serif;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
 }
 
 @media screen and (max-width: 400px) {
@@ -1178,6 +1182,7 @@ footer a {
 .jumbotron>.title {
   text-transform: uppercase;
   font-size: 48px;
+
 }
 
 .jumbotron .light {

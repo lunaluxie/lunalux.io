@@ -53,6 +53,14 @@
         {% include "footer.html" %}
 
         {# Global javascript #}
+        <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/head-support.js"></script>
+        <script>
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+        })
+        </script>
+
         <script type="text/javascript" src="{% static 'js/lunalux.js' %}"></script>
 
         <script src="https://cdn.cookiecook.io/core/cc.js"></script>

@@ -177,7 +177,7 @@
                       {{ obj.from_page.search_description }}
                     </div>
                     <div class="link">
-                      <a class="link-text" href="{% pageurl  obj.from_page %}">read</a>
+                      <a class="link-text" href="{% pageurl  obj.from_page %}" hx-push-url="true" hx-get="{% pageurl  obj.from_page %}"  hx-swap="innerHTML show:top" hx-target="#main">read</a>
                       <img class="smart-invert" src="{% static 'icons/arrow.png' %}" width="9">
                     </div>
                   </div>

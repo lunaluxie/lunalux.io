@@ -167,6 +167,8 @@ class Article(AbstractPage):
 
         context['links'] = links
 
+        context["HTMX"] = request.META.get('HTTP_HX_REQUEST')
+
         return context
 
     def serve(self, request):

@@ -33,6 +33,20 @@ def search(request):
     if not search_query:
         search_query=""
 
+    if request.META.get('HTTP_HX_REQUEST'):
+        return TemplateResponse(
+            request,
+            "blocks/lines_list.html",
+            {
+                "search_query": search_query,
+                "pages": search_results,
+                "is_search": True,
+                "include_images":True,
+                "link_to_blog":False,
+                "htmx":True,
+            },
+        )
+
     return TemplateResponse(
         request,
         "article_list.html",

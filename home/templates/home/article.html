@@ -5,16 +5,22 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "{{instance.title}}",
-  {% if instance.description %}"description":"{{instance.description}}",{% endif %}
-  {% if instance.image %}"image": "https://cdn.lunalux.io{{instance.image.url}}",{% endif %}
+  "headline": "{{page.title}}",
+  {% if page.search_description %}"description":"{{page.search_description}}",{% endif %}
+  {% if page.image %}"image": "https://cdn.lunalux.io{{page.image.url}}",{% endif %}
   "author": {
     "@type": "Person",
-    "name": "{{instance.user.get_full_name}}"
+    "name": "{{page.user.get_full_name}}"
   },
-  "name": "{{instance.slug}}"
+  "name": "{{page.slug}}"
 }
 </script>
+
+<link hx-preserve="true" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script hx-preserve="true" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<link hx-preserve="true" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+<script hx-preserve="true" src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+<script hx-preserve="true" src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
 {% endblock extra_head %}
 
 {% block content %}
@@ -52,170 +58,14 @@
     }
   </style>
 
-  <header class="article-header">
-
-  {% include_block page.header %}
-  </header>
-
-  <div class="row">
-
-    <style>
-      .content{
-        max-width:inherit!important;
-      }
-      .content>.block-text{
-        max-width:700px;
-      }
-    </style>
-
-    <div id="article" class="article">
-
-      <div class="title"><h1>{{ self.title }}</h1></div>
-
-      {% if self.search_description %}
-        <div class="description"><p>{{self.search_description}}</p></div>
-      {% endif %}
-
-
-      <div class="content">
-          {% include_block page.body %}
-      </div>
-
-      <div class="byline">
-        <div class="author">
-            By <a href="/about" rel="author">{{self.owner.get_full_name}}</a>
-        </div>
-        {% if instance.show_timestamp %}
-        <div class="publish">
-          {{ instance.publish }}
-        </div>
-        {% endif %}
-      </div>
-
-    </div>
-
-
-    {% if series %}
-        <style>
-        #sidebar{
-          opacity:0 ;
-          transition: opacity 300ms ease-in-out;
-        }
-        #sidebar.open {
-          opacity:1;
-        }
-      </style>
-      <div class="series-container" id="series-navbar" style="position:fixed; left:0;">
-        <div id="sidebar" class="series sidebar">
-          <div class="title"><a href=""><h1>{{series.title}}</h1></a></div>
-          <div class="entries">
-            {% for entries in series.articles %}
-            {% for entry in entries.value %}
-            <a href="{% pageurl entry %}?series={{series.id}}">
-              <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
-            </a>
-            {% endfor %}
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-      <script>
-        let seriesContainer = document.getElementById("series-navbar")
-        seriesContainer.style.marginLeft = (window.innerWidth-700)/2-280 + "px"
-
-        window.addEventListener("resize",()=>{
-          seriesContainer.style.marginLeft = (window.innerWidth-700)/2-280 + "px"
-        })
-      </script>
-    {% endif %}
-
-
+  <div id="article-content">
+    {% include 'home/article_partial.html' with page=page series=series links=links series=series%}
   </div>
-
-  {% if series %}
-  <style>
-    @media screen and (min-width: 1281px){
-      .series-end{
-        display:none;
-      }
-    }
-  </style>
-  <div class="series-end" style="">
-    <div style="max-width:700px; margin:0 auto;">
-      <div class="title">
-          <a href=""><h1>{{series.title}}</h1></a>
-      </div>
-      <div class="entries">
-          {% for entries in series.articles %}
-          {% for entry in entries.value %}
-          <a href="{% pageurl entry %}?series={{series.id}}">
-            <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
-          </a>
-          {% endfor %}
-          {% endfor %}
-      </div>
-      <spacer></spacer>
-    </div>
-  </div>
-  {% endif %}
-
-
-
-  {% if links and not series %}
-    <div class="similar">
-      <div class="single-col">
-        <div class="section-header">
-          <h1>continue reading</h1>
-        </div>
-        <div class="row">
-            {% for obj, freq in links %}
-            <div class="col">
-              <div class="card-small" style="max-width:400px;">
-                <div class="content">
-                    <div class="title">{{ obj.from_page.title }}</div>
-                    <div class="body">
-                      {{ obj.from_page.search_description }}
-                    </div>
-                    <div class="link">
-                      <a class="link-text" href="{% pageurl  obj.from_page %}">read</a>
-                      <img class="smart-invert" src="{% static 'icons/arrow.png' %}" width="9">
-                    </div>
-                  </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-      </div>
-    </div>
-  {% endif %}
 
 {% endblock content %}
 
 
 {% block extra_js %}
-  <link rel="stylesheet"
-  href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script> // code highlight
-      document.addEventListener("DOMContentLoaded", function(event) {
-        var els = document.getElementsByTagName("pre")
-        for (i=0; i<els.length; i++){
-          block = els[i]
-          hljs.highlightBlock(block)
-        }
-      })
-    </script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/contrib/auto-render.min.js" integrity="sha384-cXpztMJlr2xFXyDSIfRWYSMVCXZ9HeGXvzyKTYrn03rsMAlOtIQVzjty5ULbaP8L" crossorigin="anonymous"></script>
-  <script> // katex
-    renderMathInElement(document.body, {"delimiters": [
-    {left: "$$", right: "$$", display: true},
-    {left: "$", right: "$", display: false}
-    ]});
-  </script>
-
   {% if series %}
   <script> // sidebar fixing
     var sidebar = document.getElementById('sidebar');
@@ -279,6 +129,4 @@
     })
   </script>
   {% endif %}
-
-  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 {% endblock extra_js %}

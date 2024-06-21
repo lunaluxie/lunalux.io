@@ -9,7 +9,7 @@
 <div class="container mt-3">
   <ul class="" style="padding: 0; margin-bottom: 2em; font-size: 1.6666666667rem;">
     {% if is_search %}
-      <form style="display:inline-block;" action="/search" method="GET" >
+      <form style="display:inline-block;" hx-get="/search" hx-target="#articles" hx-swap="innerHTML" method="GET" >
       <li class="li-class"><button type="submit" style="background:inherit; border:inherit; padding:inherit; color:inherit; font:inherit; cursor:pointer;">Search</button></li>
       <style>
         .li-class input {
@@ -53,10 +53,12 @@
     {% endif %}
   </ul>
   <div class="" style="margin-bottom: 0.8em;">
-    <span class="" style="color: var(--body-color);">{{ articles|length }} articles</span>
+    <span class="" id="article_count" style="color: var(--body-color);">{{ articles|length }} articles</span>
   </div>
 </div>
 
-{% include 'blocks/lines_list.html' with pages=articles include_images=True link_to_blog=False %}
+<section id="articles">
+  {% include 'blocks/lines_list.html' with pages=articles include_images=True link_to_blog=False %}
+</section>
 </section>
 {% endblock content %}

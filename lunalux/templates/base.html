@@ -17,18 +17,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/lunalux.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/gi.css' %}">
+        <link hx-preserve="true" rel="stylesheet" type="text/css" href="{% static 'css/lunalux.css' %}">
+        <link hx-preserve="true" rel="stylesheet" type="text/css" href="{% static 'css/gi.css' %}">
 
-        <link href="https://fonts.googleapis.com/css?family=Lato|Roboto|Montserrat:wght@300;400" rel="stylesheet">
-        <link rel="icon" href="{% static 'icons/logo.ico'%}">
+        <link hx-preserve="true" href="https://fonts.googleapis.com/css?family=Lato|Roboto|Montserrat:wght@300;400" rel="stylesheet">
+        <link hx-preserve="true" rel="icon" href="{% static 'icons/logo.ico'%}">
 
         {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
         {% endblock %}
+
+        {% block extra_head %}
+        {% endblock %}
     </head>
 
-    <body class="{% block body_class %}{% endblock %}">
+    <body class="{% block body_class %}{% endblock %}" hx-ext="head-support">
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFV1NFBRY4"></script>
         <script>
@@ -53,28 +56,33 @@
         {% include "footer.html" %}
 
         {# Global javascript #}
+        <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/head-support.js"></script>
+        <script>
+        htmx.onLoad(function(elt){
+            console.log(elt)
+            delete cc;
+            var cc = new CC("450ad205c5a44a228c74c1dfdcfc30b5");
+        })
+        </script>
+        <script>
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+        })
+        </script>
+
         <script type="text/javascript" src="{% static 'js/lunalux.js' %}"></script>
 
         <script src="https://cdn.cookiecook.io/core/cc.js"></script>
-        <script>cc = new CC("450ad205c5a44a228c74c1dfdcfc30b5")</script>
         <style>
         .cc-badge{
             display:none;
         }
         </style>
 
-        <script src="https://www.google.com/recaptcha/api.js?render=6Le0-T8hAAAAAMW00j_qGs86mHRIale_sY4b6P6K"></script>
-
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}
         {% endblock %}
-
-        <script src="https://www.google.com/recaptcha/api.js?render=6Le0-T8hAAAAAMW00j_qGs86mHRIale_sY4b6P6K"></script>
-        <style>
-        .grecaptcha-badge{
-            display:none;
-        }
-        </style>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js" integrity="sha512-8pHNiqTlsrRjVD4A/3va++W1sMbUHwWxxRPWNyVlql3T+Hgfd81Qc6FC5WMXDC+tSauxxzp1tgiAvSKFu1qIlA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

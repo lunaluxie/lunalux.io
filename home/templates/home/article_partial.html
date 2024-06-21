@@ -1,0 +1,186 @@
+{% load static wagtailcore_tags %}
+
+{% if HTMX %}
+<head>
+<title>{{ page.title }} from htmx</title>
+<meta name="description" content="{{ page.search_description }} htmx">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{page.title}}",
+  {% if page.search_description %}"description":"{{page.search_description}}",{% endif %}
+  {% if page.image %}"image": "https://cdn.lunalux.io{{page.image.url}}",{% endif %}
+  "author": {
+    "@type": "Person",
+    "name": "{{page.user.get_full_name}}"
+  },
+  "name": "{{page.slug}}"
+}
+</script>
+
+{% comment %} <script>
+// reload cc
+delete cc;
+let cc = new CC("450ad205c5a44a228c74c1dfdcfc30b5")
+</script> {% endcomment %}
+</head>
+{% endif %}
+
+<div>
+    <header class="article-header">
+
+    {% include_block page.header %}
+    </header>
+
+    <div class="row">
+
+    <style>
+        .content{
+        max-width:inherit!important;
+        }
+        .content>.block-text{
+        max-width:700px;
+        }
+    </style>
+
+    <div id="article" class="article">
+
+        <div class="title"><h1>{{ self.title }}</h1></div>
+
+        {% if self.search_description %}
+        <div class="description"><p>{{self.search_description}}</p></div>
+        {% endif %}
+
+
+        <div class="content">
+            {% include_block page.body %}
+        </div>
+
+        <div class="byline">
+        <div class="author">
+            By <a href="/about" rel="author">{{self.owner.get_full_name}}</a>
+        </div>
+        {% if instance.show_timestamp %}
+        <div class="publish">
+            {{ instance.publish }}
+        </div>
+        {% endif %}
+        </div>
+
+    </div>
+
+
+    {% if series %}
+        <style>
+        #sidebar{
+            opacity:0 ;
+            transition: opacity 300ms ease-in-out;
+        }
+        #sidebar.open {
+            opacity:1;
+        }
+        </style>
+        <div class="series-container" id="series-navbar" style="position:fixed; left:0;">
+        <div id="sidebar" class="series sidebar">
+            <div class="title"><a href=""><h1>{{series.title}}</h1></a></div>
+            <div class="entries">
+            {% for entries in series.articles %}
+            {% for entry in entries.value %}
+            <a href="{% pageurl entry %}?series={{series.id}}">
+                <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
+            </a>
+            {% endfor %}
+            {% endfor %}
+            </div>
+        </div>
+        </div>
+        <script>
+        let seriesContainer = document.getElementById("series-navbar")
+        seriesContainer.style.marginLeft = (window.innerWidth-700)/2-280 + "px"
+
+        window.addEventListener("resize",()=>{
+            seriesContainer.style.marginLeft = (window.innerWidth-700)/2-280 + "px"
+        })
+        </script>
+    {% endif %}
+
+
+    </div>
+
+    {% if series %}
+    <style>
+    @media screen and (min-width: 1281px){
+        .series-end{
+        display:none;
+        }
+    }
+    </style>
+    <div class="series-end" style="">
+    <div style="max-width:700px; margin:0 auto;">
+        <div class="title">
+            <a href=""><h1>{{series.title}}</h1></a>
+        </div>
+        <div class="entries">
+            {% for entries in series.articles %}
+            {% for entry in entries.value %}
+            <a href="{% pageurl entry %}?series={{series.id}}">
+            <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
+            </a>
+            {% endfor %}
+            {% endfor %}
+        </div>
+        <spacer></spacer>
+    </div>
+    </div>
+    {% endif %}
+
+
+
+    {% if links and not series %}
+    <div class="similar">
+        <div class="single-col">
+        <div class="section-header">
+            <h1>continue reading</h1>
+        </div>
+        <div class="row">
+            {% for obj, freq in links %}
+            <div class="col">
+                <div hx-boost="true"  class="card-small" style="max-width:400px;">
+                <div class="content">
+                    <div class="title">{{ obj.from_page.title }}</div>
+                    <div class="body">
+                        {{ obj.from_page.search_description }}
+                    </div>
+                    <div class="link">
+                        <a class="link-text" href="{% pageurl  obj.from_page %}" hx-push-url="true"  hx-swap="innerHTML show:top" hx-target="#article-content">read</a>
+                        <img class="smart-invert" src="{% static 'icons/arrow.png' %}" width="9">
+                    </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% comment %} Render extra scripts {% endcomment %}
+    <script> // code highlight
+        document.addEventListener("DOMContentLoaded", function(event) {
+        var els = document.getElementsByTagName("pre")
+        for (i=0; i<els.length; i++){
+            block = els[i]
+            hljs.highlightBlock(block)
+        }
+        })
+    </script>
+
+
+    <script> // katex
+    renderMathInElement(document.body, {"delimiters": [
+    {left: "$$", right: "$$", display: true},
+    {left: "$", right: "$", display: false}
+    ]});
+    </script>
+</div>

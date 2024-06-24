@@ -35,11 +35,15 @@
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFV1NFBRY4"></script>
         <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+        window.addEventListener('DOMContentLoaded',function () {
+            if (cc.hasConsented('performance')) {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
 
-        gtag('config', 'G-CFV1NFBRY4');
+                gtag('config', 'G-CFV1NFBRY4');
+            }
+        });
         </script>
 
         {% wagtailuserbar %}

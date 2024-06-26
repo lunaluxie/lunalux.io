@@ -1,6 +1,8 @@
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 
+# BASIC BLOCKS
+
 class CodeBlock(blocks.StructBlock):
     language = blocks.CharBlock(required=False)
     code = blocks.TextBlock()
@@ -8,6 +10,8 @@ class CodeBlock(blocks.StructBlock):
     class Meta:
         icon = "code"
         template = "blocks/code_block.html"
+
+# SECTION BLOCKS?
 
 class CardListBlock(blocks.StructBlock):
 

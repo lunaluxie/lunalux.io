@@ -1,7 +1,7 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import redirect, get_object_or_404
 import requests
-from home.models import HomePage, Article, Contact
+from home.models.page_models import HomePage, Article, Contact
 import os
 
 

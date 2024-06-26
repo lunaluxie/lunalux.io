@@ -2,7 +2,8 @@ from wagtail.contrib.modeladmin.options import (
     ModelAdmin, modeladmin_register)
 from wagtail.signals import page_published
 
-from .models import Article, Series, Contact, InterPageLink, PageHit
+from home.models.page_models import Article, Series
+from home.models.helper_models import InterPageLink, Contact, PageHit
 
 
 

@@ -1,6 +1,6 @@
 from django import template
 from wagtail.models import Site
-from home.models import HomePage, Article, Series
+from home.models.page_models import HomePage, Article, Series
 
 register = template.Library()
 

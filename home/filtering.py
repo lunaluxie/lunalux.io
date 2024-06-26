@@ -1,6 +1,6 @@
 from django.db.models import Q
 from wagtail.models import Page
-from home.models import AbstractPage
+from home.models.page_models import AbstractPage
 
 
 abstract_page_subclasses = AbstractPage.__subclasses__()

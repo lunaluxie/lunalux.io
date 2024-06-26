@@ -8,7 +8,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
 from django.shortcuts import redirect
 from wagtail.search import index
-from .streamfields import body_fields, article_fields, article_header_fields
+from home.streamfields import body_fields, article_fields, article_header_fields
 from bs4 import BeautifulSoup
 import datetime
 from django.utils import timezone
@@ -17,12 +17,7 @@ from wagtail.search import index
 from django.db.models import Count, F, Q
 from django.db.models import Case, When
 
-class PageTag(TaggedItemBase):
-    content_object = ParentalKey(
-        'Article',
-        related_name='tagged_items',
-        on_delete=models.CASCADE,
-    )
+from home.models.helper_models import PageTag, InterPageLink, PageHit, Contact
 
 
 class AbstractPage(Page):
@@ -173,21 +168,6 @@ class HomePage(AbstractPage):
     def add_interpage_links(self):
         _add_interpage_links_from_html_field("body")
 
-
-class InterPageLink(models.Model):
-    from_page = models.ForeignKey(
-        Page, on_delete=models.CASCADE, related_name="from_page_related")
-    to_page = models.ForeignKey(
-        Page, on_delete=models.CASCADE, related_name="to_page_related")
-
-
-class PageHit(models.Model):
-    page = models.ForeignKey(Page, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.page.title} - {self.timestamp}"
-
 class Article(AbstractPage):
     page_description = "Article pages for long form writing and essays."
 
@@ -224,6 +204,8 @@ class Article(AbstractPage):
                 series = Series.objects.get(id=series_id)
             except:
                 series = None
+        else:
+            series = None
 
         context["series"] = series
 
@@ -248,6 +230,7 @@ class Article(AbstractPage):
     def add_interpage_links(self):
         _add_interpage_links_from_html_field("body")
 
+
 class Series(AbstractPage):
     page_description = "Series, a collection of articles."
     articles = StreamField([("articles", blocks.ListBlock(blocks.PageChooserBlock(page_type="home.Article")))],
@@ -263,11 +246,3 @@ class Series(AbstractPage):
 
         first_article = self.articles[0].value[0]
         return redirect(f"{first_article.url}?series={self.id}")
-
-
-class Contact(models.Model):
-    name = models.CharField(max_length=256)
-    email = models.EmailField()
-    message = models.TextField()
-
-    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)

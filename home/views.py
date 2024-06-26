@@ -4,7 +4,8 @@ from urllib.parse import unquote
 import datetime
 from django.utils import timezone
 from collections import Counter
-from .models import AbstractPage, HomePage, Article, Series, PageHit, PageTag
+from home.models.page_models import AbstractPage, HomePage, Article, Series
+from home.models.helper_models import PageHit, PageTag
 
 def article_list(request):
     queryset = Article.objects.all().filter(live=True).filter(unlisted=False)

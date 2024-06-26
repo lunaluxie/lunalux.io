@@ -5,9 +5,7 @@ from wagtail.fields import StreamField, RichTextField
 from home.streamfields import article_fields
 
 from wagtail.admin.panels import FieldPanel
-from wagtail.snippets.models import register_snippet
 
-@register_snippet
 class Book(models.Model):
     title = models.CharField(max_length=255)
     authors = models.CharField(max_length=255)
@@ -21,7 +19,6 @@ class Book(models.Model):
         return self.title
 
 
-@register_snippet
 class Problem(models.Model):
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, blank=True, null=True, related_name='problems')
 

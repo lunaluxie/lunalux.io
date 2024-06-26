@@ -79,7 +79,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
             ],
             'libraries':{
-                'define_action': 'lunalux.templatetags.define_action',
+                'my_tags': 'lunalux.templatetags.my_tags',
             }
         },
     },

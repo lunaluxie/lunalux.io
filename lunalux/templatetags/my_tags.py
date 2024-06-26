@@ -1,7 +1,9 @@
 from django import template
+from wagtail.models import Site
+from home.models import HomePage, Article, Series
+
 register = template.Library()
 
-from home.models import HomePage, Article, Series
 
 @register.simple_tag
 def define(val=None):
@@ -39,3 +41,8 @@ def pageToProperPage(val=None):
   except:
     page = Article.objects.get(id=val.id)
   return page
+
+
+@register.simple_tag(takes_context=True)
+def get_site_root(context):
+    return Site.find_for_request(context["request"]).root_page

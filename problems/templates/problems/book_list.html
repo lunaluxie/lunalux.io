@@ -1,5 +1,5 @@
 {% extends 'home/home_page.html' %}
-{% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static define_action %}
+{% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static my_tags %}
 
 {% block title %}Books{% endblock %}
 
@@ -14,10 +14,6 @@
     <span class="" style="color: var(--body-color);">{{ books|length }} books</span>
   </div>
 </div>
-
-{% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static define_action %}
-
-
 
 <section class="posts " style="margin-top: 0;">
 

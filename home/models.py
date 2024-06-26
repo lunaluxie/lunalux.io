@@ -125,6 +125,32 @@ class AbstractPage(Page):
         return Page.objects.all().filter(live=True).filter(is_project=True).order_by('-last_published_at')[:n]
 
 
+    def _add_interpage_links_from_html_field(self, html_field):
+        field = getattr(self, html_field)
+        soup = BeautifulSoup(str(field), 'html.parser')
+        links = set()
+        for link in soup.findAll("a"):
+            links.add(link['href'])
+
+        # print(links)
+        for link in links:
+            slugList = link.split("/")
+            slug = []
+            for sl in slugList:
+                if sl:
+                    slug.append(sl)
+
+            if slug:
+                try:
+                    p = Article.objects.get(slug=slug[-1])
+
+                    interlink = InterPageLink.objects.get_or_create(from_page=self, to_page=p)
+
+                    # print(p, interlink)
+
+                except:
+                    pass
+
 class HomePage(AbstractPage):
     page_description = "Home page to create multi column layouts, and non-content pages."
 
@@ -143,6 +169,9 @@ class HomePage(AbstractPage):
         context = super(AbstractPage, self).get_context(request, *args, **kwargs)
 
         return context
+
+    def add_interpage_links(self):
+        _add_interpage_links_from_html_field("body")
 
 
 class InterPageLink(models.Model):
@@ -217,29 +246,7 @@ class Article(AbstractPage):
 
 
     def add_interpage_links(self):
-        soup = BeautifulSoup(str(self.body), 'html.parser')
-        links = set()
-        for link in soup.findAll("a"):
-            links.add(link['href'])
-
-        # print(links)
-        for link in links:
-            slugList = link.split("/")
-            slug = []
-            for sl in slugList:
-                if sl:
-                    slug.append(sl)
-
-            if slug:
-                try:
-                    p = Article.objects.get(slug=slug[-1])
-
-                    interlink = InterPageLink.objects.get_or_create(from_page=self, to_page=p)
-
-                    # print(p, interlink)
-
-                except:
-                    pass
+        _add_interpage_links_from_html_field("body")
 
 class Series(AbstractPage):
     page_description = "Series, a collection of articles."

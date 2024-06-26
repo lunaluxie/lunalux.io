@@ -65,6 +65,10 @@ class AbstractPage(Page):
                     ]
     settings_panels = Page.settings_panels
 
+    search_fields = Page.search_fields + [index.SearchField('tags'),
+                                          index.SearchField('garden_status'),
+                                          index.FilterField('unlisted'),]
+
     class Meta:
         abstract = True
 
@@ -183,8 +187,6 @@ class Article(AbstractPage):
 
     search_fields = AbstractPage.search_fields + [
         index.SearchField('body'),
-        index.SearchField('tags'),
-        index.FilterField('unlisted')
     ]
 
     def get_template(self, request, *args, **kwargs):

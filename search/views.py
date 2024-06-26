@@ -3,7 +3,9 @@ from django.template.response import TemplateResponse
 
 from wagtail.models import Page
 from home.models.page_models import AbstractPage, Article,Series
-from wagtail.search.models import Query
+from home.filtering import filter_on_abstract_page_properties
+
+from wagtail.search.backends import get_search_backend
 
 
 def search(request):
@@ -12,12 +14,7 @@ def search(request):
 
     # Search
     if search_query:
-        search_results = Article.objects.filter(unlisted=False).live().search(search_query)
-
-        query = Query.get(search_query)
-
-        # Record hit
-        query.add_hit()
+        search_results = get_search_backend().search(search_query, Article.objects.filter(unlisted=False).live())
     else:
         search_results = Article.objects.filter(unlisted=False).live().order_by('-first_published_at')
 

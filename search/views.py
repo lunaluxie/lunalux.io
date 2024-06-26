@@ -14,6 +14,8 @@ def search(request):
 
     # Search
     if search_query:
+        # TODO: Investigate searching across all page types efficiently.
+        # problem now is that I cannot filter on the abstract page properties
         search_results = get_search_backend().search(search_query, Article.objects.filter(unlisted=False).live())
     else:
         search_results = Article.objects.filter(unlisted=False).live().order_by('-first_published_at')

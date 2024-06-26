@@ -26,6 +26,8 @@ class PageTag(TaggedItemBase):
 
 
 class AbstractPage(Page):
+    page_description = "The base page which all all other subpages inherit from. This page should not be used directly. Does not contain any content."
+
     image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -36,16 +38,24 @@ class AbstractPage(Page):
     is_project = models.BooleanField(default=False)
 
 
+    garden_status = [
+        ("na", "None"),
+        ("seedling", "🌱 Seedling: For rough and early ideas"),
+        ("budding", "🌿 Budding: For work that has been cleaned up and clarified"),
+        ("evergreen", "🌳 Evergreen: For work that's reasonably complete, but might still receive updates."),
+    ]
+    garden_status = models.CharField(choices=garden_status, max_length=10, default="na")
+
+
     promote_panels = Page.promote_panels + [FieldPanel("image")]
-    settings_panels = Page.settings_panels + [FieldPanel("is_project")]
-
-    def get_context(self, request, *args, **kwargs):
-
-        return {}
-
+    settings_panels = Page.settings_panels + [FieldPanel("is_project"), FieldPanel("garden_status")]
 
     class Meta:
-        abstract=True
+        abstract = True
+
+    def get_context(self, request, *args, **kwargs):
+        return {}
+
 
     def type(self):
         return self.__class__.__name__

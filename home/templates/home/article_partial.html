@@ -18,12 +18,6 @@
   "name": "{{page.slug}}"
 }
 </script>
-
-{% comment %} <script>
-// reload cc
-delete cc;
-let cc = new CC("450ad205c5a44a228c74c1dfdcfc30b5")
-</script> {% endcomment %}
 </head>
 {% endif %}
 
@@ -46,7 +40,7 @@ let cc = new CC("450ad205c5a44a228c74c1dfdcfc30b5")
 
     <div id="article" class="article">
 
-        <div class="title"><h1>{{ self.title }}</h1></div>
+        <div class="title">{{self.garden_status}}<h1>{{ self.title }}</h1></div>
 
         {% if self.search_description %}
         <div class="description"><p>{{self.search_description}}</p></div>

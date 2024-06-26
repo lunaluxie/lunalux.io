@@ -4,8 +4,9 @@ from urllib.parse import unquote
 import datetime
 from django.utils import timezone
 from collections import Counter
-from home.models.page_models import AbstractPage, HomePage, Article, Series
+from home.models.page_models import Page, AbstractPage, HomePage, Article, Series
 from home.models.helper_models import PageHit, PageTag
+from home.filtering import filter_on_abstract_page_properties
 
 def article_list(request):
     queryset = Article.objects.all().filter(live=True).filter(unlisted=False)
@@ -39,9 +40,12 @@ def article_tag_list(request, tag):
     # queryset = Article.objects.all().filter(live=True).filter(
     #     unlisted=False).filter(tags__name__icontains=tag).distinct().order_by('-first_published_at')
 
-    queryset = PageTag.objects.filter(tag__name__icontains=tag).filter(content_object__live=True).filter(content_object__unlisted=False)
-    queryset = queryset.distinct().order_by('-content_object__first_published_at')
-    queryset = [x.content_object for x in queryset]
+    queryset = PageTag.objects.filter(tag__name__icontains=tag)
+    page_ids = queryset.filter(content_object__live=True).values_list('content_object__id', flat=True)
+
+    queryset = Page.objects.type(AbstractPage).filter(id__in=page_ids)
+    queryset = queryset.filter(filter_on_abstract_page_properties(unlisted=False))
+    queryset = queryset.distinct().order_by('-first_published_at').specific()
 
     return render(request, "article_list.html",
                   context={"articles":queryset,"tag":tag.lower()})

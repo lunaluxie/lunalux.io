@@ -6,7 +6,7 @@ from modelcluster.fields import ParentalKey
 
 class PageTag(TaggedItemBase):
     content_object = ParentalKey(
-        'Article',
+        Page,
         related_name='tagged_items',
         on_delete=models.CASCADE,
     )

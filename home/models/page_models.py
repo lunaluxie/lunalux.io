@@ -42,6 +42,7 @@ class AbstractPage(Page):
     ]
     garden_status = models.CharField(choices=garden_status, max_length=10, default="na", help_text="If set, the page will show up in the garden section of the site.")
 
+    tags = ClusterTaggableManager(through=PageTag, blank=True)
 
     promote_panels = [MultiFieldPanel([
                          FieldPanel("image", heading="Search Image", help_text="Image to show up in search results (including for promotion on site)"),
@@ -56,7 +57,8 @@ class AbstractPage(Page):
                                      FieldPanel("is_project"),
                                      FieldPanel("garden_status"),
                                      FieldPanel("unlisted"),
-                                     FieldPanel("show_in_menus")
+                                     FieldPanel("show_in_menus"),
+                                     FieldPanel('tags', heading="Tags", help_text="Tags to categorize the page"),
                                      ],
                                      heading="Site Visibility",
                                      help_text="Settings controlling how the page will show up on the site.")
@@ -171,15 +173,12 @@ class HomePage(AbstractPage):
 class Article(AbstractPage):
     page_description = "Article pages for long form writing and essays."
 
-
     header = StreamField(article_header_fields, use_json_field=True, null=True, blank=True)
     body = StreamField(article_fields, use_json_field=True, null=True, blank=True)
-    tags = ClusterTaggableManager(through=PageTag, blank=True)
 
     content_panels = AbstractPage.content_panels + [
         FieldPanel("header"),
         FieldPanel("body"),
-        FieldPanel('tags'),
     ]
 
     search_fields = AbstractPage.search_fields + [

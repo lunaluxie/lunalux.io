@@ -16,7 +16,7 @@ The website is based on [Wagtail CMS](https://wagtail.io/), and is primarily str
 
 Each page is an instance of the `Page` model, and the content is created in the admin interface using predefined components that I have created in [home/templates/blocks](home/templates/blocks), but some special pages are defined as django view functions primarily located in [home/views.py](home/views.py).
 
-The main content pages are `HomePage`, and `Article` which are located in [home/models.py](home/models.py). `HomePage` is meant to be flexible enough to create a wide range of pages whereas `Article` is constrained to be in a blog-post format. However, since most pages are `Article` instances, I have developed more components for that. The most notable use of `HomePage` is the index page. 
+The main content pages are `HomePage`, and `Article` which are located in [home/models/page_models.py](home/models/page_models.py). `HomePage` is meant to be flexible enough to create a wide range of pages whereas `Article` is constrained to be in a blog-post format. However, since most pages are `Article` instances, I have developed more components for that. The most notable use of `HomePage` is the index page. 
 
 ### Bidirectional linking
 Whenever an `Article` is saved, the body is scanned for internal links (see `add_interpage_links` on `Article`) to other articles. If an internal link is found, a `InterPageLink` is created between the two articles. This is used to create a "Continue Reading" section at the bottom of each article.
@@ -30,7 +30,7 @@ In some articles, I include interactive widgets such as in [Gradient Descent](ht
 
 ## Installation
 
-Make sure that you have one of the following Python versions `3.8, 3.9, 3.10, 3.11, 3.12`, if not, I recommend using [pyenv](https://github.com/pyenv/pyenv) to manage your Python versions.
+Make sure that you have one of the following Python versions `3.11, 3.12`, if not, I recommend using [pyenv](https://github.com/pyenv/pyenv) to manage your Python versions.
 
 1: Create a virtual environment and install the dependencies:
 

@@ -24,10 +24,6 @@ class PageTag(TaggedItemBase):
         on_delete=models.CASCADE,
     )
 
-class AbstractManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset()
-
 
 class AbstractPage(Page):
     page_description = "The base page which all all other subpages inherit from. This page should not be used directly. Does not contain any content."

@@ -52,7 +52,24 @@ class AbstractPage(Page):
     garden_status = models.CharField(choices=garden_status, max_length=10, default="na", help_text="If set, the page will show up in the garden section of the site.")
 
 
-    promote_panels = Page.promote_panels + [FieldPanel("image"), MultiFieldPanel([FieldPanel("is_project"), FieldPanel("garden_status"), FieldPanel("unlisted")])]
+    promote_panels = [MultiFieldPanel([
+                         FieldPanel("image", heading="Search Image", help_text="Image to show up in search results (including for promotion on site)"),
+                         FieldPanel("slug"),
+                         FieldPanel("seo_title"),
+                         FieldPanel("search_description"),
+                        ],
+                        heading="For Search Engines",
+                        help_text="Settings that affect how the page will show up in search engines."
+                    ),
+                     MultiFieldPanel([
+                                     FieldPanel("is_project"),
+                                     FieldPanel("garden_status"),
+                                     FieldPanel("unlisted"),
+                                     FieldPanel("show_in_menus")
+                                     ],
+                                     heading="Site Visibility",
+                                     help_text="Settings controlling how the page will show up on the site.")
+                    ]
     settings_panels = Page.settings_panels
 
     class Meta:

@@ -166,7 +166,7 @@ class HomePage(AbstractPage):
         return context
 
     def add_interpage_links(self):
-        _add_interpage_links_from_html_field("body")
+        self._add_interpage_links_from_html_field("body")
 
 class Article(AbstractPage):
     page_description = "Article pages for long form writing and essays."
@@ -228,7 +228,7 @@ class Article(AbstractPage):
 
 
     def add_interpage_links(self):
-        _add_interpage_links_from_html_field("body")
+        self._add_interpage_links_from_html_field("body")
 
 
 class Series(AbstractPage):

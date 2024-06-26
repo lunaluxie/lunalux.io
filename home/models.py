@@ -24,6 +24,10 @@ class PageTag(TaggedItemBase):
         on_delete=models.CASCADE,
     )
 
+class AbstractManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset()
+
 
 class AbstractPage(Page):
     page_description = "The base page which all all other subpages inherit from. This page should not be used directly. Does not contain any content."
@@ -35,7 +39,7 @@ class AbstractPage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    is_project = models.BooleanField(default=False)
+    is_project = models.BooleanField(default=False, help_text="Will show up in projects section")
 
 
     garden_status = [
@@ -44,7 +48,7 @@ class AbstractPage(Page):
         ("budding", "🌿 Budding: For work that has been cleaned up and clarified"),
         ("evergreen", "🌳 Evergreen: For work that's reasonably complete, but might still receive updates."),
     ]
-    garden_status = models.CharField(choices=garden_status, max_length=10, default="na")
+    garden_status = models.CharField(choices=garden_status, max_length=10, default="na", help_text="If set, the page will show up in the garden section of the site.")
 
 
     promote_panels = Page.promote_panels + [FieldPanel("image")]
@@ -108,6 +112,8 @@ class AbstractPage(Page):
 
 
 class HomePage(AbstractPage):
+    page_description = "Home page to create multi column layouts, and non-content pages."
+
     body = StreamField(body_fields, use_json_field=True,null=True, blank=True)
 
     content_panels = AbstractPage.content_panels + [
@@ -140,11 +146,12 @@ class PageHit(models.Model):
         return f"{self.page.title} - {self.timestamp}"
 
 class Article(AbstractPage):
+    page_description = "Article pages for long form writing and essays."
     header = StreamField(article_header_fields, use_json_field=True, null=True, blank=True)
     body = StreamField(article_fields, use_json_field=True, null=True, blank=True)
     tags = ClusterTaggableManager(through=PageTag, blank=True)
 
-    unlisted = models.BooleanField(default=False)
+    unlisted = models.BooleanField(default=False, help_text="If unlisted, the article will be publically accessible, and indexable by search engine, but will not show up in search, or in the list of articles on the homepage")
 
 
     content_panels = AbstractPage.content_panels + [
@@ -222,7 +229,8 @@ class Article(AbstractPage):
                     pass
 
 class Series(AbstractPage):
-    articles = StreamField([("articles", blocks.ListBlock(blocks.PageChooserBlock()))],
+    page_description = "Series, a collection of articles."
+    articles = StreamField([("articles", blocks.ListBlock(blocks.PageChooserBlock(page_type="home.Article")))],
                             use_json_field=True, null=True, blank=True)
     unlisted = models.BooleanField(default=False)
 

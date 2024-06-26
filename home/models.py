@@ -1,7 +1,7 @@
 from wagtail import blocks
 from django.db import models
 from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.models import Page
 from taggit.models import TaggedItemBase
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -40,6 +40,7 @@ class AbstractPage(Page):
         related_name='+'
     )
     is_project = models.BooleanField(default=False, help_text="Will show up in projects section")
+    unlisted = models.BooleanField(default=False, help_text="If unlisted, the article will be publically accessible, and indexable by search engine, but will not show up in search, or in the list of articles on the homepage")
 
 
     garden_status = [
@@ -51,8 +52,8 @@ class AbstractPage(Page):
     garden_status = models.CharField(choices=garden_status, max_length=10, default="na", help_text="If set, the page will show up in the garden section of the site.")
 
 
-    promote_panels = Page.promote_panels + [FieldPanel("image")]
-    settings_panels = Page.settings_panels + [FieldPanel("is_project"), FieldPanel("garden_status")]
+    promote_panels = Page.promote_panels + [FieldPanel("image"), MultiFieldPanel([FieldPanel("is_project"), FieldPanel("garden_status"), FieldPanel("unlisted")])]
+    settings_panels = Page.settings_panels
 
     class Meta:
         abstract = True
@@ -147,19 +148,17 @@ class PageHit(models.Model):
 
 class Article(AbstractPage):
     page_description = "Article pages for long form writing and essays."
+
+
     header = StreamField(article_header_fields, use_json_field=True, null=True, blank=True)
     body = StreamField(article_fields, use_json_field=True, null=True, blank=True)
     tags = ClusterTaggableManager(through=PageTag, blank=True)
-
-    unlisted = models.BooleanField(default=False, help_text="If unlisted, the article will be publically accessible, and indexable by search engine, but will not show up in search, or in the list of articles on the homepage")
-
 
     content_panels = AbstractPage.content_panels + [
         FieldPanel("header"),
         FieldPanel("body"),
         FieldPanel('tags'),
     ]
-    settings_panels =AbstractPage.settings_panels + [FieldPanel("unlisted"),]
 
     search_fields = AbstractPage.search_fields + [
         index.SearchField('body'),
@@ -178,10 +177,11 @@ class Article(AbstractPage):
 
         series_id = request.GET.get("series")
 
-        try:
-            series = Series.objects.get(id=series_id)
-        except:
-            series = None
+        if series_id:
+            try:
+                series = Series.objects.get(id=series_id)
+            except:
+                series = None
 
         context["series"] = series
 
@@ -232,11 +232,9 @@ class Series(AbstractPage):
     page_description = "Series, a collection of articles."
     articles = StreamField([("articles", blocks.ListBlock(blocks.PageChooserBlock(page_type="home.Article")))],
                             use_json_field=True, null=True, blank=True)
-    unlisted = models.BooleanField(default=False)
 
     content_panels = AbstractPage.content_panels + [
                     FieldPanel("articles"),
-                    FieldPanel('unlisted'),
             ]
 
     def serve(self, request):

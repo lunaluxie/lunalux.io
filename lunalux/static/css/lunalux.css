@@ -427,7 +427,7 @@ navbar>.links {
   width: 100%;
   margin: 0 auto;
   padding: 0 20px;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 navbar>.links ul {
@@ -437,6 +437,10 @@ navbar>.links ul {
   position: relative;
   z-index: 3;
   display: flex;
+}
+
+navbar>.links ul li {
+  position: relative;
 }
 
 navbar>.links .right ul {
@@ -465,7 +469,45 @@ navbar a svg {
 }
 
 navbar>.links ul a:hover {
-  opacity: 0.7;
+  /* opacity: 0.7; */
+  text-decoration: underline;
+}
+
+navbar>.links ul a:hover .icon {
+  text-decoration: none;
+}
+
+navbar>.links .dropdown {
+  display: none;
+  position: absolute;
+  border: 1px solid var(--border-color);
+  width: var();
+  /* top: 30px; */
+  min-width: 100%;
+  border-radius: 5px;
+}
+
+navbar>.links ul>li>a {
+  padding-bottom:20px;
+}
+
+navbar>.links .dropdown ul>li>a {
+  padding-bottom: 5px;
+}
+
+navbar>.links li:hover .dropdown {
+  display: initial;
+}
+
+navbar>.links .dropdown>ul{
+  display:flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+navbar>.links .dropdown>ul>li {
+  padding: 0.25rem;
+  text-wrap: nowrap;
 }
 
 navbar>.links>div {
@@ -706,7 +748,7 @@ ARTICLE BYLINE
 .article .byline .author {
   font-size: 15px;
   font-weight: 500;
-  text-transform: uppercase;
+  text-transform: capitalize;
   color: var(--byline-text-color);
   flex-grow: 1;
 }
@@ -726,7 +768,7 @@ ARTICLE BYLINE
 .article .byline .publish {
   font-size: 15px;
   font-weight: 500;
-  text-transform: uppercase;
+  text-transform: capitalize;
   color: var(--byline-text-color);
   flex-grow: 1;
   text-align: right;
@@ -751,7 +793,7 @@ footer>.items {
   display: flex;
   width: 100%;
   margin: 0 auto;
-  text-transform: uppercase;
+  text-transform: capitalize;
   max-width: 900px;
   padding: 0 20px;
 }
@@ -773,6 +815,7 @@ footer .items ul {
 
 footer>.items ul a:hover {
   opacity: 0.7;
+  text-decoration: underline;
 }
 
 footer>.items ul a.icon {

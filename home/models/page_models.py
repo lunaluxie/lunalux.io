@@ -168,9 +168,16 @@ class HomePage(AbstractPage):
         index.SearchField('body'),
     ]
 
+    def get_template(self, request, *args, **kwargs):
+        if request.META.get('HTTP_HX_REQUEST'):
+            return "home/home_page_partial.html"
+
+        return "home/home_page.html"
 
     def get_context(self, request, *args, **kwargs):
         context = super(AbstractPage, self).get_context(request, *args, **kwargs)
+
+        context["HTMX"] = request.META.get('HTTP_HX_REQUEST')
 
         return context
 
@@ -219,8 +226,6 @@ class Article(AbstractPage):
         context['links'] = links
 
         context["HTMX"] = request.META.get('HTTP_HX_REQUEST')
-
-        print("HTMX?",context["HTMX"])
 
         return context
 

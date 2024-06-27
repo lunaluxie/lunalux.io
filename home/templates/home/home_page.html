@@ -10,8 +10,6 @@
 
 {% block content %}
 
-{% if page %}
-{% include_block page.body %}
-{% endif %}
+{% include 'home/home_page_partial.html' with page=page %}
 
 {% endblock content %}

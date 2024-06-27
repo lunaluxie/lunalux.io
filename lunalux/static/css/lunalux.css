@@ -215,13 +215,13 @@ h1, h2, h3, h4, h5, h6 {
   display: none !important;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 660px) {
   .hidden-sm {
     display: none !important;
   }
 }
 
-@media screen and (min-width: 551px) {
+@media screen and (min-width: 661px) {
   .hidden-big {
     display: none !important;
   }

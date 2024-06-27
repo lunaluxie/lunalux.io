@@ -138,7 +138,7 @@
 
     <div class="col1" style="">
       {% if show_garden_status %}{% include 'components/garden_status.html' with garden_status=obj.garden_status verbose=True %}{% endif %}
-      {% if obj.tags.first and not show_garden_status %}<a style="color: #666; font-size: 1rem; text-decoration: none;" href="/tag/{{ obj.tags.first.slug }}">{{obj.tags.first.name}}</a>{%endif%}
+      {% if obj.tags.first and not show_garden_status %}<a style="color: var(--color-muted); font-size: 1rem; text-decoration: none;" href="/tag/{{ obj.tags.first.slug }}">{{obj.tags.first.name}}</a>{%endif%}
     </div>
 
     <div class="col2 {% if include_images and obj.image and obj.include_image_in_article_list %}image{%endif%}">

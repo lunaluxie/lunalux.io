@@ -44,6 +44,8 @@
     {% else %}
       {% if tag == "Trending" %}
         <li class="li-class">Trending</li>
+      {% elif hide_other_tags %}
+        <li class="li-class" style="text-transform: capitalize;">{{tag}}</li>
       {% else %}
         <li class="li-class">{% if tag != 'all'%}<a href="/articles" class="faded-xlight">All</a>{%else%}All{%endif%}</li>
         <li class="li-class">{% if tag != 'physics'%}<a class="faded-xlight" href="/articles/tag/physics">Physics</a>{%else%}Physics{%endif%}</li>
@@ -58,7 +60,7 @@
 </div>
 
 <section id="articles">
-  {% include 'blocks/lines_list.html' with pages=articles include_images=True link_to_blog=False object_name="Essays" %}
+  {% include 'blocks/lines_list.html' with pages=articles include_images=True link_to_blog=False object_name=object_name %}
 </section>
 </section>
 {% endblock content %}

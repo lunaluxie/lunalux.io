@@ -47,7 +47,7 @@ class TagsSnippetViewSet(SnippetViewSet):
     icon = "tag"  # change as required
     add_to_admin_menu = True
     menu_label = "Tags"
-    menu_order = 300  # will put in 3rd place (000 being 1st, 100 2nd)
+    menu_order = 400
     list_display = ["name", "slug"]
     search_fields = ("name",)
 

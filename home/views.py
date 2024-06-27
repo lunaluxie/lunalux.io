@@ -24,32 +24,35 @@ def article_list(request):
         key=time, reverse=True)
 
     return render(request, "article_list.html",
-                  context={"articles": queryies_combined, "tag": "all"})
+                  context={"articles": queryies_combined, "tag": "all", "object_name": "Essays"})
 
 def article_trending_list(request):
     articles= Article.objects.first().get_trending_articles(n=15)
 
     return render(request, "article_list.html",
-                  context={"articles": articles, "tag": "Trending", "trending":True})
-
-
-
+                  context={"articles": articles, "tag": "Trending", "trending":True, "object_name": "Items"})
 
 def tag_detail(request, tag):
     tag = unquote(tag)
 
     queryset = filter_page_with_any_of_tags(tags=[tag])
 
+    context = {"articles":queryset,
+               "object_name": "Items",
+               "tag":Tag.objects.get(slug=tag)}
+
+    if request.GET.get('hide_other_tags'):
+        context["hide_other_tags"] = True
+
     return render(request, "article_list.html",
-                  context={"articles":queryset,"tag":Tag.objects.get(slug=tag)})
+                  context=context)
 
 
 def project_list(request):
     # TODO Change to single queryset on page???
-    queryset = HomePage.objects.filter(live=True).filter(is_project=True)
-    queryset2 = Article.objects.filter(live=True).filter(
-        unlisted=False).filter(is_project=True)
-    queryset3 = Series.objects.filter(live=True).filter(unlisted=False).filter(is_project=True)
+    queryset = HomePage.objects.filter(live=True, unlisted=False).filter(is_project=True)
+    queryset2 = Article.objects.filter(live=True, unlisted=False).filter(is_project=True)
+    queryset3 = Series.objects.filter(live=True, unlisted=False).filter(is_project=True)
 
     def time(instance):
         return instance.first_published_at

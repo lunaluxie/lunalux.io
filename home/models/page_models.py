@@ -122,7 +122,6 @@ class AbstractPage(Page):
             Q(pk__in=top_pages.values('page')),
             ~Q(unlisted=True),
             Q(live=True),
-            Q(article_type="article")
         ).order_by(ordering)[:n]
 
         if not queryset_with_proper_pages:

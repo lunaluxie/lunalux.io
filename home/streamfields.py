@@ -32,10 +32,17 @@ body_fields = [
 
 
     # structure
-    ("spacer",SpacerBlock(group="layout")),
     ("container", ContainerBlock(group="layout")),
     ('columns', ColumnsBlock(group="layout")),
     ("skipNavMargin", NavMarginBlock(group="layout")),
+
+    # spacers
+    ("spacer",SpacerBlock(group="spacers")),
+    ("s_spacer",SpacerBlock(group="spacers")),
+    ("m_spacer",SpacerBlock(group="spacers")),
+    ("l_spacer",SpacerBlock(group="spacers")),
+    ("xl_spacer",SpacerBlock(group="spacers")),
+    ("xxl_spacer",SpacerBlock(group="spacers")),
 
     # headers
     ("JumbotronImageBlock", JumbotronImageBlock(group="ImageHeader")),

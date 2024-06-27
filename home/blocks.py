@@ -140,8 +140,7 @@ class AboutBlurb(blocks.StructBlock):
 class SpacerBlock(blocks.StaticBlock):
     class Meta:
         icon = ""
-        label = "Create a y-margin spacer"
-        admin_text = '{label}: configured elsewhere'.format(label=label)
+        admin_text = 'configured elsewhere'
         template = 'blocks/spacer.html'
 
 

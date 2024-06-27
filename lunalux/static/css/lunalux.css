@@ -491,6 +491,7 @@ navbar>.links .dropdown {
   /* top: 30px; */
   min-width: 100%;
   border-radius: 5px;
+  background-color: var(--body-bg);
 }
 
 navbar>.links ul>li>a {

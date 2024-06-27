@@ -3,6 +3,7 @@
     display: flex;
     flex-basis: 0;
     flex-wrap: wrap;
+    gap: 1em;
 }
 
 .margin-y {

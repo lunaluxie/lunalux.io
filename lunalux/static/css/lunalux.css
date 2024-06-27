@@ -1861,3 +1861,29 @@ img.richtext-image {
 .language-css .token.string, .style .token.string, .token.entity, .token.operator, .token.url {
   background: inherit !important;
 }
+
+/* TABLE */
+table {
+  border-collapse: collapse;
+  border: 1px solid var(--border-color);
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  width: 100%;
+}
+
+td,
+th {
+  padding: 10px 20px;
+}
+
+th {
+  border-bottom: 1px solid var(--border-color);
+}
+
+td {
+  text-align: center;
+}
+
+caption {
+  padding: 10px;
+}

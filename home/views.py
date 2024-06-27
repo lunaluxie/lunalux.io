@@ -9,6 +9,17 @@ from home.models.helper_models import PageHit, PageTag
 from home.filtering import filter_on_abstract_page_properties, filter_page_with_any_of_tags
 from taggit.models import Tag
 
+
+def notes_list(request):
+    queryset = Article.objects.all().filter(live=True, article_type="note").filter(unlisted=False).order_by("-first_published_at")
+
+    context = {"articles": queryset, "tag": "Notes", 'hide_other_tags':True, "object_name": "Notes"}
+
+    context['description_text'] = "A collection of notes on various topics."
+
+    return render(request, "article_list.html",
+                  context=context)
+
 def article_list(request):
     queryset = Article.objects.all().filter(live=True, article_type="article").filter(unlisted=False)
     queryset2 = Series.objects.live().filter(unlisted=False)

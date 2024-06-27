@@ -1,0 +1,11 @@
+{% if page_type == "note" %}
+<i class="fa-solid fa-feather-pointed type-icon" title="Note"></i>
+{% elif page_type == "article" %}
+<i class="fa-solid fa-newspaper type-icon" title="Essay"></i>
+{% elif page_type == "project" %}
+<i class="fa-solid fa-table type-icon" title="Project"></i>
+{% elif page_type == "Series" %}
+<i class="fa-solid fa-list type-icon" title="Series"></i>
+{% elif page_type == "HomePage" %}
+<i class="fa-solid fa-list type-icon" title="Page"></i>
+{% endif %}

@@ -81,6 +81,11 @@ class AbstractPage(Page):
     def type(self):
         return self.__class__.__name__
 
+    def get_page_type(self):
+        if self.is_project:
+            return "project"
+        return self.type()
+
     def include_image_in_article_list(self):
         if self.is_project:
             return True
@@ -214,6 +219,11 @@ class Article(AbstractPage):
     search_fields = AbstractPage.search_fields + [
         index.SearchField('body'),
     ]
+
+    def get_page_type(self):
+        if self.is_project:
+            return "project"
+        return self.article_type
 
     def get_template(self, request, *args, **kwargs):
         if request.META.get('HTTP_HX_REQUEST'):

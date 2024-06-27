@@ -53,6 +53,7 @@
         {% if tag != 'all'%}{% if tag != 'physics' %}{% if tag != 'ai' %}<li style="text-transform: capitalize;" class="li-class">{{tag}}</li>{%endif%}{%endif%}{%endif%}
       {% endif %}
     {% endif %}
+    {% if description_text %}<style>.description-text{margin-top: 0.5rem;font-size: 1rem;color: var(--color-muted);}</style><p class="description-text">{{description_text}}</p>{%endif%}
   </ul>
   <div class="" style="margin-bottom: 0.8em;">
     <span class="" id="article_count" style="color: var(--body-color);">{{ articles|length }} articles</span>

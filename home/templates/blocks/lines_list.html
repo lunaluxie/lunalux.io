@@ -98,6 +98,14 @@
       align-items: stretch;
       flex-wrap: wrap;
     }
+
+    .type-icon{
+      position: absolute;
+      transform: translateX(-150%) scale(1);
+      color: var(--color-muted);
+      border: none;
+      text-decoration: none;
+    }
   </style>
 
 <div class="container">
@@ -125,7 +133,10 @@
     <div class="col2 {% if include_images and obj.image and obj.include_image_in_article_list %}image{%endif%}">
       <div style="max-width: 30rem;">
         <a href="{% pageurl obj %}" style="text-decoration: none;">
-          <p class="asdf" style="">{{ obj.title }}</p>
+          <p class="asdf" style="">
+            {% if not hide_page_type %}{% include 'components/article_type.html' with page_type=obj.get_page_type%}{%endif%}
+            {{ obj.title }}
+          </p>
 
           {% if include_images and obj.image and obj.include_image_in_article_list %}<p style="font-size: 1rem; margin-bottom: 0;    color: var(--color-muted); margin-top: 0.5rem;">
           {{ obj.search_description }}

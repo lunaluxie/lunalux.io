@@ -1,7 +1,7 @@
 {% extends 'home/home_page.html' %}
 {% load static wagtailcore_tags wagtailuserbar wagtailimages_tags my_tags %}
 
-{% block title %}Articles{% endblock %}
+{% block title %}{% if tag%}{{tag}} {%endif%}{{object_name}}{% endblock %}
 
 {% block content %}
 

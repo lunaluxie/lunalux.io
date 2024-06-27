@@ -172,4 +172,14 @@ WAGTAILSEARCH_BACKENDS = {
 WAGTAILADMIN_BASE_URL = "http://lunalux.io"
 
 
+WAGTAILADMIN_RICH_TEXT_EDITORS = {
+    'default': {
+        'WIDGET': 'wagtail.admin.rich_text.DraftailRichTextArea',
+        'OPTIONS': {
+            'features': ['bold', 'italic', 'link', 'document-link', 'embed', 'ol', 'ul', 'blockquote', 'code', 'strikethrough', 'hr',  'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'muted']
+        }
+    },
+}
+
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

@@ -1817,10 +1817,16 @@ section.newsletter .form>form button:hover {
           flex-wrap: wrap;
         }
 .link>img{
-  transition-duration: 300ms !important;
+  transition-duration: 300ms;
 }
 .link:hover>img{
   transform: translate(3px, -3px);
+}
+
+@media(prefers-reduced-motion) {
+  .link:hover>img{
+    transform: translate(0,0);
+  }
 }
 
 

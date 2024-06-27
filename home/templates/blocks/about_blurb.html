@@ -21,6 +21,12 @@
         transform: translateY(1em);
         transform-origin: 80% 70%;
     }
+    @media (prefers-reduced-motion) {
+        #hand {
+            animation: none;
+            display: inline;
+        }
+    }
 
     .container {
           max-width: 1470px;

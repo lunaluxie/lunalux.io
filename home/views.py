@@ -11,7 +11,7 @@ from taggit.models import Tag
 
 def article_list(request):
     queryset = Article.objects.all().filter(live=True, article_type="article").filter(unlisted=False)
-    queryset2 = list(Series.objects.all().filter(unlisted=False))
+    queryset2 = Series.objects.live().filter(unlisted=False)
 
     def time(instance):
         try:

@@ -47,7 +47,7 @@
         {% endif %}
 
 
-        <div class="content">
+        <div id='article-content' class="content">
             {% include_block page.body %}
         </div>
 
@@ -176,5 +176,20 @@
     {left: "$$", right: "$$", display: true},
     {left: "$", right: "$", display: false}
     ]});
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(e) {
+            document.getElementById('article-content').querySelectorAll("h2, h3, h4, h5, h6").forEach((el)=>{
+                el.setAttribute("id",el.textContent.slugify())
+
+                beforeEl = document.createElement("a")
+                beforeEl.setAttribute("href", "#" + el.textContent.slugify())
+                beforeEl.setAttribute("class", "heading-anchor")
+                beforeEl.innerHTML = '<i class="fas fa-link"></i>'
+
+                el.insertBefore(beforeEl, el.firstChild)
+            })
+        })
     </script>
 </div>

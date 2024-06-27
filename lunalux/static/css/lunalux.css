@@ -10,6 +10,8 @@
     --link-color-background:hsla(225, 75%, 70%, 0.8);
     --link-color-background-hover:hsla(225, 75%, 75%, 0.8);
 
+    --header-link-color: rgb(176, 176, 176);
+    --header-link-color-hover: rgb(194, 194, 194);
     --color-muted: #5f656d;
 
     --content-link-color:#246491;
@@ -47,6 +49,9 @@
 
         --link-color-background:hsla(225, 75%, 70%, 0.8);
         --link-color-background-hover:hsla(225, 75%, 75%, 0.8);
+
+        --header-link-color: rgb(194, 194, 194);
+        --header-link-color-hover: rgb(230, 230, 230);
 
         --border-color: #939393;
         --border-color-hover: white;
@@ -210,13 +215,13 @@ h1, h2, h3, h4, h5, h6 {
   display: none !important;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 550px) {
   .hidden-sm {
     display: none !important;
   }
 }
 
-@media screen and (min-width: 501px) {
+@media screen and (min-width: 551px) {
   .hidden-big {
     display: none !important;
   }
@@ -453,7 +458,7 @@ navbar>.links .active {
 
 navbar a {
   opacity: .9;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: .04rem;
   font-weight: 500;
   text-decoration: none;
@@ -625,6 +630,27 @@ spacer {
   line-height: 1em;
   margin-top: 1.1em;
   margin-bottom: 0.7em;
+}
+
+.article .content .heading-anchor {
+  border: none;
+  margin-right: 0.5rem;
+  font-size: inherit;
+  transform: scale(0.8) translateX(-100%);
+  padding-right: 1rem;
+  position: absolute;
+  color: var(--header-link-color);
+  transition: opacity 100ms, color 100ms;
+  opacity: 0;
+}
+
+.article .content .heading-anchor:hover {
+  color: var(--header-link-color-hover);
+
+}
+
+.article .content h2:hover .heading-anchor, h3:hover .heading-anchor, h4:hover .heading-anchor, h5:hover .heading-anchor, h6:hover .heading-anchor {
+  opacity: 1;
 }
 
 .article .content .katex {
@@ -845,7 +871,7 @@ footer>.items>div {
 
 footer a {
   opacity: .9;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: .04rem;
   font-weight: 500;
   text-decoration: none;

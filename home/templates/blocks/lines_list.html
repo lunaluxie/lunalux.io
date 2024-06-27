@@ -158,13 +158,13 @@
 
   {% if link_to_blog %}
     <div style="margin-top:2rem;margin-bottom: 5rem;">
-      <a class="link" href="/articles">View all articles<img class="smart-invert" style="margin-left: 0.5ch;"
+      <a class="link" href="/articles">View all essays<img class="smart-invert" style="margin-left: 0.5ch;"
           src="{% static 'icons/arrow.png' %}" width="9"></a>
     </div>
   {% endif %}
 
   <script>
-    document.getElementById('article_count').innerHTML = '{{ pages|length }} articles';
+    document.getElementById('article_count').innerHTML = '{{ pages|length }} {% if object_name %}{{object_name}}{% else %}Items{% endif %}';
   </script>
 
 </div>

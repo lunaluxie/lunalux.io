@@ -125,6 +125,8 @@ class AbstractPage(Page):
     def get_recent_projects(self, n=3):
         return Page.objects.all().filter(live=True).filter(is_project=True).order_by('-last_published_at')[:n]
 
+    def add_interpage_links(self):
+        pass
 
     def _add_interpage_links_from_html_field(self, html_field):
         field = getattr(self, html_field)

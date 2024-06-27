@@ -9,6 +9,27 @@ from home.models.helper_models import PageHit, PageTag
 from home.filtering import filter_on_abstract_page_properties, filter_page_with_any_of_tags
 from taggit.models import Tag
 
+def timeline(request):
+    queryset = Article.objects.all().filter(live=True).filter(unlisted=False).order_by("-last_published_at")
+
+    # TODO Change to single queryset on page???
+    queryset = HomePage.objects.filter(live=True, unlisted=False)
+    queryset2 = Article.objects.filter(live=True, unlisted=False)
+    queryset3 = Series.objects.filter(live=True, unlisted=False)
+
+    def time(instance):
+        return instance.last_published_at
+
+    queryies_combined = sorted(
+        chain(queryset, queryset2, queryset3),
+        key=time, reverse=True)
+
+    context = {"articles": queryies_combined, "tag": "Timeline", 'hide_other_tags':True, "object_name": "Pages"}
+
+    context['description_text'] = "A chronological list of all pages."
+
+    return render(request, "article_list.html",
+                  context=context)
 
 def notes_list(request):
     queryset = Article.objects.all().filter(live=True, article_type="note").filter(unlisted=False).order_by("-first_published_at")

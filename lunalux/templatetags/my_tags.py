@@ -7,8 +7,8 @@ register = template.Library()
 
 @register.simple_tag
 def define(val=None):
-  print(dir(val[0]))
-  return val
+  print(dir(val))
+  return dir(val)
 
 
 @register.simple_tag

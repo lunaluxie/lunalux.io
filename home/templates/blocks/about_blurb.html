@@ -70,6 +70,9 @@
         text-decoration:none;
         border-bottom:none;
     } {% endcomment %}
+     .about-blurb .container>h2{
+        margin-bottom: 0;
+     }
     </style>
     <spacer class="hidden-non-mobile"></spacer>
     <div class="container" style="margin-bottom: 3em;" >
@@ -81,7 +84,7 @@
 
 
     <div class="container">
-        <h2>About</h2>
+        <h2>{% if self.title %}{{self.title}}{% else %}About{% endif %}</h2>
         <div class="" style="display:flex; justify-content: space-between; flex-wrap: wrap;">
 
             {% comment %} Potentially add: max-width: 65ch; {% endcomment %}

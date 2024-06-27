@@ -127,6 +127,7 @@ class ContactForm(blocks.StaticBlock):
         template = 'blocks/contact_form.html'
 
 class AboutBlurb(blocks.StructBlock):
+    title = blocks.CharBlock(required=False)
     tagline = blocks.CharBlock()
 
     column1_text = blocks.RichTextBlock()

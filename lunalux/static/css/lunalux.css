@@ -26,6 +26,8 @@
 
     --gradient-background: linear-gradient( rgba(124, 26, 124, 0.4), rgba(22, 90, 173, 0.4));
 
+    --gradient-background-solid: linear-gradient(rgba(124, 26, 124, 1), rgba(22, 90, 173, 1));
+
     --form-button-bg: #7fd3f4;
     --form-button-bg-hover: #8edcf7;
     --form-button-red-bg: hsl(0, 84%, 73%);

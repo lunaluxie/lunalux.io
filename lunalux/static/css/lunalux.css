@@ -604,6 +604,14 @@ spacer {
   border: none;
   text-decoration: none;
 }
+
+@media only screen and (max-width: 830px) {
+  .article .title .garden-status {
+    position: relative;
+    transform: initial;
+  }
+}
+
 /*
   ARTICLE DESCRIPTION
 */

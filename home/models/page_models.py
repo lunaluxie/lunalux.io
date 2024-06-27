@@ -39,6 +39,7 @@ class AbstractPage(Page):
         ("seedling", "🌱 Seedling: For rough and early ideas"),
         ("budding", "🌿 Budding: For work that has been cleaned up and clarified"),
         ("evergreen", "🌳 Evergreen: For work that's reasonably complete, but might still receive updates."),
+        ('withering', "🍂 Withering: For outdated work where inaccuracies can accumulate and my opinions may change.")
     ]
     garden_status = models.CharField(choices=garden_status, max_length=10, default="na", help_text="If set, the page will show up in the garden section of the site.")
 

@@ -250,7 +250,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-list .wrapper {
-  max-width: 1920px;
+  max-width: 1470px;
   position: relative;
   margin: 0 auto;
 }
@@ -295,7 +295,7 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
   padding: 12px 28px;
   white-space: nowrap;
-  color: var(--link-color);
+  color: white;
   transform: translateX(20px);
   transition: opacity 325ms ease-in-out, transform 325ms ease-out, background-color 225ms cubic-bezier(.645, .045, .355, 1);
   opacity: 0;
@@ -327,19 +327,9 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.card-list .container::-webkit-scrollbar {
-  display: none;
-}
-
 .card-list .container a {
   text-decoration: none;
   margin-right: 25px;
-}
-
-@media screen and (max-width: 1366px) {
-  .card-list .container a:last-child {
-    display: none;
-  }
 }
 
 @media screen and (min-width: 880px) {
@@ -362,7 +352,7 @@ h1, h2, h3, h4, h5, h6 {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  overflow: hidden;
+  overflow: initial;
 }
 
 .card-list .container .card:hover {
@@ -373,7 +363,8 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0 15px;
 }
 
-.card-list .container .card .content h1 {
+.card-list .container .card .content span {
+  font-size: 1.5rem;
   color: var(--secondary-background);
   text-decoration: none;
   -webkit-user-select: none;

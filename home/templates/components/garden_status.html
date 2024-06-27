@@ -1,0 +1,8 @@
+
+{% if garden_status == 'seedling' %}
+<a href="/garden" title="This page is a seedling: It's still rough and not fully developed." class="garden-status" >🌱</a>
+{% elif garden_status == 'budding' %}
+<a href="/garden" title="This page is budding: It's starting to take form." class="garden-status">🌿</a>
+{% elif garden_status == 'evergreen' %}
+<a href="/garden" title="This page is evergreen: The work is reasonably complete altough smaller changes might come over time." class="garden-status">🌳</a>
+{%endif%}

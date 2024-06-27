@@ -597,6 +597,12 @@ spacer {
   margin: 0 auto;
 }
 
+.article .title .garden-status{
+  position: absolute;
+  transform: translateX(-120%) scale(0.8);
+  border: none;
+  text-decoration: none;
+}
 /*
   ARTICLE DESCRIPTION
 */

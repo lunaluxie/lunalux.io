@@ -32,11 +32,12 @@ body_fields = [
 
 
     # structure
-    ("container", ContainerBlock(group="layout")),
     ('columns', ColumnsBlock(group="layout")),
-    ("skipNavMargin", NavMarginBlock(group="layout")),
+    ('centered', CenteredTextContentBlock(group="layout")),
+    ("container", ContainerBlock(group="layout")),
 
     # spacers
+    ("skipNavMargin", NavMarginBlock(group="spacers")),
     ("spacer",SpacerBlock(group="spacers")),
     ("s_spacer",SpacerBlock(group="spacers")),
     ("m_spacer",SpacerBlock(group="spacers")),

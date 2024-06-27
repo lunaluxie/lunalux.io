@@ -179,6 +179,7 @@ class ImageDividerBlock(blocks.StructBlock):
         icon = "image"
         template = "blocks/image_divider.html"
 
+### META BLOCKS
 
 class ContainerBlock(blocks.StructBlock):
     content = blocks.StreamBlock([
@@ -201,6 +202,10 @@ class ColumnBlock(blocks.StructBlock):
     content = blocks.StreamBlock([
         ("text", blocks.RichTextBlock(group="basic")),
         ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
+        ('table', TableBlock(group="basic")),
+
+        ("lines_list", LinesListBlock(group="components")),
+        ('horizontal_card_list', HorizontalCardList(group="components")),
     ])
 
     class Meta:
@@ -217,3 +222,16 @@ class ColumnsBlock(blocks.StructBlock):
         template = "blocks/columns.html"
         help_text = "Create multi column layouts."
         label = 'Columns: (Use this for multi-column layouts)'
+
+class CenteredTextContentBlock(blocks.StructBlock):
+    body = blocks.StreamBlock([
+        ("text", blocks.RichTextBlock(group="basic")),
+        ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
+        ('table', TableBlock(group="basic")),
+        ('code', CodeBlock(group="basic")),
+    ])
+
+    class Meta:
+        template = "blocks/centered_text_content.html"
+        help_text = "Creates a centered text content block. (like in article)"
+        label = 'Centered Text Content: (Use this for to mimic article text layout)'

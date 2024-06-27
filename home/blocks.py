@@ -26,6 +26,10 @@ class CardListBlock(blocks.StructBlock):
     pages = blocks.ListBlock(
         blocks.PageChooserBlock())
 
+    title = blocks.CharBlock(required=False)
+
+    hide_link = blocks.BooleanBlock(required=False, default=False)
+
     class Meta:
         # icon = ""
         label = "Card list (project list)"

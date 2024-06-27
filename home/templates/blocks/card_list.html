@@ -58,7 +58,7 @@
 
     </style>
     <div class="container">
-    {% if not hide_title%}<h2>Projects</h2>{% endif %}
+    {% if not hide_title%}<h2>{% if self.title %}{{self.title}}{% else %}Projects{% endif %}</h2>{% endif %}
     <div style="display: flex; align-items: flex-start;
     flex-wrap: wrap; position: relative;margin: -0.5em;">
 
@@ -86,7 +86,7 @@
       </div>
       {% endfor %}
     </div>
-    {% if not hide_view_all_projects %}
+    {% if not hide_view_all_projects and not self.hide_link %}
     <div style="margin-bottom:5em">
       <a class="link" href="/projects">View all projects<img class="smart-invert" style="margin-left: 0.5ch;"
           src="{% static 'icons/arrow.png' %}" width="9"></a>

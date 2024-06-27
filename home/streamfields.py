@@ -58,6 +58,8 @@ article_fields =  basic_fields + [
 
     ('DescriptionBlock', DescriptionBlock(group="basic")),
 
+    ("HorizontalCardList",HorizontalCardList(group="List")),
+
     ("GradientDescentWidget", GradientDescentWidget(group="oneoff")),
     ("StatisticalMurderWidget", StatisticalMurderWidget(group="oneoff")),
     ("IRTWidget", IRTWidget(group="oneoff")),

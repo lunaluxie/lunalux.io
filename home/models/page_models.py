@@ -16,6 +16,7 @@ from collections import Counter
 from wagtail.search import index
 from django.db.models import Count, F, Q
 from django.db.models import Case, When
+from wagtail.documents import get_document_model
 
 from home.models.helper_models import PageTag, InterPageLink, PageHit, Contact
 
@@ -255,3 +256,20 @@ class Series(AbstractPage):
 
         first_article = self.articles[0].value[0]
         return redirect(f"{first_article.url}?series={self.id}")
+
+
+class DocumentPage(Page):
+    page_description = "Document page only for giving documents a permanent url."
+
+    document = models.ForeignKey(
+        get_document_model(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
+    content_panels = Page.content_panels + [
+        FieldPanel("document"),
+    ]
+
+    def serve(self, request, *args, **kwargs):
+        return redirect(self.document.url)

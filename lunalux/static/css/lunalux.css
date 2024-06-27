@@ -63,7 +63,7 @@
         --content-link-color:#589ccd;
 
 
-        --header-color: #5f656d;
+        --header-color: #cacdd0;
         --secondary-background: hsla(0, 0%, 97%, 1);
 
         --tertiary-background:hsla(214, 3%, 55%, .1);
@@ -167,8 +167,7 @@ h1, h2, h3, h4, h5, h6 {
   content: "";
   display: block;
   bottom: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, .05);
-  width: 100%;
+  border-bottom: 1px solid var(--border-color);
   margin: 0 auto;
 }
 
@@ -1097,7 +1096,7 @@ footer a {
   font-weight: 700;
   margin-bottom: 25px;
   padding-left: 15px;
-  border-left: 2px solid #000;
+  border-left: 2px solid var(--border-color);
   font-family: Poppins, sans-serif;
 }
 

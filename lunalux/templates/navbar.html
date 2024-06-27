@@ -80,8 +80,8 @@
           </a>
           <div class="dropdown">
             <ul>
-              <li><a href="/now"><i class="fa-solid fa-clock"></i><span>now</span></a></li>
-              <li><a href="/resume"><i class="fa-solid fa-file"></i><span>resume</span></a></li>
+              {% comment %} <li><a href="/now"><i class="fa-solid fa-clock"></i><span>now</span></a></li> {% endcomment %}
+              {% comment %} <li><a href="/resume"><i class="fa-solid fa-file"></i><span>resume</span></a></li> {% endcomment %}
               <li><a href="/about#contact-section"><i class="fa-solid fa-address-card"></i><span>contact</span></a></li>
               <li><a href="/colophon"><i class="fa-solid fa-globe"></i><span>colophon</span></a></li>
               <li><hr style="margin: 2px auto;max-width: 50px;border-width: 0.5px;"></li>
@@ -108,11 +108,13 @@
 <style>
 
 .bar-modal {
-    position: fixed;
+    position: absolute;
     min-height: 100%;
     width: 100%;
     background: var(--body-bg);
     top: 55px;
+    display: flex;
+    justify-content: center;
 }
 
 .bar-modal .modal-container {
@@ -124,7 +126,7 @@
 
 .bar-modal a {
 
-    padding:1rem;
+    padding: 0.5rem 0;
     display:block;
 
     color: var(--body-color);
@@ -135,15 +137,103 @@
     text-transform: uppercase;
     text-decoration: none;
 }
+
+.bar-modal svg {
+  margin-right:0.25rem;
+  width: 13px;
+}
+
+.bar-modal .dropdown ul {
+  padding: 0 1.5rem;
+}
 </style>
 <modal class="bar-modal hidden " style="z-index:10" id="modal">
-    <div class="modal-container">
-      <a style="position:relative;" href="/articles">essays</a>
-      <a style="position:relative;" href="/projects">projects</a>
-      <a style="position:relative;" href="/search">search</a>
-      <a style="position:relative;" href="/about">about</a>
+    <ul style="list-style: none; padding:0; margin-top:0;">
+        <li>
+          <a href="/start-here">
+            <i class="fa-solid fa-star"></i>
+            <span>start here</span>
+          </a>
+        </li>
+        <li>
+          <a href="/timeline">
+            <i class="fa-solid fa-pen"></i>
+            <span>Writing</span>
+            <i id="timeline-dropdown-toggle" class="fa-solid fa-angle-down"></i>
+          </a>
+          <div id="timeline-dropdown" class="dropdown">
+            <ul>
+              <li>
+                <a href="/projects">
+                  <i class="fa-solid fa-table"></i>
+                  <span>projects</span>
+                </a>
+              </li>
+              <li>
+                <a href="/articles">
+                  <i class="fa-solid fa-newspaper"></i>
+                  <span>essays</span>
+                </a>
+              </li>
+              <li>
+                <a href="/notes">
+                  <i class="fa-solid fa-feather-pointed"></i>
+                  <span>notes</span>
+                </a>
+              </li>
+              <li>
+                <a href="/trending">
+                  <i class="fa-solid fa-arrow-trend-up"></i>
+                  <span>trending</span>
+                </a>
+              </li>
+              <li>
+                <a href="/timeline">
+                  <i class="fa-solid fa-list-ul"></i>
+                  <span>timeline</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
 
-    </div>
+        <li>
+          <a href="/garden">
+            <i class="fa-solid fa-tree"></i>
+            <span>garden</span>
+            <i class="fa-solid fa-angle-down"></i>
+          </a>
+          <div class="dropdown">
+            <ul>
+              <li><a href="/garden/?garden_status=seedling"><span>🌱 seedling</span></a></li>
+              <li><a href="/garden/?garden_status=budding"><span>🌿 budding</span></a></li>
+              <li><a href="/garden/?garden_status=evergreen"><span>🌳 evergreen</span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <a href="/about">
+            <i class="fa-solid fa-user"></i>
+            <span>about</span>
+            <i class="fa-solid fa-angle-down"></i>
+          </a>
+          <div class="dropdown">
+            <ul>
+              {% comment %} <li><a href="/now"><i class="fa-solid fa-clock"></i><span>now</span></a></li> {% endcomment %}
+              {% comment %} <li><a href="/resume"><i class="fa-solid fa-file"></i><span>resume</span></a></li> {% endcomment %}
+              <li><a href="/about#contact-section"><i class="fa-solid fa-address-card"></i><span>contact</span></a></li>
+              <li><a href="/colophon"><i class="fa-solid fa-globe"></i><span>colophon</span></a></li>
+              <li><a href="javascript:cc.openOptionsModal()"><i class="fa-solid fa-cookie-bite"></i><span>cookies</span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <a href="/search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>search</span>
+          </a>
+        </li>
+      </ul>
 </modal>
 
 <script>

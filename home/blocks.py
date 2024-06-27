@@ -1,5 +1,6 @@
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.contrib.table_block.blocks import TableBlock
 
 # BASIC BLOCKS
 
@@ -174,31 +175,38 @@ class ImageDividerBlock(blocks.StructBlock):
 
 class ContainerBlock(blocks.StructBlock):
     content = blocks.StreamBlock([
-        # my thing
-        ("CardList", CardListBlock(group="List")),
-        ("HorizontalCardList", HorizontalCardList(group="List")),
-        ("LinesList", LinesListBlock(group="List")),
-
-
-        ("AboutBlurb", AboutBlurb(group="")),
-        ("ContactForm", ContactForm(group="")),
-
-        # automatic
-        ("recent_articles", RecentArticlesBlocks(group="automatic")),
-        ("recent_projects", RecentProjectsBlocks(group="automatic")),
-
-
         # structure
         ("spacer", SpacerBlock(group="layout")),
 
-        ("JumbotronCard", JumbotronCardBlock(group="ImageHeader")),
-        ("ImageHeader", ImageHeaderBlock(group="ImageHeader")),
-        ("ImageDivider", ImageDividerBlock(group="ImageHeader")),
-
         ("text", blocks.RichTextBlock(group="basic")),
         ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
+        ('table', TableBlock(group="basic")),
 
     ])
 
     class Meta:
         template = "blocks/container.html"
+        help_text = "Creates a container for text and images. Useful if you want the proper margin for wide-page layouts."
+        label = 'Container: (Use this for text in wide layouts)'
+
+
+class ColumnBlock(blocks.StructBlock):
+    content = blocks.StreamBlock([
+        ("text", blocks.RichTextBlock(group="basic")),
+        ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
+    ])
+
+    class Meta:
+        template = "blocks/column.html"
+        help_text = "Creates a column."
+        label = 'Column (add another column)'
+
+class ColumnsBlock(blocks.StructBlock):
+    columns = blocks.StreamBlock([
+        ("column", ColumnBlock())
+    ])
+
+    class Meta:
+        template = "blocks/columns.html"
+        help_text = "Create multi column layouts."
+        label = 'Columns: (Use this for multi-column layouts)'

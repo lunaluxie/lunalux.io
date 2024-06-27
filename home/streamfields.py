@@ -17,7 +17,6 @@ basic_fields = [
 
 body_fields = [
     # my thing
-
     ("CardList", CardListBlock(group="List")),
     ("HorizontalCardList",HorizontalCardList(group="List")),
     ("LinesList",LinesListBlock(group="List")),
@@ -35,14 +34,16 @@ body_fields = [
     # structure
     ("spacer",SpacerBlock(group="layout")),
     ("container", ContainerBlock(group="layout")),
+    ('columns', ColumnsBlock(group="layout")),
     ("skipNavMargin", NavMarginBlock(group="layout")),
 
+    # headers
     ("JumbotronImageBlock", JumbotronImageBlock(group="ImageHeader")),
     ("JumbotronCard",JumbotronCardBlock(group="ImageHeader")),
     ("ImageHeader", ImageHeaderBlock(group="ImageHeader")),
     ("ImageDivider", ImageDividerBlock(group="ImageHeader")),
 
-] + basic_fields
+]
 
 article_fields =  basic_fields + [
     ("ImageDivider", ImageDividerBlock()),

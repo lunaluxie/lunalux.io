@@ -457,6 +457,11 @@ navbar a {
   padding: 5px 11px;
   display: block;
   transition: opacity 0.2s;
+  text-wrap: nowrap;
+}
+
+navbar a svg {
+  margin-right:0.25rem;
 }
 
 navbar>.links ul a:hover {

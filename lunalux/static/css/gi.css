@@ -24,24 +24,6 @@
     flex: 1 1 0px;
 }
 
-.columns .block-text {
-    padding: 0 1.5rem;
-    min-width: 300px;
-    box-sizing: border-box;
-}
-
-.columns :not(.color-secondary):not(.color-primary) .block-text h2 {
-    color: #4f5b6e;
-}
-
-.columns .block-text>:not(h2):first-child {
-    margin-top: 0;
-}
-
-.columns .block-text>:not(h2):last-child {
-    margin-bottom: 1.56rem;
-}
-
 .grecaptcha-badge{
     display:none;
 }

@@ -52,6 +52,7 @@ def search(request):
         {
             "search_query": search_query,
             "articles": search_results,
-            "is_search": True
+            "is_search": True,
+            "description_text": "Can (currently) only search Notes and Essays"
         },
     )

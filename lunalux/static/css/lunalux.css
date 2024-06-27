@@ -311,7 +311,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 70px 30px;
+  padding: 0 30px;
   overflow: auto;
   margin: 0 auto;
 }
@@ -323,7 +323,7 @@ h1, h2, h3, h4, h5, h6 {
 @media screen and (max-width: 880px) {
   .card-list .container {
     justify-content: left;
-    padding: 70px 0;
+    padding: 0;
   }
 }
 

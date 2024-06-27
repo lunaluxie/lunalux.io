@@ -12,6 +12,13 @@ class CodeBlock(blocks.StructBlock):
         icon = "code"
         template = "blocks/code_block.html"
 
+class DescriptionBlock(blocks.StructBlock):
+    text = blocks.TextBlock()
+
+    class Meta:
+        icon = "pilcrow"
+        template = "blocks/description_block.html"
+
 # SECTION BLOCKS?
 
 class CardListBlock(blocks.StructBlock):

@@ -9,9 +9,38 @@ from home.models.helper_models import PageHit, PageTag
 from home.filtering import filter_on_abstract_page_properties, filter_page_with_any_of_tags
 from taggit.models import Tag
 
-def timeline(request):
-    queryset = Article.objects.all().filter(live=True).filter(unlisted=False).order_by("-last_published_at")
+def garden_list(request):
 
+    garden_status = request.GET.get('garden_status')
+
+    # TODO Change to single queryset on page???
+    queryset = HomePage.objects.filter(live=True, unlisted=False).exclude(garden_status='na')
+    queryset2 = Article.objects.filter(live=True, unlisted=False).exclude(garden_status='na')
+    queryset3 = Series.objects.filter(live=True, unlisted=False).exclude(garden_status='na')
+
+    if garden_status:
+        queryset = queryset.filter(garden_status=garden_status)
+        queryset2 = queryset2.filter(garden_status=garden_status)
+        queryset3 = queryset3.filter(garden_status=garden_status)
+
+    def time(instance):
+        return instance.last_published_at
+
+    queryies_combined = sorted(
+        chain(queryset, queryset2, queryset3),
+        key=time, reverse=True)
+
+    context = {"articles": queryies_combined, "tag": "Garden", 'hide_other_tags':True, "show_garden_status":True, "object_name": "Pages"}
+
+    context['description_text'] = "A collection of pages on various topics."
+
+    # TODO: Don't use article_list template for garden view
+    # in general move away from exclusively using article_list template
+    return render(request, "article_list.html",
+                  context=context)
+
+
+def timeline(request):
     # TODO Change to single queryset on page???
     queryset = HomePage.objects.filter(live=True, unlisted=False)
     queryset2 = Article.objects.filter(live=True, unlisted=False)

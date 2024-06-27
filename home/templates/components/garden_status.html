@@ -1,10 +1,10 @@
 
 {% if garden_status == 'seedling' %}
-<a href="/garden" title="This page is a seedling: It's still rough and not fully developed." class="garden-status" >🌱</a>
+<a href="/garden?garden_status=seedling" title="This page is a seedling: It's still rough and not fully developed." class="garden-status" >🌱{%if verbose%} Seedling{%endif%}</a>
 {% elif garden_status == 'budding' %}
-<a href="/garden" title="This page is budding: It's starting to take form." class="garden-status">🌿</a>
+<a href="/garden?garden_status=budding" title="This page is budding: It's starting to take form." class="garden-status">🌿{%if verbose%} Budding{%endif%}</a>
 {% elif garden_status == 'evergreen' %}
-<a href="/garden" title="This page is evergreen: The work is reasonably complete altough smaller changes might come over time." class="garden-status">🌳</a>
+<a href="/garden?garden_status=evergreen" title="This page is evergreen: The work is reasonably complete altough smaller changes might come over time." class="garden-status">🌳 {%if verbose%} Evergreen{%endif%}</a>
 {% elif garden_status == 'withering' %}
-<a href="/garden" title="This page is withering: It's no longer maintained, and may become outdated as information and opinions change." class="garden-status">🍂</a>
+<a href="/garden?garden_status=withering" title="This page is withering: It's no longer maintained, and may become outdated as information and opinions change." class="garden-status">🍂{%if verbose%} Withering{%endif%}</a>
 {%endif%}

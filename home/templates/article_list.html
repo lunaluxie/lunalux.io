@@ -61,7 +61,7 @@
 </div>
 
 <section id="articles">
-  {% include 'blocks/lines_list.html' with pages=articles include_images=True link_to_blog=False object_name=object_name %}
+  {% include 'blocks/lines_list.html' with pages=articles include_images=True link_to_blog=False object_name=object_name show_garden_status=show_garden_status hide_page_type=hide_page_type %}
 </section>
 </section>
 {% endblock content %}

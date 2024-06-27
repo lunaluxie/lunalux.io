@@ -107,6 +107,15 @@
       text-decoration: none;
       width: 14px;
     }
+
+    .garden-status {
+      text-decoration: none;
+      color: var(--color-muted);
+    }
+    .garden-status:hover{
+      filter: brightness(0.8);
+
+    }
   </style>
 
 <div class="container">
@@ -128,7 +137,8 @@
   <div class="row-list" style="margin: .9rem 0; font-family: 'lato';">
 
     <div class="col1" style="">
-      {% if obj.tags.first %}<a style="color: #666; font-size: 1rem; text-decoration: none;" href="/tag/{{ obj.tags.first.slug }}">{{obj.tags.first.name}}</a>{%endif%}
+      {% if show_garden_status %}{% include 'components/garden_status.html' with garden_status=obj.garden_status verbose=True %}{% endif %}
+      {% if obj.tags.first and not show_garden_status %}<a style="color: #666; font-size: 1rem; text-decoration: none;" href="/tag/{{ obj.tags.first.slug }}">{{obj.tags.first.name}}</a>{%endif%}
     </div>
 
     <div class="col2 {% if include_images and obj.image and obj.include_image_in_article_list %}image{%endif%}">

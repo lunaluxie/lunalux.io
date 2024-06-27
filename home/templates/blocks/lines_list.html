@@ -119,7 +119,7 @@
   <div class="row-list" style="margin: .9rem 0; font-family: 'lato';">
 
     <div class="col1" style="">
-      {% if obj.tags.first %}<a style="color: #666; font-size: 1rem; text-decoration: none;" href="/articles/tag/{{ obj.tags.first }}">{{obj.tags.first}}</a>{%endif%}
+      {% if obj.tags.first %}<a style="color: #666; font-size: 1rem; text-decoration: none;" href="/tag/{{ obj.tags.first.slug }}">{{obj.tags.first.name}}</a>{%endif%}
     </div>
 
     <div class="col2 {% if include_images and obj.image and obj.include_image_in_article_list %}image{%endif%}">

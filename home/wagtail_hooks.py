@@ -2,12 +2,15 @@ from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import SnippetViewSet
 from wagtail.signals import page_published
 from wagtail import hooks
-from home.models.page_models import Article, Series, AbstractPage
-from home.models.helper_models import InterPageLink, Contact, PageHit
+from wagtail.admin.panels import FieldPanel
 import wagtail.admin.rich_text.editors.draftail.features as draftail_features
 from wagtail.admin.rich_text.converters.html_to_contentstate import (
     InlineStyleElementHandler,
 )
+from taggit.models import Tag
+from home.models.page_models import Article, Series, AbstractPage
+from home.models.helper_models import InterPageLink, Contact, PageHit
+
 
 
 class ContactAdmin(SnippetViewSet):
@@ -36,6 +39,19 @@ def update_interlinks(sender,instance,**kwargs):
     if isinstance(instance, AbstractPage):
         instance.add_interpage_links()
 page_published.connect(update_interlinks)
+
+
+class TagsSnippetViewSet(SnippetViewSet):
+    panels = [FieldPanel("name")]  # only show the name field
+    model = Tag
+    icon = "tag"  # change as required
+    add_to_admin_menu = True
+    menu_label = "Tags"
+    menu_order = 300  # will put in 3rd place (000 being 1st, 100 2nd)
+    list_display = ["name", "slug"]
+    search_fields = ("name",)
+
+register_snippet(TagsSnippetViewSet)
 
 
 @hooks.register('register_rich_text_features')

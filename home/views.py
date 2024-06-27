@@ -6,7 +6,8 @@ from django.utils import timezone
 from collections import Counter
 from home.models.page_models import Page, AbstractPage, HomePage, Article, Series
 from home.models.helper_models import PageHit, PageTag
-from home.filtering import filter_on_abstract_page_properties
+from home.filtering import filter_on_abstract_page_properties, filter_page_with_any_of_tags
+from taggit.models import Tag
 
 def article_list(request):
     queryset = Article.objects.all().filter(live=True, article_type="article").filter(unlisted=False)
@@ -34,20 +35,13 @@ def article_trending_list(request):
 
 
 
-def article_tag_list(request, tag):
+def tag_detail(request, tag):
     tag = unquote(tag)
-    # queryset = Article.objects.all().filter(live=True).filter(
-    #     unlisted=False).filter(tags__name__icontains=tag).distinct().order_by('-first_published_at')
 
-    queryset = PageTag.objects.filter(tag__name__in=[tag])
-    page_ids = queryset.filter(content_object__live=True).values_list('content_object__id', flat=True)
-
-    queryset = Page.objects.type(AbstractPage).filter(id__in=page_ids)
-    queryset = queryset.filter(filter_on_abstract_page_properties(unlisted=False))
-    queryset = queryset.distinct().order_by('-first_published_at').specific()
+    queryset = filter_page_with_any_of_tags(tags=[tag])
 
     return render(request, "article_list.html",
-                  context={"articles":queryset,"tag":tag.lower()})
+                  context={"articles":queryset,"tag":Tag.objects.get(slug=tag)})
 
 
 def project_list(request):

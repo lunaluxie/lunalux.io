@@ -56,8 +56,8 @@ class AbstractPage(Page):
                         help_text="Settings that affect how the page will show up in search engines."
                     ),
                      MultiFieldPanel([
-                                     FieldPanel("is_project"),
                                      FieldPanel("garden_status"),
+                                     FieldPanel("is_project"),
                                      FieldPanel("unlisted"),
                                      FieldPanel("show_in_menus"),
                                      FieldPanel('tags', heading="Tags", help_text="Tags to categorize the page"),
@@ -91,9 +91,16 @@ class AbstractPage(Page):
 
 
     def get_recent_articles(self, n=8):
-        return Article.objects.all().filter(live=True).filter(unlisted=False).order_by('-last_published_at')[:n]
+        return Article.objects.all().filter(live=True, unlisted=False, article_type="article").order_by('-last_published_at')[:n]
 
     def get_trending_articles(self, n=8):
+        """Note we get all trending article no matter which type (note or article) they are.
+        The name is for historical reasons
+
+        Args:
+            n (int, optional): Number of pages to get. Defaults to 8.
+
+        """
         # Get the queryset of PageHit objects
         queryset = PageHit.objects.all()
 
@@ -113,7 +120,9 @@ class AbstractPage(Page):
         # Get the queryset of Article and Series objects with the proper pages
         queryset_with_proper_pages = Article.objects.filter(
             Q(pk__in=top_pages.values('page')),
-            ~Q(unlisted=True)
+            ~Q(unlisted=True),
+            Q(live=True),
+            Q(article_type="article")
         ).order_by(ordering)[:n]
 
         if not queryset_with_proper_pages:
@@ -122,10 +131,10 @@ class AbstractPage(Page):
         return queryset_with_proper_pages
 
     def get_all_articles(self):
-        return Article.objects.all().filter(live=True).filter(unlisted=False).order_by('-last_published_at')
+        return Article.objects.all().filter(live=True, unlisted=False, article_type="article").order_by('-last_published_at')
 
     def get_recent_projects(self, n=3):
-        return Page.objects.all().filter(live=True).filter(is_project=True).order_by('-last_published_at')[:n]
+        return Page.objects.all().filter(live=True).filter(is_project=True).order_by('-last_published_at').specific()[:n]
 
     def add_interpage_links(self):
         pass
@@ -191,7 +200,14 @@ class Article(AbstractPage):
     header = StreamField(article_header_fields, use_json_field=True, null=True, blank=True)
     body = StreamField(article_fields, use_json_field=True, null=True, blank=True)
 
+    choices = (
+        ("article", "📕 Article: For long form writing and essays - should be worth the reader's time"),
+        ("note", "📝 Note: For shorter pieces, or notes - may not be as polished as an article"),
+    )
+    article_type = models.CharField(max_length=100, choices=choices, default='article', help_text="Type of article, e.g. Article, Note, etc.")
+
     content_panels = AbstractPage.content_panels + [
+        FieldPanel('article_type'),
         FieldPanel("header"),
         FieldPanel("body"),
     ]

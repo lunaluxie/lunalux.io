@@ -14,6 +14,9 @@
     --header-link-color-hover: rgb(194, 194, 194);
     --color-muted: #5f656d;
 
+
+    --shadow-color: rgba(0, 0, 0, .1);
+
     --content-link-color:#246491;
 
     --border-color: rgb(139, 139, 139);
@@ -62,6 +65,7 @@
 
         --content-link-color:#589ccd;
 
+        --shadow-color: rgba(143, 51, 141, 0.151);
 
         --header-color: #cacdd0;
         --secondary-background: hsla(0, 0%, 97%, 1);
@@ -137,7 +141,7 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
   border-radius: 5px;
   position: relative;
-  box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 10px 2px var(--shadow-color);
   padding: 12px 36px;
   z-index: 5;
   text-transform: uppercase;
@@ -152,7 +156,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn:hover {
-  box-shadow: 5px 5px 20px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 20px 2px var(--shadow-color);
   transform: scale(1.025);
 }
 
@@ -355,8 +359,8 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--gradient-background);
   min-width: 200px;
   border-radius: 5px;
-  box-shadow: 0 5px 30px 0 rgba(136, 100, 190, 0.1);
-  transition: box-shadow .4s;
+  box-shadow: 0 5px 30px 0 var(--shadow-color);
+  transition: box-shadow .2s, transform .1s;
   display: flex;
   align-items: center;
   background-size: cover;
@@ -366,7 +370,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-list .container .card:hover {
-  box-shadow: 7px 10px 25px 0 rgba(136, 100, 190, 0.3)
+  box-shadow: 7px 10px 25px 0 var(--shadow-color);
+  transform: scale(1.02)
 }
 
 .card-list .container .card .content {
@@ -948,13 +953,13 @@ footer a {
   margin-top: -170px;
   border-radius: 5px;
   background-color: var(--body-bg);
-  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+  box-shadow: 0 5px 10px 0 var(--shadow-color);
   transition: box-shadow .1s;
   margin-right: 0;
 }
 
 .hero-card .content:hover {
-  box-shadow: 0px 5px 10px 0 rgba(0, 0, 0, .12);
+  box-shadow: 0px 5px 10px 0 var(--shadow-color);
 }
 
 .hero-card .content .title {
@@ -1052,7 +1057,7 @@ footer a {
   display: block;
   border-radius: 5px;
   background-color: var(--body-bg);
-  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+  box-shadow: 0 5px 10px 0 var(--shadow-color);
   transition: box-shadow .5s;
   margin: 20px;
   max-width: 100%;
@@ -1069,7 +1074,7 @@ footer a {
 
 .card-small:hover {
   /* box-shadow: 0 40px 150px 0 rgba(0, 0, 0, .1); */
-  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, .1);
+  box-shadow: 0 10px 10px 0 var(--shadow-color);
 }
 
 .card-small.v-center {
@@ -1163,7 +1168,7 @@ footer a {
   background: var(--body-bg);
   color: var(--color-muted);
   font: inherit;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 10px 0 var(--shadow-color);
   border: 0;
   outline: 0;
   padding: 22px 18px;
@@ -1183,7 +1188,7 @@ footer a {
   margin-left: -96px;
   background-color: var(--form-button-bg);
   color: var(--body-bg);
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 2px var(--shadow-color);
   padding: 12px 36px;
   z-index: 5;
   text-transform: uppercase;
@@ -1324,7 +1329,7 @@ footer a {
 }
 
 .paginator a:hover {
-  box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 7px 2px var(--shadow-color);
   background-color: var(--form-button-bg-hover);
 }
 
@@ -1405,7 +1410,7 @@ section.newsletter .form>form button:hover {
   position: relative;
   border-radius: 5px;
   background-color: var(--body-bg);
-  box-shadow: 0 10px 100px 0 rgba(0, 0, 0, .1);
+  box-shadow: 0 10px 100px 0 var(--shadow-color);
   transition: box-shadow .5s;
   margin: 40px 25px;
   display: flex;
@@ -1413,7 +1418,7 @@ section.newsletter .form>form button:hover {
 }
 
 .series>.entries .entry:hover {
-  box-shadow: 0 30px 140px 0 rgba(0, 0, 0, .1)
+  box-shadow: 0 30px 140px 0 var(--shadow-color);
 }
 
 .series>.entries .entry .image {
@@ -1632,12 +1637,12 @@ section.newsletter .form>form button:hover {
   z-index: 100;
   border-radius: 5px;
   background-color: var(--body-bg);
-  box-shadow: 0 10px 100px 0 rgba(0, 0, 0, .1);
+  box-shadow: 0 10px 100px 0 var(--shadow-color);
   transition: box-shadow .5s;
 }
 
 .consent-modal-container:hover {
-  box-shadow: 0 30px 120px 0 rgba(0, 0, 0, .1);
+  box-shadow: 0 30px 120px 0 var(--shadow-color);
 }
 
 @media screen and (max-width: 550px) {

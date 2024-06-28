@@ -247,6 +247,8 @@ class Article(AbstractPage):
         context["series"] = series
 
         links = InterPageLink.objects.filter(to_page=self).exclude(from_page=self)
+        links.filter(from_page__live=True)
+        # TODO: Filter unlisted pages
         links = Counter(links).most_common(4)
 
         context['links'] = links

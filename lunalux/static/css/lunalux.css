@@ -1869,6 +1869,11 @@ pre {
     border: 1px solid var(--body-color)!important;
 }
 
+.block-code code {
+  font-size: 16px;
+  line-height: 1;
+}
+
 .hljs{
   margin:0;
   padding:0;

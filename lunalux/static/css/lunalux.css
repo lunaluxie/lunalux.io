@@ -672,7 +672,19 @@ spacer {
 
 }
 
-.article .content h2:hover .heading-anchor, h3:hover .heading-anchor, h4:hover .heading-anchor, h5:hover .heading-anchor, h6:hover .heading-anchor {
+.article .content h2:hover .heading-anchor{
+  opacity: 1;
+}
+.article .content h3:hover .heading-anchor {
+  opacity: 1;
+}
+.article .content h4:hover .heading-anchor {
+  opacity: 1;
+}
+.article .content h5:hover .heading-anchor {
+  opacity: 1;
+}
+.article .content h6:hover .heading-anchor {
   opacity: 1;
 }
 

@@ -72,7 +72,7 @@
         <div class="content" style="padding:0.5rem">
 
           {% image obj.image width-700 as tmp_photo %}
-          <a href="{% pageurl obj %}" title="{{obj.title}}"><img style="aspect-ratio: calc({{tmp_photo.width}}/{{tmp_photo.height}}); width:100%;" src="{{ tmp_photo.url }}"></a>
+          <a href="{% pageurl obj %}" title="{{obj.title}}"><img style="aspect-ratio: calc({{tmp_photo.width}}/{{tmp_photo.height}}); width:100%; max-height: 300px; object-fit: cover;" src="{{ tmp_photo.url }}"></a>
 
           <a href="{%pageurl obj%}" style="text-decoration: none;"><div class="content_">
             <h3 class="title">{{ obj.title }}</h3>

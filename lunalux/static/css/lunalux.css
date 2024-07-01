@@ -863,6 +863,7 @@ ARTICLE BYLINE
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
+  padding: 0;
 }
 
 .tags a {

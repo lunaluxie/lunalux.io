@@ -7,7 +7,8 @@
 
 <section style="min-height: 90vh; margin-top:5em; margin-bottom:3rem">
 <div class="container mt-3">
-  <ul class="" style="padding: 0; margin-bottom: 2em; font-size: 1.6666666667rem;">
+  <div class="head-control" style="margin-bottom: 2em">
+  <ul class="" style="padding: 0; font-size: 1.6666666667rem; margin-bottom:0;">
     {% if is_search %}
       <form style="display:inline-block;" hx-get="/search" hx-target="#articles" hx-swap="innerHTML" method="GET" >
       <li class="li-class"><button type="submit" style="background:inherit; border:inherit; padding:inherit; color:inherit; font:inherit; cursor:pointer;">Search</button></li>
@@ -55,6 +56,12 @@
     {% endif %}
     {% if description_text %}<style>.description-text{margin-top: 0.5rem;font-size: 1rem;color: var(--color-muted);}</style><p class="description-text">{{description_text}}</p>{%endif%}
   </ul>
+  <ul class="tags" style="justify-content:flex-start; padding:0; margin-bottom:3rem;">
+    {% for tag in tags%}
+    <a href="/tag/{{tag.slug}}"><li>{{tag.name}}</li></a>
+    {% endfor %}
+  </ul>
+  </div>
   <div class="" style="margin-bottom: 0.8em;">
     <span class="" id="article_count" style="color: var(--body-color);">{{ articles|length }} articles</span>
   </div>

@@ -84,8 +84,10 @@ def article_list(request):
         chain(queryset, queryset2),
         key=time, reverse=True)
 
+    tags = Article.tags.most_common().exclude(slug__in=['ai', 'physics'])[:10]
+
     return render(request, "article_list.html",
-                  context={"articles": queryies_combined, "tag": "all", "object_name": "Essays"})
+                  context={"articles": queryies_combined, "tag": "all", 'tags':tags, "object_name": "Essays"})
 
 def article_trending_list(request):
     articles= Article.objects.first().get_trending_articles(n=15)

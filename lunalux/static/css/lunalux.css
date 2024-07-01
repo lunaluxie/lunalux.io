@@ -688,6 +688,28 @@ spacer {
   opacity: 1;
 }
 
+@media screen and (max-width: 800px) {
+  .article .content h2:hover .heading-anchor {
+      opacity: 0;
+    }
+
+    .article .content h3:hover .heading-anchor {
+      opacity: 0;
+    }
+
+    .article .content h4:hover .heading-anchor {
+      opacity: 0;
+    }
+
+    .article .content h5:hover .heading-anchor {
+      opacity: 0;
+    }
+
+    .article .content h6:hover .heading-anchor {
+      opacity: 0;
+    }
+}
+
 .article .content .katex {
   /* overflow: auto; */
 }

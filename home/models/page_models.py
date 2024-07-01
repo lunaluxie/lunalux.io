@@ -244,10 +244,10 @@ class Article(AbstractPage):
         links = InterPageLink.objects.filter(to_page=self).select_related("from_page").exclude(from_page=self)
         links = links.filter(from_page__live=True)
         links = [obj.from_page.specific for obj, freq in Counter(links).most_common(4) if not obj.from_page.specific.unlisted]
-
         context['links'] = links
 
-        print(context)
+        context['similar_objects'] = self.tags.similar_objects()[:10]
+        context['similar_objects'] = [obj.specific for obj in context['similar_objects'] if obj.specific.live and not obj.specific.unlisted]
 
         return context
 

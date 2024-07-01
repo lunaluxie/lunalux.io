@@ -1803,7 +1803,7 @@ section.newsletter .form>form button:hover {
           .col2 {
             flex: 0 0 90%;
             max-width: 90%;
-            margin: 0 1.2rem;
+            margin-right: 1rem;
           }
 
           .col2.large{

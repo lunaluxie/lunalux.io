@@ -247,7 +247,12 @@ class Article(AbstractPage):
         context['links'] = links
 
         context['similar_objects'] = self.tags.similar_objects()[:10]
-        context['similar_objects'] = [obj.specific for obj in context['similar_objects'] if obj.specific.live and not obj.specific.unlisted]
+
+        link_ids = [obj.id for obj in links]
+        context['similar_objects'] = [obj.specific for obj in context['similar_objects']
+                                      if obj.specific.live
+                                         and not obj.specific.unlisted
+                                         and obj.id not in  link_ids]
 
         return context
 

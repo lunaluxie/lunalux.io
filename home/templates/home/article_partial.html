@@ -131,19 +131,21 @@
             opacity:1;
         }
         </style>
-        <div class="series-container" id="series-navbar" style="position:fixed; left:0;">
-        <div id="sidebar" class="series sidebar">
-            <div class="title"><a href=""><h1>{{series.title}}</h1></a></div>
-            <div class="entries">
-            {% for entries in series.articles %}
-            {% for entry in entries.value %}
-            <a href="{% pageurl entry %}?series={{series.id}}">
-                <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
-            </a>
-            {% endfor %}
-            {% endfor %}
+        <div class="series-container" id="series-navbar" style="">
+            <div id="sidebar" class="series sidebar">
+                <div class="title"><a href=""><h1>{{series.title}}</h1></a></div>
+                <div class="entries">
+                {% for entries in series.articles %}
+                    {% for entry in entries.value %}
+                    {% if entry.live %}
+                    <a href="{% pageurl entry %}?series={{series.id}}">
+                        <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                </div>
             </div>
-        </div>
         </div>
         <script>
         let seriesContainer = document.getElementById("series-navbar")
@@ -159,7 +161,7 @@
     </div>
 
     {% if series %}
-    <div class="series-end" style="">
+    <div class="series-end" id='series-end' style="">
     <div style="max-width:700px; margin:0 auto;">
         <div class="title">
             <a href=""><h1>{{series.title}}</h1></a>
@@ -167,9 +169,11 @@
         <div class="entries">
             {% for entries in series.articles %}
             {% for entry in entries.value %}
+            {% if entry.live %}
             <a href="{% pageurl entry %}?series={{series.id}}">
             <div class="entry" id="{% if entry.slug == page.slug %}active{% endif %}">{{entry.title}}</div>
             </a>
+            {% endif %}
             {% endfor %}
             {% endfor %}
         </div>

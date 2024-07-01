@@ -74,9 +74,10 @@
   {% if series %}
   <script> // sidebar fixing
     var sidebar = document.getElementById('sidebar');
+    var sidebarContainer = document.getElementById('series-navbar');
     window.addEventListener("scroll", function(){
-      var articlePosition = document.getElementById('article').offsetTop;
-      var articleBottom = document.getElementById('article').offsetHeight;
+      var articlePosition = document.getElementById('article-content').offsetTop;
+      var articleBottom = document.getElementById('article-content').offsetHeight;
 
       if (window.pageYOffset > articlePosition){
         //sidebar.classList.add("fixed");
@@ -125,12 +126,14 @@
       })
 
 
-
-      {% comment %} if (window.pageYOffset > articleBottom - 70){
+      // hide sidebar container at bottom
+      if (document.getElementById("series-end").getBoundingClientRect().top <= (window.innerHeight || document.documentElement.clientHeight)){
         sidebar.classList.add("bottom");
+        sidebarContainer.classList.add('bottom')
       } else {
         sidebar.classList.remove("bottom");
-      } {% endcomment %}
+        sidebarContainer.classList.remove('bottom')
+      }
     })
   </script>
   {% endif %}

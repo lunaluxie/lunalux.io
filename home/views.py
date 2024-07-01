@@ -100,9 +100,13 @@ def tag_detail(request, tag):
 
     queryset = filter_page_with_any_of_tags(tags=[tag])
 
+    tags = Article.tags.most_common().exclude(slug=tag)[:10]
+
     context = {"articles":queryset,
                "object_name": "Items",
-               "tag":Tag.objects.get(slug=tag)}
+               "tag":Tag.objects.get(slug=tag),
+               'tags':tags,
+               "hide_other_tags":True}
 
     if request.GET.get('hide_other_tags'):
         context["hide_other_tags"] = True

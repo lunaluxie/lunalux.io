@@ -151,7 +151,7 @@
 
     <div class="col2 {% if include_images and obj.image and obj.include_image_in_article_list %}image{%endif%}">
       <div style="max-width: 30rem;">
-        <a href="{% pageurl obj %}" style="text-decoration: none;">
+        <a {% if use_htmx%}hx-push-url="true"  hx-swap="innerHTML show:top" hx-target="#main"{%endif%} href="{% pageurl obj %}" style="text-decoration: none;">
           <p class="asdf" style="">
             {% if not hide_page_type %}{% include 'components/article_type.html' with page_type=obj.get_page_type%}{%endif%}
             {{ obj.title }}
@@ -167,7 +167,7 @@
 
     {% if include_images and obj.image and obj.include_image_in_article_list %}
     <div class="col3" style="">
-      <a href="{% pageurl obj %}">
+      <a {% if use_htmx%}hx-push-url="true"  hx-swap="innerHTML show:top" hx-target="#main"{%endif%} href="{% pageurl obj %}">
         {% image obj.image width-600 as tmp_photo %}
         <img style="aspect-ratio: calc({{tmp_photo.width}}/{{tmp_photo.height}}); width:100%;" alt="{{tmp_photo.alt}}" src="{{ tmp_photo.url }}">
       </a>
@@ -194,7 +194,10 @@
   {% endif %}
 
   <script>
-    document.getElementById('article_count').innerHTML = '{{ pages|length }} {% if object_name %}{{object_name}}{% else %}Items{% endif %}';
+    let articleCount = document.getElementById('article_count')
+    if (articleCount){
+      articleCount.innerHTML = '{{ pages|length }} {% if object_name %}{{object_name}}{% else %}Items{% endif %}';
+    }
   </script>
 
 </div>

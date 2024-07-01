@@ -75,8 +75,10 @@ class AbstractPage(Page):
         abstract = True
 
     def get_context(self, request, *args, **kwargs):
-        return {}
+        context = super().get_context(request, *args, **kwargs)
+        context["HTMX"] = request.META.get('HTTP_HX_REQUEST')
 
+        return context
 
     def type(self):
         return self.__class__.__name__
@@ -188,13 +190,6 @@ class HomePage(AbstractPage):
 
         return "home/home_page.html"
 
-    def get_context(self, request, *args, **kwargs):
-        context = super(AbstractPage, self).get_context(request, *args, **kwargs)
-
-        context["HTMX"] = request.META.get('HTTP_HX_REQUEST')
-
-        return context
-
     def add_interpage_links(self):
         self._add_interpage_links_from_html_field("body")
 
@@ -232,7 +227,7 @@ class Article(AbstractPage):
         return "home/article.html"
 
     def get_context(self, request, *args, **kwargs):
-        context = super(AbstractPage, self).get_context(request, *args, **kwargs)
+        context = super().get_context(request, *args, **kwargs)
 
         series_id = request.GET.get("series")
 
@@ -246,14 +241,13 @@ class Article(AbstractPage):
 
         context["series"] = series
 
-        links = InterPageLink.objects.filter(to_page=self).exclude(from_page=self)
+        links = InterPageLink.objects.filter(to_page=self).select_related("from_page").exclude(from_page=self)
         links = links.filter(from_page__live=True)
-        # TODO: Filter unlisted pages
-        links = Counter(links).most_common(4)
+        links = [obj.from_page.specific for obj, freq in Counter(links).most_common(4) if not obj.from_page.specific.unlisted]
 
         context['links'] = links
 
-        context["HTMX"] = request.META.get('HTTP_HX_REQUEST')
+        print(context)
 
         return context
 

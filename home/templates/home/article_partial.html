@@ -2,8 +2,8 @@
 
 {% if HTMX %}
 <head>
-<title>{{ page.title }} from htmx</title>
-<meta name="description" content="{{ page.search_description }} htmx">
+<title>{{ page.title }}</title>
+<meta name="description" content="{{ page.search_description }}">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -13,17 +13,13 @@
   {% if page.image %}"image": "https://cdn.lunalux.io{{page.image.url}}",{% endif %}
   "author": {
     "@type": "Person",
-    "name": "{{page.user.get_full_name}}"
+    "name": "{{page.owner.get_full_name}}"
   },
   "name": "{{page.slug}}"
 }
-</script>
 </head>
 {% endif %}
-
-<div>
     <header class="article-header">
-
     {% include_block page.header %}
     </header>
 
@@ -107,7 +103,7 @@
             </div>
         {% endif %}
 
-        <div id='article-content' class="content">
+        <div id='article-content' class="content" hx-boost='true'>
             {% include_block page.body %}
         </div>
 
@@ -185,29 +181,12 @@
 
 
     {% if links and not series %}
-    <div class="similar">
+    <div class="similar" hx-boost="true">
         <div class="single-col">
         <div class="section-header">
-            <h1>continue reading</h1>
+            <h1>Continue reading</h1>
         </div>
-        <div class="row">
-            {% for obj, freq in links %}
-            <div class="col">
-                <div hx-boost="true"  class="card-small" style="max-width:400px;">
-                <div class="content">
-                    <div class="title">{{ obj.from_page.title }}</div>
-                    <div class="body">
-                        {{ obj.from_page.search_description }}
-                    </div>
-                    <div class="link">
-                        <a class="link-text" href="{% pageurl  obj.from_page %}" hx-push-url="true"  hx-swap="innerHTML show:top" hx-target="#article-content">read</a>
-                        <img class="smart-invert" src="{% static 'icons/arrow.png' %}" width="9">
-                    </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            </div>
+        {% include 'blocks/lines_list.html' with pages=links include_images=True use_htmx=True%}
         </div>
     </div>
     {% endif %}
@@ -232,7 +211,8 @@
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function(e) {
+        htmx.onLoad( function(e) {
+            // set up heading anchors
             document.getElementById('article-content').querySelectorAll("h2, h3, h4, h5, h6").forEach((el)=>{
                 el.setAttribute("id",el.textContent.slugify())
 
@@ -243,6 +223,14 @@
 
                 el.insertBefore(beforeEl, el.firstChild)
             })
+
+            // boost internal article links
+            document.getElementById("article-content").querySelectorAll("a").forEach(el=>{
+                if (el.href.includes(window.location.origin)){
+                    el.setAttribute("hx-push-url", "true")
+                    el.setAttribute("hx-swap", "innerHTML show:top")
+                    el.setAttribute("hx-target", "#main")
+                }
+            })
         })
     </script>
-</div>

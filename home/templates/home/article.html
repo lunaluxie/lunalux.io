@@ -10,7 +10,7 @@
   {% if page.image %}"image": "https://cdn.lunalux.io{{page.image.url}}",{% endif %}
   "author": {
     "@type": "Person",
-    "name": "{{page.user.get_full_name}}"
+    "name": "{{page.owner.get_full_name}}"
   },
   "name": "{{page.slug}}"
 }
@@ -64,9 +64,8 @@
     }
   </style>
 
-  <div id="article-content">
-    {% include 'home/article_partial.html' with page=page series=series links=links series=series%}
-  </div>
+
+{% include 'home/article_partial.html' with page=page series=series links=links series=series%}
 
 {% endblock content %}
 

@@ -1,5 +1,11 @@
 {% load static wagtailcore_tags%}
 
+{% if htmx %}
+<head>
+<title>{{ page.title }}</title>
+<meta name="description" content="{{ page.search_description }}">
+</head>
+{% endif %}
 
 {% if page %}
 {% include_block page.body %}

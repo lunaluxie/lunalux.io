@@ -29,6 +29,13 @@
 
         {% block extra_head %}
         {% endblock %}
+
+        <link hx-preserve="true" rel="stylesheet" type="text/css" href="{% static 'font-awesome/fontawesome.css'%}">
+        <link hx-preserve="true" rel="stylesheet" type="text/css" href="{% static 'font-awesome/solid.css'%}">
+
+        <script hx-preserve="true" src="https://unpkg.com/htmx.org@1.9.12"></script>
+        <script hx-preserve="true" src="https://unpkg.com/htmx.org@1.9.12/dist/ext/head-support.js"></script>
+
     </head>
 
     <body class="{% block body_class %}{% endblock %}" hx-ext="head-support">
@@ -49,8 +56,6 @@
         {% include "footer.html" %}
 
         {# Global javascript #}
-        <script src="https://unpkg.com/htmx.org@1.9.12"></script>
-        <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/head-support.js"></script>
         <script>
         htmx.onLoad(function(elt){
             delete cc;
@@ -94,8 +99,5 @@
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}
         {% endblock %}
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js" integrity="sha512-8pHNiqTlsrRjVD4A/3va++W1sMbUHwWxxRPWNyVlql3T+Hgfd81Qc6FC5WMXDC+tSauxxzp1tgiAvSKFu1qIlA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </body>
 </html>

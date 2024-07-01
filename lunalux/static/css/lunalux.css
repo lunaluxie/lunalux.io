@@ -163,7 +163,6 @@ h1, h2, h3, h4, h5, h6 {
 .section-header {
   display: block;
   position: relative;
-  bottom: 40px;
   padding: 20px;
 }
 
@@ -475,9 +474,9 @@ navbar a {
   text-wrap: nowrap;
 }
 
-navbar a svg {
-  margin-right:0.25rem;
-  width: 13px;
+navbar a i {
+  margin-right:0.2rem;
+  /* width: 13px; */
 }
 
 navbar>.links ul a:hover {
@@ -1376,10 +1375,6 @@ footer a {
   background-color: var(--body-bg);
   position: relative;
   padding-bottom: 60px;
-}
-
-.similar .single-col {
-  padding-top: 50px;
 }
 
 /*

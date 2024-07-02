@@ -260,7 +260,14 @@
                                             popover.style.left = el.getBoundingClientRect().left + "px"
                                         })
 
-                                        el.appendChild(popover)
+                                        if(!el.querySelector(".popover")){
+                                            // avoid loading multiple popovers when loading
+                                            // a better way would be insert a lock into the dom immediately,
+                                            // but that would render the popover when the page is still loading
+                                            // and I would have to add some loading element
+                                            // TODO: later.
+                                            el.appendChild(popover)
+                                        }
                                     })
                                 }
                             })

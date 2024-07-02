@@ -40,7 +40,14 @@
           border-bottom: 2px solid var(--link-color-hover);
         }
       </style>
-      <li class="li-class"><input style="width:100%; background: transparent;" name="query" placeholder="for something" value="{{search_query}}"></li>
+      <li class="li-class">
+        <input style="width:100%; background: transparent;" name="query" placeholder="for something" value="{{search_query}}"
+          hx-get="/search"
+          hx-trigger="input changed delay:500ms, search"
+          hx-target="#articles"
+          hx-swap="innerHTML"
+        >
+      </li>
       </form>
     {% else %}
       {% if tag == "Trending" %}

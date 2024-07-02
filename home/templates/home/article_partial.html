@@ -181,40 +181,35 @@
     {% endif %}
 
 
-    {% if links or similar_objects  %}
-    <div class="similar" hx-boost="true">
+
+    <div class="similar" id='similar'
+         hx-boost="true"
+         hx-get="?fragment=recommendation"
+         hx-trigger="revealed   "
+         hx-swap="innerHTML">
         <div class="single-col">
         <div class="section-header">
             <h1>Continue reading</h1>
         </div>
 
-        {% if links %}
-        <div class="container" style="margin-top: 1.8em;">
-            <h2 title="Pages that link here">Backlinks</h2>
+        <h2 class="container">Loading...</h2>
+        <div class="container" style="height:300px; display:flex; justify-content:center; align-items:center;">
+        <style>
+        .loader {
+            width: 25px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 5px solid;
+            border-color: #000 #0000;
+            animation: l1 1s infinite;
+        }
+        @keyframes l1 {to{transform: rotate(.5turn)}}
+        </style>
+        <div class="loader"></div>
         </div>
-        {% include 'blocks/lines_list.html' with pages=links include_images=True use_htmx=True%}
-        {% endif %}
-
-        {% if page.tags.all %}
-        <div class="container" style="margin-top:1.8em;">
-            <h2>Tags</h2>
-            <ul class="tags">
-                {% for tag in page.tags.all%}
-                <a href="/tag/{{tag.slug}}"><li>{{tag.name}}</li></a>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-        {% if similar_objects %}
-        <div class="container" style="margin-top: 1.8em;">
-            <h2 title="Pages with similar tags">Recommended</h2>
-        </div>
-        {% include 'blocks/lines_list.html' with pages=similar_objects include_images=True use_htmx=True%}
-        {% endif %}
 
     </div>
-    {% endif %}
+
 
     <script> // katex
     renderMathInElement(document.body, {"delimiters": [

@@ -222,6 +222,9 @@ class Article(AbstractPage):
 
     def get_template(self, request, *args, **kwargs):
         if request.META.get('HTTP_HX_REQUEST'):
+            if request.GET.get("fragment")=="recommendation":
+                return "components/recommendations.html"
+
             return "home/article_partial.html"
 
         return "home/article.html"
@@ -241,18 +244,21 @@ class Article(AbstractPage):
 
         context["series"] = series
 
-        links = InterPageLink.objects.filter(to_page=self).select_related("from_page").exclude(from_page=self)
-        links = links.filter(from_page__live=True)
-        links = [obj.from_page.specific for obj, freq in Counter(links).most_common(4) if not obj.from_page.specific.unlisted]
-        context['links'] = links
+        if request.GET.get("fragment")=="recommendation":
+            links = InterPageLink.objects.filter(to_page=self).select_related("from_page").exclude(from_page=self)
+            links = links.filter(from_page__live=True)
+            links = [obj.from_page.specific for obj, freq in Counter(links).most_common(4) if not obj.from_page.specific.unlisted]
+            context['links'] = links
 
-        context['similar_objects'] = self.tags.similar_objects()[:10]
+            context['similar_objects'] = self.tags.similar_objects()[:10]
 
-        link_ids = [obj.id for obj in links]
-        context['similar_objects'] = [obj.specific for obj in context['similar_objects']
-                                      if obj.specific.live
-                                         and not obj.specific.unlisted
-                                         and obj.id not in  link_ids]
+            link_ids = [obj.id for obj in links]
+            context['similar_objects'] = [obj.specific for obj in context['similar_objects']
+                                        if obj.specific.live
+                                            and not obj.specific.unlisted
+                                            and obj.id not in  link_ids]
+        print(context)
+
 
         return context
 

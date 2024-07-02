@@ -187,25 +187,27 @@
          hx-get="?fragment=recommendation"
          hx-trigger="revealed"
          hx-swap="innerHTML">
+
         <div class="single-col">
-        <div class="section-header">
-            <h1>Continue reading</h1>
+            <div class="section-header">
+                <h1>Continue reading</h1>
+            </div>
         </div>
 
         <h2 class="container">Loading...</h2>
         <div class="container" style="height:300px; display:flex; justify-content:center; align-items:center;">
-        <style>
-        .loader {
-            width: 25px;
-            aspect-ratio: 1;
-            border-radius: 50%;
-            border: 5px solid;
-            border-color: #000 #0000;
-            animation: l1 1s infinite;
-        }
-        @keyframes l1 {to{transform: rotate(.5turn)}}
-        </style>
-        <div class="loader"></div>
+            <style>
+            .loader {
+                width: 25px;
+                aspect-ratio: 1;
+                border-radius: 50%;
+                border: 5px solid;
+                border-color: #000 #0000;
+                animation: l1 1s infinite;
+            }
+            @keyframes l1 {to{transform: rotate(.5turn)}}
+            </style>
+            <div class="loader"></div>
         </div>
 
     </div>

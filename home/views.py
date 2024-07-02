@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from itertools import chain
 from urllib.parse import unquote
 import datetime
@@ -8,6 +8,23 @@ from home.models.page_models import Page, AbstractPage, HomePage, Article, Serie
 from home.models.helper_models import PageHit, PageTag
 from home.filtering import filter_on_abstract_page_properties, filter_page_with_any_of_tags
 from taggit.models import Tag
+from django.http import Http404
+from urllib.parse import urlparse
+
+
+def hover_preview(request):
+
+    url = request.GET.get('url')
+
+    if not url:
+        raise Http404("No URL provided")
+
+    url = urlparse(url).path
+
+    # find a bit more robust way of reversing wagtail page from url
+    page = get_object_or_404(Page, url_path__endswith=url).specific
+
+    return render(request, "components/hover_preview.html", context={"page":page})
 
 def garden_list(request):
 

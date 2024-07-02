@@ -2017,3 +2017,47 @@ caption {
 .block-text a:hover {
   border-bottom-color: var(--content-link-color);
 }
+
+/* Popover */
+.popover {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s ease;
+  padding-top: 0.5rem;
+  transform: translateY(-0.3rem);
+  margin-right: 0.5rem;
+
+}
+
+a:has(> .popover):hover>.popover {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popover .popover-content {
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: var(--body-bg);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+.popover .title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  margin: 0;
+  padding: 0;
+  color: var(--body-color);
+  display: block;
+  width: 100%;
+}
+
+.popover .description {
+  color: var(--color-muted);
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  display: block;
+}

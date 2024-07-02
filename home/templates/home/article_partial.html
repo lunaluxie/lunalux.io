@@ -237,9 +237,36 @@
             // boost internal article links
             document.getElementById("article-content").querySelectorAll("a").forEach(el=>{
                 if (el.href.includes(window.location.origin)){
+                    // set up hx attributes
                     el.setAttribute("hx-push-url", "true")
                     el.setAttribute("hx-swap", "innerHTML show:top")
                     el.setAttribute("hx-target", "#main")
+
+                    // add popover
+                    el.addEventListener("mouseover", (e)=>{
+                        if (!el.querySelector(".popover")){
+                            let popover = document.createElement("div")
+                            popover.classList.add("popover")
+
+                            fetch(`{% url 'home:hover-preview' %}?url=${el.href}`).then(function(response) {
+                                console.log(response)
+                                if (response.ok){
+                                    popover.innerHTML = response.text().then(function(text){
+                                        popover.innerHTML = text
+                                        {% comment %} el.parentNode.insertBefore(popover, el) {% endcomment %}
+                                        popover.style.left = el.getBoundingClientRect().left + "px"
+
+                                        window.addEventListener('resize', function(){
+                                            popover.style.left = el.getBoundingClientRect().left + "px"
+                                        })
+
+                                        el.appendChild(popover)
+                                    })
+                                }
+                            })
+
+                        }
+                    })
                 }
             })
 

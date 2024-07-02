@@ -1,0 +1,4 @@
+<div class="popover-content">
+    <span class='title'>{% include 'components/garden_status.html' with garden_status=page.garden_status %}{{ page.title }}</span>
+    <span class='description'>{{ page.search_description | truncatewords:20 }}</span>
+<div>

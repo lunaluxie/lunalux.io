@@ -257,8 +257,6 @@ class Article(AbstractPage):
                                         if obj.specific.live
                                             and not obj.specific.unlisted
                                             and obj.id not in  link_ids]
-        print(context)
-
 
         return context
 

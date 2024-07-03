@@ -249,7 +249,6 @@
                             popover.classList.add("popover")
 
                             fetch(`{% url 'home:hover-preview' %}?url=${el.href}`).then(function(response) {
-                                console.log(response)
                                 if (response.ok){
                                     popover.innerHTML = response.text().then(function(text){
                                         popover.innerHTML = text

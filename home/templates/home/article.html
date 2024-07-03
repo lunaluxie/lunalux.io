@@ -24,46 +24,5 @@
 {% endblock extra_head %}
 
 {% block content %}
-  <style>
-    .article .content {
-        position: relative;
-        /* max-width: 700px; */
-        margin: 0 auto;
-        padding: 0;
-        font-size: 18px;
-        line-height: 1.5em;
-        font-family: 'Lato', sans-serif;
-        font-weight: 400;
-        width: 100vw;
-    }
-
-    .content>.block-text{
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    .content>.block-DescriptionBlock{
-      margin: 0 auto;
-      padding: 0 1rem;
-      max-width: 700px;
-    }
-
-    .block-table{
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    code[class*=language-], pre[class*=language-] {
-      color: var(--body-color) !important;
-      text-shadow: none !important;
-    }
-
-    .block-text iframe {
-      width: 100%!important;
-      height: 450px!important;
-    }
-  </style>
-
-
 {% include 'home/article_partial.html' with page=page series=series links=links series=series%}
 {% endblock content %}

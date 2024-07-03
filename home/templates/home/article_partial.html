@@ -235,7 +235,7 @@
             })
 
             // boost internal article links
-            document.getElementById("article-content").querySelectorAll("a").forEach(el=>{
+            document.getElementById("article-content").querySelectorAll("a:not(.heading-anchor)").forEach(el=>{
                 if (el.href.includes(window.location.origin)){
                     // set up hx attributes
                     el.setAttribute("hx-push-url", "true")

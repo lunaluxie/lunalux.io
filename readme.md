@@ -5,8 +5,10 @@ The code that runs my personal website, [lunalux.io](https://lunalux.io). Feel f
 ## ToC
 - [Overview](#overview)
     - [Bidirectional Linking](#bidirectional-linking)
+    - [Hover Preview](#hover-preview)
     - [Trending Pages](#trending-pages)
     - [Interactive widgets](#interactive-widgets)
+    - [HTMX](#htmx)
 - [Installation](#installation)
 - [Deployment](#deployment)
 
@@ -16,10 +18,18 @@ The website is based on [Wagtail CMS](https://wagtail.io/), and is primarily str
 
 Each page is an instance of the `Page` model, and the content is created in the admin interface using predefined components that I have created in [home/templates/blocks](home/templates/blocks), but some special pages are defined as django view functions primarily located in [home/views.py](home/views.py).
 
-The main content pages are `HomePage`, and `Article` which are located in [home/models/page_models.py](home/models/page_models.py). `HomePage` is meant to be flexible enough to create a wide range of pages whereas `Article` is constrained to be in a blog-post format. However, since most pages are `Article` instances, I have developed more components for that. The most notable use of `HomePage` is the index page. 
+The main content pages are `HomePage`, and `Article` which are located in [home/models/page_models.py](home/models/page_models.py). `HomePage` is meant to be flexible enough to create a wide range of layouts whereas `Article` is constrained to be in a blog-post format. However, since most pages are `Article` instances, I have developed more components for that. The most notable use of `HomePage` is the index page.
+
+For a more thorough documentation of the features and changelog of the website, you can read the [colophon](http://lunalux.io/colophon) page.
 
 ### Bidirectional linking
-Whenever an `Article` is saved, the body is scanned for internal links (see `add_interpage_links` on `Article`) to other articles. If an internal link is found, a `InterPageLink` is created between the two articles. This is used to create a "Continue Reading" section at the bottom of each article.
+Whenever an `Article` is saved, the body is scanned for internal links (see `_add_interpage_links_from_html_field` on `AbstractPage`) to other articles. If an internal link is found, a `InterPageLink` is created between the two articles. This is used to create a "Continue Reading" section at the bottom of each article.
+
+### Hover Preview
+
+[<img src="https://cdn.lunalux.io/media/images/hover-preview.original.png" width=372 height=121/>](https://lunalux.io/statistical-murders-the-victims-of-the-climate-crisis/)
+
+When hovering over internal links in the body of `Article` instances, a [preview](home/views.py#L15-L27) will show.
 
 ### Trending pages
 Whenever a page is rendered, we save a `PageHit` object to the database. We use these to find the trending pages on the site by counting the number of hits in the last 7 days (see `AbstractPage.get_trending_articles`). This is used to create the "[Trending](https://lunalux.io/trending)" section on the index page.
@@ -27,6 +37,8 @@ Whenever a page is rendered, we save a `PageHit` object to the database. We use 
 ### Interactive widgets
 In some articles, I include interactive widgets such as in [Gradient Descent](https://lunalux.io/gradient-descent-how-machines-learn/?series=14). These are one-off components located in [home/templates/oneoff_blocks](home/templates/oneoff_blocks).
 
+### HTMX
+I use HTMX to improve the user experience several places on the site. I use it for [search](https://lunalux.io/search/) to automatically load search results as you type. I use it to lazy load fragments of articles (see `get_template` method on `Article`), and to avoid full page reloads when navigating between links within the article using `hx-boost`. 
 
 ## Installation
 

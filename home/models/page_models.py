@@ -287,6 +287,11 @@ class Series(AbstractPage):
         first_article = self.articles[0].value[0]
         return redirect(f"{first_article.url}?series={self.id}")
 
+    def add_interpage_links(self):
+        for article in self.articles:
+            for a in article.value:
+                interlink = InterPageLink.objects.get_or_create(from_page=self, to_page=a)
+
 
 class DocumentPage(Page):
     page_description = "Document page only for giving documents a permanent url."

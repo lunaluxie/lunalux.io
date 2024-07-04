@@ -27,7 +27,7 @@ Whenever an `Article` is saved, the body is scanned for internal links (see `_ad
 
 ### Hover Preview
 
-[<img src="https://cdn.lunalux.io/media/images/hover-preview_cWWzXhC.original.png" width=372 height=121/>](https://lunalux.io/statistical-murders-the-victims-of-the-climate-crisis/)
+[<img src="https://cdn.lunalux.io/media/images/hover-preview_cWWzXhC.original.png" width=372 height=121/>](https://lunalux.io/running-models-on-edge-devices-is-a-win-win-for-users-and-providers/)
 
 When hovering over internal links in the body of `Article` instances, a [preview](home/views.py#L15-L27) will show.
 

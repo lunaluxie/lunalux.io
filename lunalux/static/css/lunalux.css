@@ -380,7 +380,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .card-list .container .card .content span {
   font-size: 1.5rem;
-  color: var(--secondary-background);
+  color: hsla(0, 0%, 97%, 1); /* shouldn't change in darkmode */
   text-decoration: none;
   -webkit-user-select: none;
   user-select: none;

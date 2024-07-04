@@ -17,6 +17,7 @@ from wagtail.search import index
 from django.db.models import Count, F, Q
 from django.db.models import Case, When
 from wagtail.documents import get_document_model
+from taggit.models import Tag
 
 from home.models.helper_models import PageTag, InterPageLink, PageHit, Contact
 
@@ -257,6 +258,12 @@ class Article(AbstractPage):
                                         if obj.specific.live
                                             and not obj.specific.unlisted
                                             and obj.id not in  link_ids]
+
+            # TODO: Make it count all page types not just articles.
+            tags = Tag.objects.all().annotate(
+                num_times=Count('home_pagetag_items')
+            ).filter(article=self).order_by('-num_times')
+            context['tags'] = tags
 
         return context
 

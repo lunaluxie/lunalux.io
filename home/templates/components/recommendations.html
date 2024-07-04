@@ -11,12 +11,12 @@
 {% include 'blocks/lines_list.html' with pages=links include_images=True use_htmx=True%}
 {% endif %}
 
-{% if page.tags.all %}
+{% if tags %}
 <div class="container" style="margin-top:1.8em;">
     <h2>Tags</h2>
     <ul class="tags">
-        {% for tag in page.tags.all%}
-        <a href="/tag/{{tag.slug}}"><li>{{tag.name}}</li></a>
+        {% for tag in tags%}
+        {% if tag.num_times > 1%}<a href="/tag/{{tag.slug}}"><li>{{tag.name}}</li></a>{% endif %}
         {% endfor %}
     </ul>
 </div>

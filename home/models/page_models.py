@@ -127,7 +127,7 @@ class AbstractPage(Page):
         # Get the queryset of Article and Series objects with the proper pages
         queryset_with_proper_pages = Article.objects.filter(
             Q(pk__in=top_pages.values('page')),
-            ~Q(unlisted=True),
+            Q(unlisted=False),
             Q(live=True),
         ).order_by(ordering)[:n]
 

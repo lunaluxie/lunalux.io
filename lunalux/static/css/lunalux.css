@@ -573,6 +573,14 @@ spacer {
   max-width: 100%;
 }
 
+.article .content {
+  max-width: inherit !important;
+}
+
+.article .content>.block-text {
+  max-width: 700px;
+}
+
 @media only screen and (min-width: 876px) {
   .article .image-large {
     max-width: 100vw !important;

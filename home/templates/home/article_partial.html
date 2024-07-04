@@ -24,16 +24,6 @@
     </header>
 
     <div class="row">
-
-    <style>
-        .content{
-        max-width:inherit!important;
-        }
-        .content>.block-text{
-        max-width:700px;
-        }
-    </style>
-
     <div id="article" class="article">
 
         <div class="title"><h1>{% include 'components/garden_status.html' with garden_status=page.garden_status %}{{ page.title }}</h1></div>
@@ -212,14 +202,6 @@
 
     </div>
 
-
-    <script> // katex
-    renderMathInElement(document.body, {"delimiters": [
-    {left: "$$", right: "$$", display: true},
-    {left: "$", right: "$", display: false}
-    ]});
-    </script>
-
     <script>
         htmx.onLoad( function(e) {
             // set up heading anchors
@@ -232,38 +214,6 @@
                     el.setAttribute("hx-push-url", "true")
                     el.setAttribute("hx-swap", "innerHTML show:top")
                     el.setAttribute("hx-target", "#main")
-
-                    // add popover
-                    el.addEventListener("mouseover", (e)=>{
-                        if (!el.querySelector(".popover")){
-                            let popover = document.createElement("div")
-                            popover.classList.add("popover")
-
-                            fetch(`{% url 'home:hover-preview' %}?url=${el.href}`).then(function(response) {
-                                if (response.ok){
-                                    popover.innerHTML = response.text().then(function(text){
-                                        popover.innerHTML = text
-                                        {% comment %} el.parentNode.insertBefore(popover, el) {% endcomment %}
-                                        popover.style.left = el.getBoundingClientRect().left + "px"
-
-                                        window.addEventListener('resize', function(){
-                                            popover.style.left = el.getBoundingClientRect().left + "px"
-                                        })
-
-                                        if(!el.querySelector(".popover")){
-                                            // avoid loading multiple popovers when loading
-                                            // a better way would be insert a lock into the dom immediately,
-                                            // but that would render the popover when the page is still loading
-                                            // and I would have to add some loading element
-                                            // TODO: later.
-                                            el.appendChild(popover)
-                                        }
-                                    })
-                                }
-                            })
-
-                        }
-                    })
                 }
             })
 

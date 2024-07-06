@@ -1,3 +1,7 @@
+@import url("https: //cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css");
+/* Supersede dark mode when applicable */
+/* @import url("https: //cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css") screen and (prefers-color-scheme: dark); */
+
 /*
   GENERAL
 */
@@ -760,27 +764,6 @@ spacer {
   border-bottom-color: var(--content-link-color);
 }
 
-.article .content>p>code {
-  overflow: auto
-}
-
-.article .content>pre {
-  border-radius: 5px;
-  background: var(--body-bg);
-  /* box-shadow: 0 0px 50px 0 rgba(0, 0, 0, 0.1); */
-  margin: 40px 0;
-  padding: 24px;
-  transition: box-shadow .4s;
-  overflow: auto;
-  font-size: 1rem;
-  line-height: 1.2rem;
-  border: 1px solid var(--body-color);
-}
-
-.article .content>pre:hover {
-  /* box-shadow: 8px 8px 75px 0 rgba(0, 0, 0, 0.1); */
-}
-
 .article .content>pre::-webkit-scrollbar {
   height: 5px;
   transition: height .4s;
@@ -822,12 +805,6 @@ spacer {
 .block-table {
   max-width: 700px;
   margin: 0 auto;
-}
-
-code[class*=language-],
-pre[class*=language-] {
-  color: var(--body-color) !important;
-  text-shadow: none !important;
 }
 
 .block-text iframe {
@@ -1965,36 +1942,33 @@ section.newsletter .form>form button:hover {
 .block-code {
     margin: 1rem;
 }
-pre {
-  background: var(--body-bg) !important;
-}
 .code {
   /* box-shadow: 0 5px 10px 0 rgb(0 0 0 / 10%); */
     max-width: 800px!important;
-    margin: 1rem auto!important;
     border-radius: 10px!important;
     border: 1px solid var(--body-color)!important;
+    font-size: 15px;
+    overflow: auto;
+    max-height: 400px;
+    margin: 0 auto;
+    line-height: 1.4;
 }
 
-.block-code code {
-  font-size: 16px;
-  line-height: 1;
+.code pre {
+  margin: 0;
 }
 
-.hljs{
-  margin:0;
-  padding:0;
-  border-radius: 10px!important;
+.code pre code {
+  background-color: var(--body-bg);
 }
-
 
 img.richtext-image {
   height:auto;
 }
 
-.language-css .token.string, .style .token.string, .token.entity, .token.operator, .token.url {
+/* .language-css .token.string, .style .token.string, .token.entity, .token.operator, .token.url {
   background: inherit !important;
-}
+} */
 
 /* TABLE */
 table {

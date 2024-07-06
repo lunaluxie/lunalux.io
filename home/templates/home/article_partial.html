@@ -217,13 +217,6 @@
                 }
             })
 
-            // syntax highlight
-            let els = document.getElementsByTagName("pre")
-            for (i=0; i<els.length; i++){
-                block = els[i]
-                hljs.highlightBlock(block)
-            }
-
             {% if series %}
             // initial series container resize
             let seriesContainer = document.getElementById("series-navbar")

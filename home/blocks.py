@@ -5,7 +5,15 @@ from wagtail.contrib.table_block.blocks import TableBlock
 # BASIC BLOCKS
 
 class CodeBlock(blocks.StructBlock):
-    language = blocks.CharBlock(required=False)
+    choices = (
+        ('python', 'Python'),
+        ('javascript', 'JavaScript'),
+        ('html', 'HTML'),
+        ('css', 'CSS'),
+        ('bash', 'Bash'),
+        ('plaintext', 'Plain text'),
+    )
+    language = blocks.ChoiceBlock(required=True, choices=choices, default='plaintext')
     code = blocks.TextBlock()
 
     class Meta:

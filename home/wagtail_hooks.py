@@ -31,6 +31,10 @@ register_snippet(ContactAdmin)
 
 
 class InterPageLinkAdmin(SnippetViewSet):
+    list_display = ("id", "from_page__url", "to_page__url")
+    search_fields = ("from_page__url", "to_page__url")
+    list_filter = ('from_page','to_page')
+    icon = "link"
     model = InterPageLink
 
 register_snippet(InterPageLinkAdmin)

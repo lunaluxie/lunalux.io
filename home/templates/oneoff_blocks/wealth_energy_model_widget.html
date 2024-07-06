@@ -1,5 +1,5 @@
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.js"></script>
+<script id='chartjs' src="https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.js"></script>
 <style>
     .ctrl{
         margin-top:1em;
@@ -106,159 +106,165 @@ if (document.documentElement.clientWidth < 600) {
 
 
 <script>
-{% comment %} Simulation {% endcomment %}
-
-function getRandomSubarray(arr, size) {
-    var shuffled = arr.slice(0), i = arr.length, temp, index;
-    while (i--) {
-        index = Math.floor((i + 1) * Math.random());
-        temp = shuffled[index];
-        shuffled[index] = shuffled[i];
-        shuffled[i] = temp;
+htmx.onLoad(function(e) {
+    if (typeof Chart != "function"){
+        let script = document.getElementById("chartjs");
+        script.onload = setupWidget;
+    } else {
+        setupWidget();
     }
-    return shuffled.slice(0, size);
-}
 
-class Agent{
-  constructor(startWealth, minSkill, maxSkill){
-    this.wealth = startWealth;
-
-    // skill between max and min skill
-    this.skill = (maxSkill-minSkill)*Math.random()+minSkill
+})
+{% comment %} Simulation {% endcomment %}
+function setupWidget(){
+  function getRandomSubarray(arr, size) {
+      let shuffled = arr.slice(0), i = arr.length, temp, index;
+      while (i--) {
+          index = Math.floor((i + 1) * Math.random());
+          temp = shuffled[index];
+          shuffled[index] = shuffled[i];
+          shuffled[i] = temp;
+      }
+      return shuffled.slice(0, size);
   }
 
-  trade(customers){
-    this.wealth += this.skill
+  class Agent{
+    constructor(startWealth, minSkill, maxSkill){
+      this.wealth = startWealth;
 
-    let nCustomers = customers.length
-    let pricePerCustomer = this.skill/nCustomers
+      // skill between max and min skill
+      this.skill = (maxSkill-minSkill)*Math.random()+minSkill
+    }
 
-    customers.forEach((customer)=>{
-      customer.wealth -= pricePerCustomer
+    trade(customers){
+      this.wealth += this.skill
+
+      let nCustomers = customers.length
+      let pricePerCustomer = this.skill/nCustomers
+
+      customers.forEach((customer)=>{
+        customer.wealth -= pricePerCustomer
+      })
+    }
+  }
+
+  function simulationRound(agents){
+    agents.forEach((agent)=>{
+      let customers = getRandomSubarray(agents, parseFloat(document.getElementById("nCustomers").value))
+      agent.trade(customers)
     })
   }
-}
 
-function simulationRound(agents){
-  agents.forEach((agent)=>{
-    let customers = getRandomSubarray(agents, parseFloat(document.getElementById("nCustomers").value))
-    agent.trade(customers)
+  function agentWealth(agents){
+    return agents.map((agent)=>agent.wealth)
+  }
+
+  function linspace(startValue, stopValue, cardinality) {
+    let arr = [];
+    let step = (stopValue - startValue) / (cardinality - 1);
+    for (let i = 0; i < cardinality; i++) {
+      arr.push(startValue + (step * i));
+    }
+    return arr;
+  }
+
+  function arange(n){
+    return [...Array(n).keys()];
+  }
+
+
+
+  function convert_to_chartjs(xs,ys){
+      let result = [];
+
+      for (let i=0; i<xs.length; i++){
+          result.push({
+              "x":xs[i],
+              "y":ys[i]
+          });
+      }
+      return result;
+  }
+
+
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let myChart = new Chart(ctx, {
+      type: 'scatter',
+      data: {
+          datasets: [{
+              type: 'scatter',
+              label: 'Agent Wealth',
+              data: convert_to_chartjs(arange(parseFloat(document.getElementById("pop").value)), arange(parseFloat(document.getElementById("pop").value)).map(x=>50)),
+
+              backgroundColor: 'hsla(264, 55%, 70%, 1)',
+              borderColor: 'hsla(264, 55%, 70%, 1)',
+              showLine: false,
+              showPoint: true,
+          }],
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true,
+              },
+              x: {
+              }
+          },
+          animation: {
+              duration: 150,
+          },
+      }
+  });
+
+  let isRunning = false;
+  let intervalId = null;
+  function updateChart(){
+    let population = parseFloat(document.getElementById("pop").value);
+    let startWealth = parseFloat(document.getElementById("swealth").value);
+    let minSkill = parseFloat(document.getElementById("minskill").value);
+    let maxSkill = parseFloat(document.getElementById("maxskill").value);
+    let nCustomers = parseFloat(document.getElementById("nCustomers").value);
+
+    document.getElementById("population").innerText= population
+    document.getElementById("startWealth").innerText= startWealth
+    document.getElementById("minSkill").innerText= minSkill
+    document.getElementById("maxSkill").innerText= maxSkill
+    document.getElementById("numberCustomers").innerText= nCustomers
+
+    let agents = arange(population).map(x=>new Agent(startWealth, minSkill,maxSkill))
+
+    myChart.data.datasets[0].data = convert_to_chartjs(arange(population), agentWealth(agents))
+    myChart.update();
+
+    window.clearInterval(intervalId);
+    intervalId = window.setInterval(() => {
+        if (isRunning){
+          simulationRound(agents)
+          myChart.data.datasets[0].data = convert_to_chartjs(arange(population), agentWealth(agents))
+          myChart.update();
+
+        }
+    }, 150);
+  }
+
+
+
+  document.getElementById("pop").addEventListener("input",()=>{updateChart()});
+  document.getElementById("swealth").addEventListener("input",()=>{updateChart()});
+  document.getElementById("minskill").addEventListener("input",()=>{updateChart()});
+  document.getElementById("maxskill").addEventListener("input",()=>{updateChart()});
+  document.getElementById("nCustomers").addEventListener("input",()=>{updateChart()});
+  updateChart()
+
+  // events
+  document.getElementById("start-stop").addEventListener("click",()=>{
+      if (isRunning){
+          isRunning=false;
+          document.getElementById("start-stop").innerHTML="Start";
+      } else {
+          isRunning=true;
+          document.getElementById("start-stop").innerHTML="Stop";
+      }
   })
 }
-
-function agentWealth(agents){
-  return agents.map((agent)=>agent.wealth)
-}
-
-</script>
-
-
-<script type="application/javascript">
-function linspace(startValue, stopValue, cardinality) {
-  let arr = [];
-  let step = (stopValue - startValue) / (cardinality - 1);
-  for (let i = 0; i < cardinality; i++) {
-    arr.push(startValue + (step * i));
-  }
-  return arr;
-}
-
-function arange(n){
-  return [...Array(n).keys()];
-}
-
-
-
-function convert_to_chartjs(xs,ys){
-    let result = [];
-
-    for (let i=0; i<xs.length; i++){
-        result.push({
-            "x":xs[i],
-            "y":ys[i]
-        });
-    }
-    return result;
-}
-
-
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'scatter',
-    data: {
-        datasets: [{
-            type: 'scatter',
-            label: 'Agent Wealth',
-            data: convert_to_chartjs(arange(parseFloat(document.getElementById("pop").value)), arange(parseFloat(document.getElementById("pop").value)).map(x=>50)),
-
-            backgroundColor: 'hsla(264, 55%, 70%, 1)',
-            borderColor: 'hsla(264, 55%, 70%, 1)',
-            showLine: false,
-            showPoint: true,
-        }],
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-            },
-            x: {
-            }
-        },
-        animation: {
-            duration: 150,
-        },
-    }
-});
-
-let isRunning = false;
-var intervalId = null;
-function updateChart(){
-  let population = parseFloat(document.getElementById("pop").value);
-  let startWealth = parseFloat(document.getElementById("swealth").value);
-  let minSkill = parseFloat(document.getElementById("minskill").value);
-  let maxSkill = parseFloat(document.getElementById("maxskill").value);
-  let nCustomers = parseFloat(document.getElementById("nCustomers").value);
-
-  document.getElementById("population").innerText= population
-  document.getElementById("startWealth").innerText= startWealth
-  document.getElementById("minSkill").innerText= minSkill
-  document.getElementById("maxSkill").innerText= maxSkill
-  document.getElementById("numberCustomers").innerText= nCustomers
-
-  var agents = arange(population).map(x=>new Agent(startWealth, minSkill,maxSkill))
-
-  myChart.data.datasets[0].data = convert_to_chartjs(arange(population), agentWealth(agents))
-  myChart.update();
-
-  window.clearInterval(intervalId);
-  intervalId = window.setInterval(() => {
-      if (isRunning){
-        simulationRound(agents)
-        myChart.data.datasets[0].data = convert_to_chartjs(arange(population), agentWealth(agents))
-        myChart.update();
-
-      }
-  }, 150);
-}
-
-
-
-document.getElementById("pop").addEventListener("input",()=>{updateChart()});
-document.getElementById("swealth").addEventListener("input",()=>{updateChart()});
-document.getElementById("minskill").addEventListener("input",()=>{updateChart()});
-document.getElementById("maxskill").addEventListener("input",()=>{updateChart()});
-document.getElementById("nCustomers").addEventListener("input",()=>{updateChart()});
-updateChart()
-
-// events
-document.getElementById("start-stop").addEventListener("click",()=>{
-    if (isRunning){
-        isRunning=false;
-        document.getElementById("start-stop").innerHTML="Start";
-    } else {
-        isRunning=true;
-        document.getElementById("start-stop").innerHTML="Stop";
-    }
-})
 </script>

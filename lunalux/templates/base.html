@@ -120,6 +120,9 @@
 
             hljs.highlightAll();
 
+            // set up heading anchors
+            addHeaderLinks()
+
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 // dark mode
                 document.getElementById("code-light-theme").disabled = true;

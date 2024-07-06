@@ -204,9 +204,6 @@
 
     <script>
         htmx.onLoad( function(e) {
-            // set up heading anchors
-            addHeaderLinks()
-
             // boost internal article links
             document.getElementById("article-content").querySelectorAll("a:not(.heading-anchor)").forEach(el=>{
                 if (el.href.includes(window.location.origin)){

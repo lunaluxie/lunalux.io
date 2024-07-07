@@ -488,6 +488,10 @@ navbar a {
 }
 
 navbar a i {
+  margin-right: 0.1rem;
+}
+
+navbar .dropdown a i {
   margin-right:0.2rem;
   width: 17px;
 }

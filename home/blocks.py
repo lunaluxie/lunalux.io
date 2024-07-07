@@ -29,6 +29,22 @@ class DescriptionBlock(blocks.StructBlock):
 
 # SECTION BLOCKS?
 
+class AlertBlock(blocks.StructBlock):
+    body = blocks.RichTextBlock()
+    icon = blocks.CharBlock(required=False, max_length=2)
+
+    choices = (
+        ("info","Info"),
+        ("warning","Warning"),
+        ("danger","Danger"),
+        ("success","Success")
+    )
+    style = blocks.ChoiceBlock(choices=choices, default="info")
+
+    class Meta:
+        icon = "warning"
+        template = "blocks/alert.html"
+
 class CardListBlock(blocks.StructBlock):
 
     pages = blocks.ListBlock(
@@ -241,6 +257,7 @@ class CenteredTextContentBlock(blocks.StructBlock):
         ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
         ('table', TableBlock(group="basic")),
         ('code', CodeBlock(group="basic")),
+        ('alert', AlertBlock(group="basic")),
     ])
 
     class Meta:

@@ -30,42 +30,11 @@
 
         {% if page.garden_status == "withering" %}
             <style>
-                .alert {
-                position: relative;
-                top: 10;
-                left: 0;
-                width: auto;
-                height: auto;
-                padding: 10px;
-                margin: 10px;
-                line-height: 1.8;
-                border-radius: 5px;
-                cursor: hand;
-                cursor: pointer;
-                font-family: sans-serif;
-                font-weight: 400;
+                .alert.withering {
+                    border: 1px solid rgb(164,99,42);
+                    color: rgb(164,99,42);
                 }
 
-                .alertText {
-                display: table;
-                margin: 0 auto;
-                text-align: center;
-                font-size: 16px;
-                }
-
-                .warning {
-                border: 1px solid rgb(164,99,42);
-                color: rgb(164,99,42);
-                }
-
-                .alert .icon {
-                    position: absolute;
-                    top: -15px;
-                    left: -15px;
-                    font-size: 25px;
-                    background-color: var(--body-bg);
-                    border-radius: 50%;
-                }
                 .garden-status {
                     display:none;
                 }
@@ -77,17 +46,15 @@
                         display:initial;
                     }
                 }
-
-                .withering-alert {
-                    margin: 1rem;
-                }
             </style>
 
-            <div class="withering-alert">
-                <a href="/garden" style="text-decoration:none">
-                <div class="alert warning" style="margin: 0 auto; padding: 0 1rem; max-width: 700px;">
+            <div class="alert-container">
+                <a href="/garden">
+                <div class="alert withering">
                     <span class="icon">🍂</span>
-                    <p class=".alertText">This page is withering and is no longer maintained. It may become outdated as information and opinions change.</p>
+                    <div class="alertText">
+                        <p>This page is withering and is no longer maintained. It may become outdated as information and opinions change.</p>
+                    </div>
                 </div>
                 </a>
             </div>

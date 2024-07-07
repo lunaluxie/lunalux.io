@@ -57,6 +57,7 @@ article_fields =  basic_fields + [
     ("ImageDivider", ImageDividerBlock()),
 
     ('DescriptionBlock', DescriptionBlock(group="basic")),
+    ('alert', AlertBlock(group="basic")),
 
     ("HorizontalCardList",HorizontalCardList(group="List")),
 

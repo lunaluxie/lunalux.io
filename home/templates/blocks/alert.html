@@ -1,0 +1,9 @@
+{% load wagtailcore_tags %}
+<div class="alert-container">
+    <div class="alert {{self.style}}">
+        {% if self.icon %}<span class="icon">{{self.icon}}</span>{% endif %}
+        <div class="alertText">
+            {{ self.body | richtext }}
+        </div>
+    </div>
+</div>

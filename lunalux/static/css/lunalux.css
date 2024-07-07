@@ -2125,7 +2125,7 @@ a:has(> .popover):hover>.popover {
 .alert .icon {
   position: absolute;
   top: -15px;
-  left: -15px;
+  left: -5px;
   font-size: 25px;
   background-color: var(--body-bg);
   border-radius: 50%;

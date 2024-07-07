@@ -139,32 +139,30 @@
 
 
 
-    <div class="similar" id='similar'
+    <div class="similar single-col" id='similar'
          hx-boost="true"
-         hx-get="?fragment=recommendation"
+         hx-get="?fragment=recommendation&section_header=true"
          hx-trigger="revealed"
          hx-swap="innerHTML">
 
-        <div class="single-col">
-            <div class="section-header">
-                <h1>Continue reading</h1>
-            </div>
+        <div class="container section-header">
+            <h1>Continue reading</h1>
+        </div>
 
-            <div class="container"><h2>Loading...</h2></div>
-            <div class="container" style="height:300px; display:flex; justify-content:center; align-items:center;">
-                <style>
-                .loader {
-                    width: 25px;
-                    aspect-ratio: 1;
-                    border-radius: 50%;
-                    border: 3px solid;
-                    border-color: var(--body-color) transparent;
-                    animation: l1 1s infinite;
-                }
-                @keyframes l1 {to{transform: rotate(.5turn)}}
-                </style>
-                <div class="loader"></div>
-            </div>
+        <div class="container"><h2>Loading...</h2></div>
+        <div class="container" style="height:300px; display:flex; justify-content:center; align-items:center;">
+            <style>
+            .loader {
+                width: 25px;
+                aspect-ratio: 1;
+                border-radius: 50%;
+                border: 3px solid;
+                border-color: var(--body-color) transparent;
+                animation: l1 1s infinite;
+            }
+            @keyframes l1 {to{transform: rotate(.5turn)}}
+            </style>
+            <div class="loader"></div>
         </div>
 
     </div>

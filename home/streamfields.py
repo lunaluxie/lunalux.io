@@ -20,7 +20,7 @@ body_fields = [
     ("CardList", CardListBlock(group="List")),
     ("HorizontalCardList",HorizontalCardList(group="List")),
     ("LinesList",LinesListBlock(group="List")),
-
+    ("Recommendations", RecommendationsBlock(group="List")),
 
     ("AboutBlurb",AboutBlurb(group="")),
     ("ContactForm", ContactForm(group="")),

@@ -18,7 +18,8 @@ from django.db.models import Count, F, Q
 from django.db.models import Case, When
 from wagtail.documents import get_document_model
 from taggit.models import Tag
-
+import urllib
+from django.conf import settings as SETTINGS
 from home.models.helper_models import PageTag, InterPageLink, PageHit, Contact
 
 
@@ -143,6 +144,29 @@ class AbstractPage(Page):
     def get_recent_projects(self, n=3):
         return Page.objects.all().filter(live=True).filter(is_project=True).order_by('-last_published_at').specific()[:n]
 
+    def get_recommendations(self):
+        context = {}
+        links = InterPageLink.objects.filter(to_page=self).select_related("from_page").exclude(from_page=self)
+        links = links.filter(from_page__live=True)
+        links = [obj.from_page.specific for obj, freq in Counter(links).most_common(4) if not obj.from_page.specific.unlisted]
+        context['links'] = links
+
+        context['similar_objects'] = self.tags.similar_objects()[:10]
+
+        link_ids = [obj.id for obj in links]
+        context['similar_objects'] = [obj.specific for obj in context['similar_objects']
+                                    if obj.specific.live
+                                        and not obj.specific.unlisted
+                                        and obj.id not in  link_ids]
+
+        # TODO: Make it count all page types not just articles.
+        tags = Tag.objects.all().annotate(
+            num_times=Count('home_pagetag_items')
+        ).filter(article=self).order_by('-num_times')
+        context['tags'] = tags
+
+        return context
+
     def add_interpage_links(self):
         pass
 
@@ -153,23 +177,22 @@ class AbstractPage(Page):
         for link in soup.findAll("a"):
             links.add(link['href'])
 
-        # print(links)
+        print(links)
         for link in links:
-            slugList = link.split("/")
-            slug = []
-            for sl in slugList:
-                if sl:
-                    slug.append(sl)
+            url = urllib.parse.urlparse(link)
 
-            if slug:
+            if url.netloc == "" or url.netloc in SETTINGS.ALLOWED_HOSTS:
                 try:
-                    p = Article.objects.get(slug=slug[-1])
+                    # bug cannot use index page
+                    # get() returned more than one Page
+                    # still todo find a more robust way of getting page
+                    p = Page.objects.get(url_path__endswith=url.path)
 
                     interlink = InterPageLink.objects.get_or_create(from_page=self, to_page=p)
 
                     # print(p, interlink)
-
-                except:
+                except Exception as e:
+                    # print(e)
                     pass
 
 class HomePage(AbstractPage):
@@ -246,24 +269,9 @@ class Article(AbstractPage):
         context["series"] = series
 
         if request.GET.get("fragment")=="recommendation":
-            links = InterPageLink.objects.filter(to_page=self).select_related("from_page").exclude(from_page=self)
-            links = links.filter(from_page__live=True)
-            links = [obj.from_page.specific for obj, freq in Counter(links).most_common(4) if not obj.from_page.specific.unlisted]
-            context['links'] = links
+            context.update(self.get_recommendations())
 
-            context['similar_objects'] = self.tags.similar_objects()[:10]
-
-            link_ids = [obj.id for obj in links]
-            context['similar_objects'] = [obj.specific for obj in context['similar_objects']
-                                        if obj.specific.live
-                                            and not obj.specific.unlisted
-                                            and obj.id not in  link_ids]
-
-            # TODO: Make it count all page types not just articles.
-            tags = Tag.objects.all().annotate(
-                num_times=Count('home_pagetag_items')
-            ).filter(article=self).order_by('-num_times')
-            context['tags'] = tags
+            context['section_header'] = request.GET.get("section_header", False)
 
         return context
 

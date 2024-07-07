@@ -178,7 +178,7 @@ h1, h2, h3, h4, h5, h6 {
 .section-header {
   display: block;
   position: relative;
-  margin: 20px 1rem;
+  margin: 1.4rem 0;
 }
 
 .section-header::after {
@@ -198,7 +198,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 10px;
 }
 
-.similar h2 {
+.recommendations h2 {
   text-transform: capitalize;
   font-weight: 500;
   color: var(--header-color);
@@ -1424,17 +1424,6 @@ footer a {
 .paginator a:hover {
   box-shadow: 0px 0px 7px 2px var(--shadow-color);
   background-color: var(--form-button-bg-hover);
-}
-
-/*
-  SIMILAR POSTS
-*/
-
-.similar {
-  padding: 0;
-  background-color: var(--body-bg);
-  position: relative;
-  padding-bottom: 60px;
 }
 
 /*

@@ -1,32 +1,33 @@
 {% if links or similar_objects %}
-<div class="single-col">
-<div class="section-header">
-    <h1>Continue reading</h1>
-</div>
+<div class="recommendations single-col" id="recommendations">
+    {% if section_header or self.title %}
+    <div class="container section-header">
+        <h1>{% if self.title%}{{self.title}}{% else %}Continue reading{% endif %}</h1>
+    </div>
+    {% endif %}
+    {% if links %}
+    <div class="container" style="margin-top: 1.8em;">
+        <h2 title="Pages that link here">Backlinks</h2>
+    </div>
+    {% include 'blocks/lines_list.html' with pages=links include_images=True use_htmx=True%}
+    {% endif %}
 
-{% if links %}
-<div class="container" style="margin-top: 1.8em;">
-    <h2 title="Pages that link here">Backlinks</h2>
-</div>
-{% include 'blocks/lines_list.html' with pages=links include_images=True use_htmx=True%}
-{% endif %}
+    {% if tags %}
+    <div class="container" style="margin-top:1.8em;">
+        <h2>Tags</h2>
+        <ul class="tags">
+            {% for tag in tags%}
+            {% if tag.num_times > 1%}<a href="/tag/{{tag.slug}}"><li>{{tag.name}}</li></a>{% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 
-{% if tags %}
-<div class="container" style="margin-top:1.8em;">
-    <h2>Tags</h2>
-    <ul class="tags">
-        {% for tag in tags%}
-        {% if tag.num_times > 1%}<a href="/tag/{{tag.slug}}"><li>{{tag.name}}</li></a>{% endif %}
-        {% endfor %}
-    </ul>
-</div>
-{% endif %}
-
-{% if similar_objects %}
-<div class="container" style="margin-top: 1.8em;">
-    <h2 title="Pages with similar tags">Recommended</h2>
-</div>
-{% include 'blocks/lines_list.html' with pages=similar_objects include_images=True use_htmx=True%}
-{% endif %}
+    {% if similar_objects %}
+    <div class="container" style="margin-top: 1.8em;">
+        <h2 title="Pages with similar tags">Recommended</h2>
+    </div>
+    {% include 'blocks/lines_list.html' with pages=similar_objects include_images=True use_htmx=True%}
+    {% endif %}
 </div>
 {% endif %}

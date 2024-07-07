@@ -29,6 +29,14 @@ class DescriptionBlock(blocks.StructBlock):
 
 # SECTION BLOCKS?
 
+class SectionHeaderBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+
+    class Meta:
+        icon = "title"
+        label = "Section Header"
+        template = 'blocks/section_header.html'
+
 class AlertBlock(blocks.StructBlock):
     body = blocks.RichTextBlock()
     icon = blocks.CharBlock(required=False, max_length=2)
@@ -171,6 +179,26 @@ class AboutBlurb(blocks.StructBlock):
         template = 'blocks/about_blurb.html'
 
 
+class RecommendationsBlock(blocks.StructBlock):
+
+    title = blocks.CharBlock(required=False)
+
+    class Meta:
+        icon = "link"
+        label = "Recommendations widget"
+        admin_text = '{label}: configured elsewhere'.format(label=label)
+        template = 'components/recommendations.html'
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+
+        page = context.get('page')
+
+        if page:
+            context.update(page.specific.get_recommendations())
+
+        return context
+
 # LAYOUT
 
 class SpacerBlock(blocks.StaticBlock):
@@ -218,6 +246,7 @@ class ContainerBlock(blocks.StructBlock):
         ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
         ('table', TableBlock(group="basic")),
 
+        ('section_header', SectionHeaderBlock(group="section")),
     ])
 
     class Meta:
@@ -231,6 +260,8 @@ class ColumnBlock(blocks.StructBlock):
         ("text", blocks.RichTextBlock(group="basic")),
         ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
         ('table', TableBlock(group="basic")),
+
+        ('section_header', SectionHeaderBlock(group="section")),
 
         ("lines_list", LinesListBlock(group="components")),
         ('horizontal_card_list', HorizontalCardList(group="components")),
@@ -258,6 +289,7 @@ class CenteredTextContentBlock(blocks.StructBlock):
         ('table', TableBlock(group="basic")),
         ('code', CodeBlock(group="basic")),
         ('alert', AlertBlock(group="basic")),
+        ('section_header', SectionHeaderBlock(group="section")),
     ])
 
     class Meta:

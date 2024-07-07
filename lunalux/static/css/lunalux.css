@@ -1981,11 +1981,15 @@ table {
 
 td,
 th {
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
 }
 
-th {
+thead th {
   border-bottom: 1px solid var(--border-color);
+}
+
+tbody th {
+  border-right: 1px solid var(--border-color);
 }
 
 td {

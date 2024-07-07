@@ -21,5 +21,5 @@
     }
 </style>
 <section class="image-header" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url({% if image %}{{image.url}}{% else %}{{cover.url}}{%endif%});">
-    <h1>{{value.title}}</h1>
+    {% if value.title %}<h1>{{value.title}}</h1>{% endif %}
 </section>

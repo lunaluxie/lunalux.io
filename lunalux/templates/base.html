@@ -138,25 +138,39 @@
                             let popover = document.createElement("div")
                             popover.classList.add("popover")
 
+                            if(!el.querySelector(".popover")){
+                                // avoid loading multiple popovers when loading
+                                // a better way would be insert a lock into the dom immediately,
+                                // but that would render the popover when the page is still loading
+                                // and I would have to add some loading element
+                                // TODO: later.
+                                el.appendChild(popover)
+                            }
+
                             fetch(`{% url 'home:hover-preview' %}?url=${el.href}`).then(function(response) {
                                 if (response.ok){
                                     popover.innerHTML = response.text().then(function(text){
                                         popover.innerHTML = text
-                                        {% comment %} el.parentNode.insertBefore(popover, el) {% endcomment %}
-                                        popover.style.left = el.getBoundingClientRect().left + "px"
+
+                                        let movePopover = () => {
+                                            let leftOffset = el.getBoundingClientRect().left
+                                            let popoverMaxWidth = 300;
+
+                                            let rem = 16;
+
+                                            if (leftOffset + popoverMaxWidth > window.innerWidth){
+                                                leftOffset = window.innerWidth - popoverMaxWidth - 1*rem;
+                                            }
+
+                                            popover.style.left = leftOffset + "px"
+                                        }
+
+                                        movePopover()
 
                                         window.addEventListener('resize', function(){
-                                            popover.style.left = el.getBoundingClientRect().left + "px"
+                                            movePopover()
                                         })
 
-                                        if(!el.querySelector(".popover")){
-                                            // avoid loading multiple popovers when loading
-                                            // a better way would be insert a lock into the dom immediately,
-                                            // but that would render the popover when the page is still loading
-                                            // and I would have to add some loading element
-                                            // TODO: later.
-                                            el.appendChild(popover)
-                                        }
                                     })
                                 }
                             })

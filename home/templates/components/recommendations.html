@@ -1,8 +1,8 @@
 {% if links or similar_objects %}
 <div class="recommendations single-col" id="recommendations">
-    {% if section_header or self.title %}
+    {% if section_header or value.title %}
     <div class="container section-header">
-        <h1>{% if self.title%}{{self.title}}{% else %}Continue reading{% endif %}</h1>
+        <h1>{% if value.title%}{{value.title}}{% else %}Continue reading{% endif %}</h1>
     </div>
     {% endif %}
     {% if links %}

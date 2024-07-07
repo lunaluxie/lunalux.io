@@ -481,7 +481,7 @@ navbar a {
 
 navbar a i {
   margin-right:0.2rem;
-  /* width: 13px; */
+  width: 17px;
 }
 
 navbar>.links ul a:hover {

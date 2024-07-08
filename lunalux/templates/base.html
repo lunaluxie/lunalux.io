@@ -93,6 +93,7 @@
                         beforeEl = document.createElement("a")
                         beforeEl.setAttribute("href", "#" + el.textContent.slugify())
                         beforeEl.setAttribute("class", "heading-anchor")
+                        beforeEl.setAttribute("aria-hidden", "true")
                         beforeEl.innerHTML = '<i class="fas fa-link"></i>'
 
                         el.insertBefore(beforeEl, el.firstChild)

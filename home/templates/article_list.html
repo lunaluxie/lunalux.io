@@ -63,11 +63,20 @@
     {% endif %}
     {% if description_text %}<style>.description-text{margin-top: 0.5rem;font-size: 1rem;color: var(--color-muted);}</style><p class="description-text">{{description_text}}</p>{%endif%}
   </ul>
+  {% if tags %}
   <ul class="tags" style="justify-content:flex-start; padding:0; margin-bottom:3rem;">
     {% for tag in tags%}
     <a href="/tag/{{tag.slug}}"><li>{{tag.name}}</li></a>
     {% endfor %}
   </ul>
+  {% elif garden_tags %}
+
+  <ul class="tags" style="justify-content:flex-start; padding:0; margin-bottom:3rem;">
+    {% for garden_tag in garden_tags%}
+    <a href="?garden_status={{garden_tag.slug}}" {% if garden_status == garden_tag.slug %}class="active"{% endif %} title="{{garden_tag.title}}"><li>{{garden_tag.name}}</li></a>
+    {% endfor %}
+  </ul>
+  {% endif %}
   </div>
   <div class="" style="margin-bottom: 0.8em;">
     <span class="" id="article_count" style="color: var(--body-color);">{{ articles|length }} articles</span>

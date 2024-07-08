@@ -51,6 +51,24 @@ def garden_list(request):
 
     context['description_text'] = "A collection of pages on various topics."
 
+    garden_filters = [{
+            'name': '🌱 Seedling',
+            'title': 'For rough and early ideas',
+            'slug': 'seedling',
+        }, {
+            'name': '🌿 Budding',
+            'title': 'For work that has been cleaned up and clarified',
+            'slug': 'budding',
+        }, {
+            'name': '🌳 Evergreen',
+            'title': "For work that's reasonably complete, but might still small receive updates",
+            'slug': 'evergreen',
+        }
+    ]
+
+    context['garden_status'] = garden_status
+    context['garden_tags'] = garden_filters
+
     # TODO: Don't use article_list template for garden view
     # in general move away from exclusively using article_list template
     return render(request, "article_list.html",

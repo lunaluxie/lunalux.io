@@ -30,7 +30,7 @@
     --secondary-background: hsla(0, 0%, 97%, 1);
     --secondary-background-hover: rgb(228, 226, 242);
 
-    --tertiary-background:hsla(214, 3%, 55%, .1);
+    --tertiary-background:hsla(214, 75.51%, 59.18%, 0.1);
 
     --gradient-background: linear-gradient( rgba(124, 26, 124, 0.4), rgba(22, 90, 173, 0.4));
 
@@ -81,7 +81,7 @@
 
         --secondary-background-hover: hsla(238.76, 17.99%, 49.58%, 1);
 
-        --tertiary-background:hsla(214, 3%, 55%, .1);
+        --tertiary-background: hsla(214, 63.28%, 64.6%, 0.26);
 
         --gradient-background: linear-gradient( rgba(124, 26, 124, 0.4), rgba(22, 90, 173, 0.4));
 
@@ -905,6 +905,11 @@ ARTICLE BYLINE
   text-decoration: none;
   color: var(--color-muted);
 }
+
+.tags a.active li {
+  background-color: var(--tertiary-background);
+}
+
 .tags li {
   background-color: var(--secondary-background);
   padding: 0.3rem 0.6rem;
@@ -917,6 +922,9 @@ ARTICLE BYLINE
   background-color: var(--secondary-background-hover);
 }
 
+.tags a.active li:hover {
+  background-color: var(--secondary-background-hover);
+}
 /*
   FOOTER
 */

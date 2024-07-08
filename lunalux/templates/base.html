@@ -16,6 +16,13 @@
         <meta name="description" content="{{page.seo_description}}" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+        <link hx-preserve="true" rel='alternate' type='application/rss+xml' title='Timeline RSS feed' href='{% url "home:rss-feed" type="timeline" %}'>
+        <link hx-preserve="true" rel='alternate' type='application/rss+xml' title='Articles RSS feed' href='{% url "home:rss-feed" type="articles" %}'>
+        <link hx-preserve="true" rel='alternate' type='application/rss+xml' title='Notes RSS feed' href='{% url "home:rss-feed" type="notes" %}'>
+        <link hx-preserve="true" rel='alternate' type='application/atom+xml' title='Timeline Atom feed' href='{% url "home:atom-feed" type="timeline" %}'>
+        <link hx-preserve="true" rel='alternate' type='application/atom+xml' title='Articles Atom feed' href='{% url "home:atom-feed" type="articles" %}'>
+        <link hx-preserve="true" rel='alternate' type='application/atom+xml' title='Notes Atom feed' href='{% url "home:atom-feed" type="notes" %}'>
+
         {# Global stylesheets #}
         <link hx-preserve="true" rel="stylesheet" type="text/css" href="{% static 'css/lunalux.css' %}">
         <link hx-preserve="true" rel="stylesheet" type="text/css" href="{% static 'css/gi.css' %}">

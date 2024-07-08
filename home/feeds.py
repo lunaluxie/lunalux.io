@@ -19,7 +19,7 @@ class RSSFeed(Feed):
                 obj['objects'] = Page.objects.live().filter(filter_on_abstract_page_properties(unlisted=False)).order_by("-first_published_at")
                 obj["link"] = "/timeline"
             case "articles":
-                obj['objects'] = Article.objects.live().filter(unlisted=False, article_type="article")#.order_by("-first_published_at")
+                obj['objects'] = Article.objects.live().filter(unlisted=False, article_type="article").order_by("-first_published_at")
                 obj["link"] = "/articles"
             case "notes":
                 obj['objects'] = Article.objects.live().filter(unlisted=False, article_type="note").order_by("-first_published_at")

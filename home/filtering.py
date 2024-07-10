@@ -30,7 +30,7 @@ def filter_on_abstract_page_properties(**filtering_params) -> Q:
     return query
 
 def filter_on_child_page_properties(child_model, **filtering_params) -> Q:
-    """Filters property of a specific child page model.
+    """Filters property of a specific child page model, and all its subclasses.
 
     Args:
         child_model (Page): child page model class
@@ -39,7 +39,7 @@ def filter_on_child_page_properties(child_model, **filtering_params) -> Q:
         Q: queryset
     """
 
-    child_model_subclasses = child_model.__subclasses__()
+    child_model_subclasses = [child_model]+child_model.__subclasses__()
 
     query = Q()
 

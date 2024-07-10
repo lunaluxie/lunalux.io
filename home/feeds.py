@@ -15,6 +15,10 @@ class RSSFeed(Feed):
 
         tags = request.GET.getlist('tags')
 
+        garden_status = request.GET.get('garden_status')
+        if garden_status:
+            obj["garden_status"] = garden_status
+
         if tags:
             obj['objects'] = filter_page_with_any_of_tags(tags)
             obj["tags"] = tags
@@ -23,18 +27,30 @@ class RSSFeed(Feed):
             case "timeline":
                 if not tags:
                     obj['objects'] = Page.objects.live().filter(filter_on_abstract_page_properties(unlisted=False)).order_by("-first_published_at")
+
+                if garden_status:
+                    obj['objects'] = obj['objects'].filter(filter_on_abstract_page_properties(garden_status=garden_status))
+
                 obj["link"] = "/timeline"
             case "articles":
                 if tags:
                     obj['objects'] = obj['objects'].type(Article).filter(filter_on_child_page_properties(Article, article_type="article"))
                 else:
                     obj['objects'] = Article.objects.live().filter(unlisted=False, article_type="article").order_by("-first_published_at")
+
+                if garden_status:
+                    obj['objects'] = obj['objects'].filter(filter_on_child_page_properties(Article, garden_status=garden_status))
+
                 obj["link"] = "/articles"
             case "notes":
                 if tags:
                     obj['objects'] = obj['objects'].type(Article).filter(filter_on_child_page_properties(Article, article_type="note"))
                 else:
                     obj['objects'] = Article.objects.live().filter(unlisted=False, article_type="note").order_by("-first_published_at")
+
+                if garden_status:
+                    obj['objects'] = obj['objects'].filter(filter_on_child_page_properties(Article, garden_status=garden_status))
+
                 obj["link"] = "/notes"
 
         return obj
@@ -62,9 +78,14 @@ class RSSFeed(Feed):
 
     def item_categories(self, item):
         if isinstance(item.specific, AbstractPage):
-            return list(item.specific.tags.all())
+            categories = list(item.specific.tags.all())
         else:
-            return []
+            categories = []
+
+        if item.garden_status != "n/a":
+            categories.append(item.garden_status)
+
+        return categories
 
     def item_author_name(self, item):
         return item.owner.get_full_name()

@@ -29,6 +29,27 @@ def filter_on_abstract_page_properties(**filtering_params) -> Q:
 
     return query
 
+def filter_on_child_page_properties(child_model, **filtering_params) -> Q:
+    """Filters property of a specific child page model.
+
+    Args:
+        child_model (Page): child page model class
+
+    Returns:
+        Q: queryset
+    """
+
+    child_model_subclasses = child_model.__subclasses__()
+
+    query = Q()
+
+    for key, value in filtering_params.items():
+        for subclass in child_model_subclasses:
+            model_name = subclass._meta.model_name
+            query |= Q(**{f"{model_name}__{key}": value})
+
+    return query
+
 
 def filter_page_with_any_of_tags(tags):
     queryset = PageTag.objects.filter(tag__slug__in=tags)

@@ -189,7 +189,9 @@ class FeedBuilderBlock(blocks.StructBlock):
         ]
         context['content_types'] = content_types
 
-        context['base_feed_url'] = parent_context['request'].scheme + "://" + parent_context["request"].get_host()+"/feeds"
+        if parent_context:
+            if parent_context.get('request'):
+                context['base_feed_url'] = parent_context['request'].scheme + "://" + parent_context["request"].get_host()+"/feeds"
         context['feed_preview_url'] = reverse('home:feed-preview')
 
         return context

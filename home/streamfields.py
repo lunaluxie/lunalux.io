@@ -24,6 +24,7 @@ body_fields = [
 
     ("AboutBlurb",AboutBlurb(group="")),
     ("ContactForm", ContactForm(group="")),
+    ('FeedBuilder', FeedBuilderBlock(group="")),
 
     # automatic
     ("trending_articles", TrendingArticlesBlock(group="automatic")),

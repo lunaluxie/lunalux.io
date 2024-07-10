@@ -1,0 +1,120 @@
+<section class="feed-builder" id="feed-builder">
+    <div class="controls container">
+        <div class="select-toggles">
+            <div class="select-group" id="feed-type">
+                <label for="fb-feed_type">Feed Type</label>
+                <div class="select">
+                    <select id="fb-feed_type">
+                    {% for feed_type in feed_types%}
+                    <option {% if forloop.counter == 1 %}selected="true"{%endif%} value="{{feed_type.0}}">{{feed_type.1}}</option>
+                    {%endfor%}
+                    </select>
+                </div>
+                <script>
+                    document.getElementById('fb-feed_type').addEventListener('change', (e) => {
+                        build_feed_url();
+                    });
+                </script>
+            </div>
+            <div class="select-group" id="content-type">
+                <label for="fb-content_type">Content Type</label>
+                <div class="select">
+                    <select id="fb-content_type">
+                    {% for content_type in content_types%}
+                    <option {% if forloop.counter == 1 %}selected="true"{%endif%} value="{{content_type.0}}">{{content_type.1}}</option>
+                    {%endfor%}
+                    </select>
+                </div>
+                <script>
+                    document.getElementById('fb-content_type').addEventListener('change', (e) => {
+                        build_feed_url();
+                    });
+                </script>
+            </div>
+            <div class="select-group" id="garden-status">
+                <label for="fb-garden_status">Garden Status</label>
+                <div class="select">
+                    <select id="fb-garden_status">
+                    {% for garden_status in garden_statuses%}
+                    <option {% if forloop.counter == 1 %}selected="true"{%endif%} value="{{garden_status.0}}">{{garden_status.1}}</option>
+                    {%endfor%}
+                    </select>
+                </div>
+                <script>
+                    document.getElementById('fb-garden_status').addEventListener('change', (e) => {
+                        build_feed_url();
+                    });
+                </script>
+            </div>
+        </div>
+
+        <label for="fb-tag-select">Tags <span style="color: var(--color-muted); font-size:0.8rem;">(select all the tags you want to follow)</span></label>
+        <ul class="tags" style="justify-content:flex-start;" id='fb-tag-select'>
+        {% for tag in tags%}
+            <li id="fb-{{tag.slug}}" value="{{tag.slug}}">{{tag.name}} - {{tag.num_times}}</li>
+        {%endfor%}
+        <script>
+            document.querySelectorAll('#fb-tag-select li').forEach((tag) => {
+                tag.addEventListener('click', (e) => {
+                    e.target.classList.toggle('active');
+                    build_feed_url();
+                });
+            });
+        </script>
+        </ul>
+
+        <script>
+            function previewFeed(url){
+                let preview = document.querySelector('#preview-attach');
+                fetch("{{feed_preview_url}}?url="+encodeURIComponent(url))
+                .then(response => {
+                    if (response.ok){
+                        response.text().then(html => {
+                            preview.innerHTML = html;
+                        });
+                    }
+                });
+            }
+            function build_feed_url(){
+                let base_feed_url = "{{base_feed_url}}";
+                let garden_status = document.getElementById('fb-garden_status').value;
+                let content_type = document.getElementById('fb-content_type').value;
+                let feed_type = document.getElementById('fb-feed_type').value;
+                let tags = Array.from(document.querySelectorAll('#fb-tag-select li.active')).map((tag) => tag.getAttribute('value'));
+
+                let feed_url = new URL(base_feed_url + "/" + feed_type + "/" + content_type)
+
+                if (garden_status!="any") {
+                    feed_url.searchParams.append('garden_status', garden_status);
+                }
+                if (tags.length > 0){
+                    for (let tag of tags){
+                        feed_url.searchParams.append('tags', tag);
+                    }
+                }
+
+                document.getElementById('fb-url').setAttribute('href', feed_url);
+                document.getElementById('fb-url').innerText = feed_url;
+
+                previewFeed(feed_url);
+
+                return feed_url;
+            }
+
+            htmx.onLoad((e)=>{
+                build_feed_url();
+            });
+        </script>
+
+        <div class="submit" style="margin-bottom:2rem;">
+            <label style="display:block; margin-bottom:0.5rem;">Save Feed</label>
+            <button id="fb-submit" class="button" onClick="window.location=build_feed_url()">Go to feed</button>
+            <a id="fb-url" href="{{base_feed_url}}">{{base_feed_url}}</a>
+        </div>
+    </div>
+
+    <div class="preview container">
+        <label style="display:block; margin-bottom:0.5rem;">Preview <span id="article_count"></div></label>
+    </div>
+    <div id="preview-attach" style="margin-bottom:2rem;"></div>
+</section>

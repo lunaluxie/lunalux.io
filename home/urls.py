@@ -7,7 +7,8 @@ from home.views import (article_list,
                         notes_list,
                         timeline,
                         garden_list,
-                        hover_preview)
+                        hover_preview,
+                        feed_preview)
 
 from home.feeds import RSSFeed, AtomFeed
 
@@ -22,6 +23,7 @@ urlpatterns = [
     path("hover-preview/", hover_preview, name="hover-preview"),
 
     # feeds
+    path('feeds/preview', feed_preview, name="feed-preview"),
     path("feeds/rss/<str:type>/", RSSFeed(), name="rss-feed"),
     path("feeds/atom/<str:type>/", AtomFeed(), name="atom-feed"),
 ]

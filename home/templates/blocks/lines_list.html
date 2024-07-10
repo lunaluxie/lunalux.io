@@ -132,8 +132,6 @@
   {% endif %}
 
   {% for obj in pages %}
-
-
   <hr style="opacity: 0.0875;
     border: 0;
     margin: 0;
@@ -175,6 +173,23 @@
     {% endif %}
 
   </div>
+  {%empty%}
+  {% if show_empty %}
+  <hr style="opacity: 0.0875;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    max-width: none;">
+  <div class="row-list" style="font-family: 'lato';">
+    <div class="col1"></div>
+    <div class="col2">
+      <p style="">No items found</p>
+    </div>
+  </div>
+  {% endif %}
   {% endfor %}
   <hr style="opacity: 0.0875;
     border: 0;

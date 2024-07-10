@@ -155,7 +155,7 @@
                                 el.appendChild(popover)
                             }
 
-                            fetch(`{% url 'home:hover-preview' %}?url=${el.href}`).then(function(response) {
+                            fetch(`{% url 'home:hover-preview' %}?url=${encodeURIComponent(el.href)}`).then(function(response) {
                                 if (response.ok){
                                     popover.innerHTML = response.text().then(function(text){
                                         popover.innerHTML = text

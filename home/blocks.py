@@ -1,6 +1,12 @@
+from django.db.models import Count
+
+from django.urls import reverse
+
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.contrib.table_block.blocks import TableBlock
+
+from taggit.models import Tag
 
 # BASIC BLOCKS
 
@@ -145,6 +151,48 @@ class RecentProjectsBlocks(blocks.StructBlock):
 
 
 # PAGE BLOCKS
+
+class FeedBuilderBlock(blocks.StructBlock):
+    class Meta:
+        icon = "form"
+        label = "Feed builder block"
+        admin_text = '{label}: configured elsewhere'.format(label=label)
+        template = 'blocks/feed_builder.html'
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+
+        tags = Tag.objects.all().annotate(
+            num_times=Count('home_pagetag_items')
+        ).order_by('-num_times').filter(num_times__gt=1)
+        context['tags'] = tags
+
+        garden_statuses = [
+            ('any', "Any"),
+            ("seedling", "🌱 Seedling: For rough and early ideas"),
+            ("budding", "🌿 Budding: For work that has been cleaned up and clarified"),
+            ("evergreen", "🌳 Evergreen: For work that's reasonably complete"),
+        ]
+        context['garden_statuses'] = garden_statuses
+
+
+        feed_types = [
+            ('rss', "RSS"),
+            ('atom', "Atom")
+        ]
+        context['feed_types'] = feed_types
+
+        content_types = [
+            ("timeline", "All"),
+            ("articles", "Articles: Longer form content"),
+            ("notes", "Notes: Short form content"),
+        ]
+        context['content_types'] = content_types
+
+        context['base_feed_url'] = parent_context['request'].scheme + "://" + parent_context["request"].get_host()+"/feeds"
+        context['feed_preview_url'] = reverse('home:feed-preview')
+
+        return context
 
 class AllProjectsBlocks(blocks.StaticBlock):
     class Meta:

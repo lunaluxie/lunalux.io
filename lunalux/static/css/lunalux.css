@@ -918,6 +918,8 @@ ARTICLE BYLINE
   border-radius: 5px;
   transition-duration: 100ms;
   transition-property: background-color;
+  text-decoration: none;
+  color: var(--color-muted);
 }
 
 .tags li:hover {
@@ -925,6 +927,14 @@ ARTICLE BYLINE
 }
 
 .tags a.active li:hover {
+  background-color: var(--secondary-background-hover);
+}
+
+.tags li.active {
+  background-color: var(--active-background);
+}
+
+.tags li.active:hover {
   background-color: var(--secondary-background-hover);
 }
 /*
@@ -2156,4 +2166,105 @@ a:has(> .popover):hover>.popover {
 .alert.success {
   border: 1px solid var(--success-color);
   color: var(--success-color);
+}
+
+/* feed builder */
+.select-toggles {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.select-toggles .select-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feed-builder .submit a{
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin-left: 0.5rem;
+}
+
+.feed-builder .submit button{
+  padding: 0.4rem 0.5rem;
+  background: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 100ms;
+}
+
+.feed-builder .submit button:hover {
+  background-color: var(--secondary-background-hover);
+
+
+}
+
+.feed-builder .tags li {
+  font-size: 14px;
+  align-content: center;
+  cursor: pointer;
+}
+
+.feed-builder .tags {
+  margin-bottom: 2rem;
+}
+
+.feed-builder select {
+  /* Reset Select */
+  appearance: none;
+  outline: none;
+  border: 0;
+  box-shadow: none;
+  /* Personalize */
+  padding: 5px;
+  color: var(--body-color);
+  cursor: pointer;
+  margin-right: 0.5rem;
+  width: 110px;
+  background-color: transparent;
+}
+
+/* Remove IE arrow */
+.feed-builder select::-ms-expand {
+  display: none;
+}
+
+.feed-builder .select {
+  position: relative;
+  display: inline-block;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  transition: background-color 100ms;
+  background-color: var(--body-bg);
+}
+
+.feed-builder .select:hover {
+  background-color: var(--secondary-background-hover);
+}
+
+/* Arrow */
+.feed-builder .select::after {
+  content: '\f107';
+  position: absolute;
+  top: calc(50% - 0.3rem);
+  right: 0.25rem;
+  transition: .25s all ease;
+  pointer-events: none;
+  color: var(--color-muted);
+  font-size: 0.6rem;
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 500;
+}
+
+.feed-builder hr {
+  margin: 1.5rem 0 1rem 0;
+  height: 0;
+  border-radius: 5px;
+  border-color: var(--border-color);
+  max-width: 100%;
 }

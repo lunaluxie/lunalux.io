@@ -13,12 +13,12 @@ class RSSFeed(Feed):
             "type": type
         }
 
-        tags = request.GET.getlist('tags')
 
         garden_status = request.GET.get('garden_status')
         if garden_status:
             obj["garden_status"] = garden_status
 
+        tags = request.GET.getlist('tags')
         if tags:
             obj['objects'] = filter_page_with_any_of_tags(tags)
             obj["tags"] = tags
@@ -35,21 +35,23 @@ class RSSFeed(Feed):
             case "articles":
                 if tags:
                     obj['objects'] = obj['objects'].type(Article).filter(filter_on_child_page_properties(Article, article_type="article"))
+                    if garden_status:
+                        obj['objects'] = obj['objects'].filter(filter_on_child_page_properties(Article, garden_status=garden_status))
                 else:
                     obj['objects'] = Article.objects.live().filter(unlisted=False, article_type="article").order_by("-first_published_at")
-
-                if garden_status:
-                    obj['objects'] = obj['objects'].filter(filter_on_child_page_properties(Article, garden_status=garden_status))
+                    if garden_status:
+                        obj['objects'] = obj['objects'].filter(garden_status=garden_status)
 
                 obj["link"] = "/articles"
             case "notes":
                 if tags:
                     obj['objects'] = obj['objects'].type(Article).filter(filter_on_child_page_properties(Article, article_type="note"))
+                    if garden_status:
+                        obj['objects'] = obj['objects'].filter(filter_on_child_page_properties(Article, garden_status=garden_status))
                 else:
                     obj['objects'] = Article.objects.live().filter(unlisted=False, article_type="note").order_by("-first_published_at")
-
-                if garden_status:
-                    obj['objects'] = obj['objects'].filter(filter_on_child_page_properties(Article, garden_status=garden_status))
+                    if garden_status:
+                        obj['objects'] = obj['objects'].filter(garden_status=garden_status)
 
                 obj["link"] = "/notes"
 
@@ -79,11 +81,11 @@ class RSSFeed(Feed):
     def item_categories(self, item):
         if isinstance(item.specific, AbstractPage):
             categories = list(item.specific.tags.all())
+
+            if item.specific.garden_status != "n/a":
+                categories.append(item.specific.garden_status)
         else:
             categories = []
-
-        if item.garden_status != "n/a":
-            categories.append(item.garden_status)
 
         return categories
 

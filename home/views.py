@@ -10,7 +10,10 @@ from home.filtering import filter_on_abstract_page_properties, filter_page_with_
 from taggit.models import Tag
 from django.http import Http404
 from urllib.parse import urlparse
+from urllib import parse
+from django.http import HttpRequest, QueryDict
 
+from home.feeds import RSSFeed
 
 def hover_preview(request):
 
@@ -19,12 +22,40 @@ def hover_preview(request):
     if not url:
         raise Http404("No URL provided")
 
-    url = urlparse(url).path
+    url = urlparse(unquote(url)).path
 
     # find a bit more robust way of reversing wagtail page from url
     page = get_object_or_404(Page, url_path__endswith=url).specific
 
     return render(request, "components/hover_preview.html", context={"page":page})
+
+def feed_preview(request):
+
+    print("hi")
+
+    url = request.GET.get('url')
+
+    if not url:
+        raise Http404("No URL provided")
+
+    url = urlparse(unquote(url))
+
+    content_type = url.path.split("/")[-1]
+
+    query_params = QueryDict(url.query)
+
+    r = HttpRequest()
+    r.GET = query_params
+
+    feed = RSSFeed().get_object(r, content_type)
+
+    context = {
+        "pages":list(feed['objects'].specific()),
+        "include_images":False,
+        "show_empty": True,
+    }
+    return render(request, "blocks/lines_list.html", context=context)
+
 
 def garden_list(request):
 

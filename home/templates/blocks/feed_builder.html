@@ -64,13 +64,30 @@
         </ul>
 
         <script>
+            function setInnerHTML(elm, html) {
+                elm.innerHTML = html;
+
+                Array.from(elm.querySelectorAll("script"))
+                    .forEach( oldScriptEl => {
+                    const newScriptEl = document.createElement("script");
+
+                    Array.from(oldScriptEl.attributes).forEach( attr => {
+                        newScriptEl.setAttribute(attr.name, attr.value)
+                    });
+
+                    const scriptText = document.createTextNode(oldScriptEl.innerHTML);
+                    newScriptEl.appendChild(scriptText);
+
+                    oldScriptEl.parentNode.replaceChild(newScriptEl, oldScriptEl);
+                });
+            }
             function previewFeed(url){
                 let preview = document.querySelector('#preview-attach');
                 fetch("{{feed_preview_url}}?url="+encodeURIComponent(url))
                 .then(response => {
                     if (response.ok){
                         response.text().then(html => {
-                            preview.innerHTML = html;
+                            setInnerHTML(preview, html);
                         });
                     }
                 });

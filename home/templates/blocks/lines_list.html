@@ -209,9 +209,8 @@
   {% endif %}
 
   <script>
-    let articleCount = document.getElementById('article_count')
-    if (articleCount){
-      articleCount.innerHTML = '{{ pages|length }} {% if object_name %}{{object_name}}{% else %}Items{% endif %}';
+    if (document.getElementById('article_count')){
+      document.getElementById('article_count').innerHTML = '{{ pages|length }} {% if object_name %}{{object_name}}{% else %}Items{% endif %}';
     }
   </script>
 

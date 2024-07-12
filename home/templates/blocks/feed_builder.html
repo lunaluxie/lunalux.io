@@ -51,7 +51,7 @@
         <label for="fb-tag-select">Tags <span style="color: var(--color-muted); font-size:0.8rem;">(select all the tags you want to follow)</span></label>
         <ul class="tags" style="justify-content:flex-start;" id='fb-tag-select'>
         {% for tag in tags%}
-            <li id="fb-{{tag.slug}}" value="{{tag.slug}}">{{tag.name}} - {{tag.num_times}}</li>
+            <li id="fb-{{tag.slug}}" value="{{tag.slug}}">{{tag.name}}</li>
         {%endfor%}
         <script>
             document.querySelectorAll('#fb-tag-select li').forEach((tag) => {

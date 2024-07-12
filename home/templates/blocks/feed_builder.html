@@ -75,7 +75,7 @@
                     }
                 });
             }
-            function build_feed_url(){
+            function build_feed_url(update_preview=true){
                 let base_feed_url = "{{base_feed_url}}";
                 let garden_status = document.getElementById('fb-garden_status').value;
                 let content_type = document.getElementById('fb-content_type').value;
@@ -96,7 +96,9 @@
                 document.getElementById('fb-url').setAttribute('href', feed_url);
                 document.getElementById('fb-url').innerText = feed_url;
 
-                previewFeed(feed_url);
+                if (update_preview) {
+                    previewFeed(feed_url);
+                }
 
                 return feed_url;
             }

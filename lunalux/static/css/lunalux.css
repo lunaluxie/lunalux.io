@@ -2195,6 +2195,7 @@ a:has(> .popover):hover>.popover {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 100ms;
+  color: var(--body-color);
 }
 
 .feed-builder .submit button:hover {

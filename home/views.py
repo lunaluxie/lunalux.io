@@ -30,9 +30,6 @@ def hover_preview(request):
     return render(request, "components/hover_preview.html", context={"page":page})
 
 def feed_preview(request):
-
-    print("hi")
-
     url = request.GET.get('url')
 
     if not url:
@@ -49,8 +46,13 @@ def feed_preview(request):
 
     feed = RSSFeed().get_object(r, content_type)
 
+    pages = list(feed['objects'].specific())
+
+    num_pages = len(pages)
+
     context = {
-        "pages":list(feed['objects'].specific()),
+        "pages":pages[:15],
+        "num_pages":num_pages,
         "include_images":False,
         "show_empty": True,
     }

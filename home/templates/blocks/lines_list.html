@@ -210,7 +210,7 @@
 
   <script>
     if (document.getElementById('article_count')){
-      document.getElementById('article_count').innerHTML = '{{ pages|length }} {% if object_name %}{{object_name}}{% else %}Items{% endif %}';
+      document.getElementById('article_count').innerHTML = '{% if num_pages%}{{num_pages}}{% else %}{{ pages|length }}{% endif %} {% if object_name %}{{object_name}}{% else %}Items{% endif %}';
     }
   </script>
 

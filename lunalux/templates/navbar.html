@@ -150,19 +150,27 @@
     margin-top: 0px;
     margin-left: 0px;
     font-size: 0.95rem;
-    text-transform: uppercase;
+    text-transform: capitalize;
     text-decoration: none;
 }
 
 .bar-modal i {
   margin-right:0.25rem;
-  width: 13px;
+  width: 17px;
 }
 
 .bar-modal .dropdown ul {
   padding: 0 1.5rem;
 }
 </style>
+<script>
+  function toggleDropdown(id){
+    document.getElementById(id).classList.toggle("hidden");
+    document.getElementById(id+"-toggle").classList.toggle("fa-angle-down");
+    document.getElementById(id+"-toggle").classList.toggle("fa-angle-up");
+
+  }
+</script>
 <modal class="bar-modal hidden " style="z-index:10" id="modal">
     <ul style="list-style: none; padding:0; margin-top:0;">
         <li>
@@ -172,12 +180,12 @@
           </a>
         </li>
         <li>
-          <a href="/timeline">
+          <a onclick="toggleDropdown('timeline-dropdown')" style="cursor:pointer;">
             <i class="fa-solid fa-pen"></i>
-            <span>Writing</span>
+            <span>writing</span>
             <i id="timeline-dropdown-toggle" class="fa-solid fa-angle-down"></i>
           </a>
-          <div id="timeline-dropdown" class="dropdown">
+          <div id="timeline-dropdown" class="dropdown hidden">
             <ul>
               <li>
                 <a href="/projects">
@@ -197,6 +205,7 @@
                   <span>notes</span>
                 </a>
               </li>
+              <hr style="margin: 10px auto;max-width: 100%;border-width: 0.8px;border-radius: 10px;">
               <li>
                 <a href="/feeds">
                   <i class="fa-solid fa-rss"></i>
@@ -220,13 +229,14 @@
         </li>
 
         <li>
-          <a href="/garden">
+          <a onclick="toggleDropdown('garden-dropdown')" style="cursor:pointer;">
             <i class="fa-solid fa-tree"></i>
             <span>garden</span>
-            <i class="fa-solid fa-angle-down"></i>
+            <i id="garden-dropdown-toggle" class="fa-solid fa-angle-down"></i>
           </a>
-          <div class="dropdown">
+          <div id="garden-dropdown" class="dropdown hidden">
             <ul>
+              <li><a href="/garden"><span>🪴 garden</span></a></li>
               <li><a href="/garden/?garden_status=seedling"><span>🌱 seedling</span></a></li>
               <li><a href="/garden/?garden_status=budding"><span>🌿 budding</span></a></li>
               <li><a href="/garden/?garden_status=evergreen"><span>🌳 evergreen</span></a></li>
@@ -234,17 +244,19 @@
           </div>
         </li>
         <li>
-          <a href="/about">
+          <a onclick="toggleDropdown('about-dropdown')" style="cursor:pointer;">
             <i class="fa-solid fa-user"></i>
             <span>about</span>
-            <i class="fa-solid fa-angle-down"></i>
+            <i id="about-dropdown-toggle" class="fa-solid fa-angle-down"></i>
           </a>
-          <div class="dropdown">
+          <div id="about-dropdown" class="dropdown hidden">
             <ul>
+              <li><a href="/about"><i class="fa-solid fa-user"></i><span>about</span></a></li>
               {% comment %} <li><a href="/now"><i class="fa-solid fa-clock"></i><span>now</span></a></li> {% endcomment %}
               <li><a href="/resume"><i class="fa-solid fa-file"></i><span>resume</span></a></li>
               <li><a href="/about#contact-section"><i class="fa-solid fa-address-card"></i><span>contact</span></a></li>
               <li><a href="/colophon"><i class="fa-solid fa-globe"></i><span>colophon</span></a></li>
+              <hr style="margin: 10px auto;max-width: 100%;border-width: 0.8px;border-radius: 10px;">
               <li><a href="/about/privacy-policy"><i class="fa-solid fa-fingerprint"></i><span>privacy</span></a></li>
               <li><a href="javascript:cc.openOptionsModal()"><i class="fa-solid fa-cookie-bite"></i><span>cookies</span></a></li>
             </ul>

@@ -417,6 +417,7 @@ navbar {
   align-items: center;
   -webkit-tap-highlight-color: transparent;
   transition: opacity .2s ease;
+  margin-top:8px;
 }
 
 navbar::after {

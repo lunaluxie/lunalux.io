@@ -4,6 +4,7 @@ The code that runs my personal website, [lunalux.io](https://lunalux.io). Feel f
 
 ## ToC
 - [Overview](#overview)
+    - [Dynamic Feeds](#dynamic-feeds)
     - [Bidirectional Linking](#bidirectional-linking)
     - [Hover Preview](#hover-preview)
     - [Trending Pages](#trending-pages)
@@ -21,6 +22,9 @@ Each page is an instance of the `Page` model, and the content is created in the 
 The main content pages are `HomePage`, and `Article` which are located in [home/models/page_models.py](home/models/page_models.py). `HomePage` is meant to be flexible enough to create a wide range of layouts whereas `Article` is constrained to be in a blog-post format. However, since most pages are `Article` instances, I have developed more components for that. The most notable use of `HomePage` is the index page.
 
 For a more thorough documentation of the features and changelog of the website, you can read the [colophon](http://lunalux.io/colophon) page.
+
+### Dynamic Feeds
+The [Feed class](home/feeds.py) is able to generate different dynamic RSS feeds based on the parameters submitted. Combined with the [user interface](https://lunalux.io/about/feeds/), it is easy for visitors to generate a personal feed with the content types, tags, and content maturity they're interested in. 
 
 ### Bidirectional linking
 Whenever an `Article` is saved, the body is scanned for internal links (see `_add_interpage_links_from_html_field` on `AbstractPage`) to other articles. If an internal link is found, a `InterPageLink` is created between the two articles. This is used to create a "Continue Reading" section at the bottom of each article.

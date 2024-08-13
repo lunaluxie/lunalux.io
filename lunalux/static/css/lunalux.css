@@ -2156,17 +2156,17 @@ a:has(> .popover):hover>.popover {
 
 .alert.warning {
     border: 1px solid var(--warning-color);
-    color: var(--warning-color);
+    /* color: var(--warning-color); */
 }
 
 .alert.danger {
   border: 1px solid var(--danger-color);
-  color: var(--danger-color);
+  /* color: var(--danger-color); */
 }
 
 .alert.success {
   border: 1px solid var(--success-color);
-  color: var(--success-color);
+  /* color: var(--success-color); */
 }
 
 /* feed builder */

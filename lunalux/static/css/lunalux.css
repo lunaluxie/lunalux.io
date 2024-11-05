@@ -835,7 +835,6 @@ ARTICLE BYLINE
   --byline-text-color: var(--color-muted);
   margin-top: 4rem;
   padding-top: 2rem;
-  display: flex;
   padding-left: 25px;
   padding-right: 25px;
   max-width: 680px;
@@ -843,6 +842,11 @@ ARTICLE BYLINE
   margin-right: auto;
   position: relative;
   margin-bottom: 50px;
+  display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: space-between;
 }
 
 .article .byline:before {
@@ -868,7 +872,6 @@ ARTICLE BYLINE
   font-weight: 500;
   text-transform: capitalize;
   color: var(--byline-text-color);
-  flex-grow: 1;
 }
 
 .article .byline .author>a {
@@ -886,9 +889,7 @@ ARTICLE BYLINE
 .article .byline .publish {
   font-size: 15px;
   font-weight: 500;
-  text-transform: capitalize;
   color: var(--byline-text-color);
-  flex-grow: 1;
   text-align: right;
 }
 /*

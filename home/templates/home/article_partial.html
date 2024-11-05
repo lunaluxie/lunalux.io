@@ -68,11 +68,10 @@
         <div class="author">
             By <a href="/about" rel="author">{{page.owner.get_full_name}}</a>
         </div>
-        {% if instance.show_timestamp %}
+
         <div class="publish">
-            {{ instance.publish }}
+            Edited at {{ page.last_published_at|date:"F j, Y" }}
         </div>
-        {% endif %}
         </div>
 
     </div>

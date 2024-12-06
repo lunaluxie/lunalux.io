@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
 # Application definition
 
 INSTALLED_APPS = [
@@ -183,3 +183,5 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+TAGGIT_CASE_INSENSITIVE = True

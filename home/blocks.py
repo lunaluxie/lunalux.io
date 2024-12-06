@@ -6,7 +6,8 @@ from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.contrib.table_block.blocks import TableBlock
 
-from taggit.models import Tag
+
+from home.models.helper_models import HierarchicalTag as Tag
 
 # BASIC BLOCKS
 

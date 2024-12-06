@@ -7,10 +7,10 @@ import wagtail.admin.rich_text.editors.draftail.features as draftail_features
 from wagtail.admin.rich_text.converters.html_to_contentstate import (
     InlineStyleElementHandler,
 )
-from taggit.models import Tag
+
 from home.models.page_models import Article, Series, AbstractPage
 from home.models.helper_models import InterPageLink, Contact, PageHit
-
+from home.models.helper_models import HierarchicalTag as Tag
 
 
 class ContactAdmin(SnippetViewSet):
@@ -52,7 +52,7 @@ class TagsSnippetViewSet(SnippetViewSet):
     add_to_admin_menu = True
     menu_label = "Tags"
     menu_order = 400
-    list_display = ["name", "slug"]
+    list_display = ["name", "slug", 'path', "pk"]
     search_fields = ("name",)
 
 register_snippet(TagsSnippetViewSet)

@@ -2271,3 +2271,33 @@ a:has(> .popover):hover>.popover {
   border-color: var(--border-color);
   max-width: 100%;
 }
+/* columns */
+.columns {
+  display: flex;
+  flex-basis: 0;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.margin-y {
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+.margin-x {
+  margin-right: 3em;
+  margin-left: 3em;
+}
+
+.fullscreen {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.columns>div {
+  flex: 1 1 0px;
+}
+
+.grecaptcha-badge {
+  display: none;
+}

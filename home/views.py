@@ -1,19 +1,22 @@
-from django.shortcuts import render, get_object_or_404
-from itertools import chain
-from urllib.parse import unquote
 import datetime
-from django.utils import timezone
 from collections import Counter
-from home.models.page_models import Page, AbstractPage, HomePage, Article, Series
-from home.models.helper_models import PageHit, PageTag
-from home.filtering import filter_on_abstract_page_properties, filter_page_with_any_of_tags
-from taggit.models import Tag
-from django.http import Http404
-from urllib.parse import urlparse
+from itertools import chain
 from urllib import parse
-from django.http import HttpRequest, QueryDict
+from urllib.parse import unquote, urlparse
+
+from django.http import Http404, HttpRequest, QueryDict
+from django.shortcuts import get_object_or_404, render
+from django.utils import timezone
+from taggit.models import Tag
 
 from home.feeds import RSSFeed
+from home.filtering import (
+    filter_on_abstract_page_properties,
+    filter_page_with_any_of_tags,
+)
+from home.models.helper_models import PageHit, PageTag
+from home.models.page_models import AbstractPage, Article, HomePage, Page, Series
+
 
 def hover_preview(request):
 
@@ -121,7 +124,15 @@ def timeline(request):
         chain(queryset, queryset2, queryset3),
         key=time, reverse=True)
 
-    context = {"articles": queryies_combined, "tag": "Timeline", 'hide_other_tags':True, "object_name": "Pages"}
+    tags = Article.tags.most_common()[:10]
+
+    context = {
+        "articles": queryies_combined,
+        "tag": "Timeline",
+        "hide_other_tags": True,
+        "object_name": "Pages",
+        "tags": tags,
+    }
 
     context['description_text'] = "A chronological list of all pages."
 

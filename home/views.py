@@ -132,6 +132,7 @@ def timeline(request):
         "hide_other_tags": True,
         "object_name": "Pages",
         "tags": tags,
+        "use_last_updated": True,
     }
 
     context['description_text'] = "A chronological list of all pages."

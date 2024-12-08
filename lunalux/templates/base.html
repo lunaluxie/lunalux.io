@@ -51,11 +51,15 @@
         <script hx-preserve="true" src="https://unpkg.com/htmx.org@1.9.12"></script>
         <script hx-preserve="true" src="https://unpkg.com/htmx.org@1.9.12/dist/ext/head-support.js"></script>
 
+        <script hx-preserve="true" defer data-domain="lunalux.io" src="http://plausible.lunalux.io/js/script.file-downloads.js"></script>
+        <script hx-preserve="true">window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
     </head>
 
     <body class="{% block body_class %}{% endblock %}" hx-ext="head-support">
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFV1NFBRY4"></script>
+        <script defer data-domain="lunalux.io" src="http://plausible.lunalux.io/js/script.file-downloads.js"></script>
+        <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+
 
         {% wagtailuserbar %}
 
@@ -186,17 +190,6 @@
                     })
                 }
             })
-
-            delete cc;
-            var cc = new CC("450ad205c5a44a228c74c1dfdcfc30b5");
-
-            // load google analytics if appropriate.
-            if (cc.hasConsented('performance')) {
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-CFV1NFBRY4');
-            }
         })
         </script>
         <script>
@@ -204,13 +197,6 @@
             event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
         })
         </script>
-
-        <script src="https://cdn.cookiecook.io/core/cc.js"></script>
-        <style>
-        .cc-badge{
-            display:none;
-        }
-        </style>
 
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}

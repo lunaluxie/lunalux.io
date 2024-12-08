@@ -4,6 +4,7 @@ from itertools import chain
 from urllib import parse
 from urllib.parse import unquote, urlparse
 
+from django.db.models.functions import Trunc
 from django.http import Http404, HttpRequest, QueryDict
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
@@ -113,12 +114,18 @@ def garden_list(request):
 
 def timeline(request):
     # TODO Change to single queryset on page???
-    queryset = HomePage.objects.filter(live=True, unlisted=False)
-    queryset2 = Article.objects.filter(live=True, unlisted=False)
-    queryset3 = Series.objects.filter(live=True, unlisted=False)
+    queryset = HomePage.objects.filter(live=True, unlisted=False).annotate(
+        year=Trunc("first_published_at", "year")
+    )
+    queryset2 = Article.objects.filter(live=True, unlisted=False).annotate(
+        year=Trunc("first_published_at", "year")
+    )
+    queryset3 = Series.objects.filter(live=True, unlisted=False).annotate(
+        year=Trunc("first_published_at", "year")
+    )
 
     def time(instance):
-        return instance.last_published_at
+        return instance.first_published_at
 
     queryies_combined = sorted(
         chain(queryset, queryset2, queryset3),
@@ -132,7 +139,7 @@ def timeline(request):
         "hide_other_tags": True,
         "object_name": "Pages",
         "tags": tags,
-        "use_last_updated": True,
+        "group_by_year": True,
     }
 
     context['description_text'] = "A chronological list of all pages."

@@ -1,0 +1,53 @@
+{% load static wagtailcore_tags wagtailuserbar wagtailimages_tags static my_tags humanize %}
+
+<hr style="opacity: 0.0875;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    max-width: none;">
+<div class="row-list" style="margin: .9rem 0; font-family: 'lato';">
+
+    <div class="col1" style="">
+        {% if show_date %}
+        <span style="color: var(--color-muted); font-size: 1rem; text-decoration: none;">{{obj.first_published_at|date:"Y" }}</span>
+        {% elif show_garden_status %}{% include 'components/garden_status.html' with garden_status=obj.garden_status
+        verbose=True %}
+        {% elif obj.tags.first %}<a style="color: var(--color-muted); font-size: 1rem; text-decoration: none;"
+            href="/tag/{{ obj.tags.first.slug }}">{{obj.tags.first.name}}</a>
+        {% else %}
+        {%endif%}
+    </div>
+
+    <div class="col2 {% if include_images and obj.image and obj.include_image_in_article_list %}image{%endif%}">
+        <div style="max-width: 30rem;">
+            <a {% if use_htmx%}hx-push-url="true" hx-swap="innerHTML show:top" hx-target="#main" {%endif%}
+                href="{% pageurl obj %}" style="text-decoration: none;">
+                <p class="asdf" style="">
+                    {% if not hide_page_type %}{% include 'components/article_type.html' with page_type=obj.get_page_type%}{%endif%}
+                    {{ obj.title }}
+                </p>
+
+                {% if include_images and obj.image and obj.include_image_in_article_list %}<p
+                    style="font-size: 1rem; margin-bottom: 0;    color: var(--color-muted); margin-top: 0.5rem;">
+                    {{ obj.search_description }}
+                </p>
+                {% endif %}
+            </a>
+        </div>
+    </div>
+
+    {% if include_images and obj.image and obj.include_image_in_article_list %}
+    <div class="col3" style="">
+        <a {% if use_htmx%}hx-push-url="true" hx-swap="innerHTML show:top" hx-target="#main" {%endif%}
+            href="{% pageurl obj %}">
+            {% image obj.image width-600 as tmp_photo %}
+            <img style="aspect-ratio: calc({{tmp_photo.width}}/{{tmp_photo.height}}); width:100%;"
+                alt="{{tmp_photo.alt}}" src="{{ tmp_photo.url }}">
+        </a>
+    </div>
+    {% endif %}
+
+</div>

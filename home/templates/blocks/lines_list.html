@@ -132,72 +132,54 @@
       {% pageChooserBlockListToProperPages self.pages as pages %}
   {% endif %}
 
-  {% for obj in pages %}
-  <hr style="opacity: 0.0875;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 1px;
-    background-color: currentColor;
-    max-width: none;">
-  <div class="row-list" style="margin: .9rem 0; font-family: 'lato';">
-
-    <div class="col1" style="">
-      {% if use_last_updated %}
-        <span style="color: var(--color-muted); font-size: 1rem; text-decoration: none;">{{obj.last_published_at|naturalday | title}}</span>
-      {% elif show_garden_status %}{% include 'components/garden_status.html' with garden_status=obj.garden_status
-      verbose=True %}
-      {% elif obj.tags.first %}<a style="color: var(--color-muted); font-size: 1rem; text-decoration: none;"
-        href="/tag/{{ obj.tags.first.slug }}">{{obj.tags.first.name}}</a>
-      {% else %}
-      {%endif%}
-    </div>
-
-    <div class="col2 {% if include_images and obj.image and obj.include_image_in_article_list %}image{%endif%}">
-      <div style="max-width: 30rem;">
-        <a {% if use_htmx%}hx-push-url="true"  hx-swap="innerHTML show:top" hx-target="#main"{%endif%} href="{% pageurl obj %}" style="text-decoration: none;">
-          <p class="asdf" style="">
-            {% if not hide_page_type %}{% include 'components/article_type.html' with page_type=obj.get_page_type%}{%endif%}
-            {{ obj.title }}
-          </p>
-
-          {% if include_images and obj.image and obj.include_image_in_article_list %}<p style="font-size: 1rem; margin-bottom: 0;    color: var(--color-muted); margin-top: 0.5rem;">
-          {{ obj.search_description }}
-          </p>
-          {% endif %}
-        </a>
+  {% if group_by_year %}
+    {% regroup pages by year as pages_ordered %}
+    {% for group in pages_ordered %}
+        <h2 id="{{ group.grouper | date:"Y"}}">{{ group.grouper | date:"Y"}}</h2>
+        <div style="margin-bottom: 0.8rem"><span style="color:var(--color-muted);">{{group.list | length}} {{object_name}}</span></div>
+        {% for obj in group.list %}
+          {% include 'blocks/line.html' with obj=obj include_images=include_images show_garden_status=show_garden_status hide_page_type=hide_page_type %}
+        {% endfor %}
+    {%empty%}
+    {% if show_empty %}
+    <hr style="opacity: 0.0875;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 1px;
+        background-color: currentColor;
+        max-width: none;">
+    <div class="row-list" style="font-family: 'lato';">
+      <div class="col1"></div>
+      <div class="col2">
+        <p style="">No items found</p>
       </div>
     </div>
-
-    {% if include_images and obj.image and obj.include_image_in_article_list %}
-    <div class="col3" style="">
-      <a {% if use_htmx%}hx-push-url="true"  hx-swap="innerHTML show:top" hx-target="#main"{%endif%} href="{% pageurl obj %}">
-        {% image obj.image width-600 as tmp_photo %}
-        <img style="aspect-ratio: calc({{tmp_photo.width}}/{{tmp_photo.height}}); width:100%;" alt="{{tmp_photo.alt}}" src="{{ tmp_photo.url }}">
-      </a>
-    </div>
     {% endif %}
-
-  </div>
-  {%empty%}
-  {% if show_empty %}
-  <hr style="opacity: 0.0875;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 1px;
-    background-color: currentColor;
-    max-width: none;">
-  <div class="row-list" style="font-family: 'lato';">
-    <div class="col1"></div>
-    <div class="col2">
-      <p style="">No items found</p>
-    </div>
-  </div>
+    {% endfor %}
+  {% else %}
+    {% for obj in pages %}
+    {% include 'blocks/line.html' with obj=obj include_images=include_images show_garden_status=show_garden_status hide_page_type=hide_page_type %}
+    {%empty%}
+      {% if show_empty %}
+      <hr style="opacity: 0.0875;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 1px;
+        background-color: currentColor;
+        max-width: none;">
+      <div class="row-list" style="font-family: 'lato';">
+        <div class="col1"></div>
+        <div class="col2">
+          <p style="">No items found</p>
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
   {% endif %}
-  {% endfor %}
   <hr style="opacity: 0.0875;
     border: 0;
     margin: 0;

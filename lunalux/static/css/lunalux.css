@@ -833,16 +833,15 @@ spacer {
 /*
 ARTICLE BYLINE
 */
-
+.article .article-end {
+  margin: 2rem auto;
+  max-width: 700px;
+  padding: 0 1rem;
+}
 .article .byline {
   --byline-text-color: var(--color-muted);
-  margin-top: 2rem;
-    padding: 1rem;
-    max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
   position: relative;
-  margin-bottom: 50px;
+
   display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -851,11 +850,8 @@ ARTICLE BYLINE
 }
 
 .article .byline:before {
-  position: absolute;
-  top: 0;
-  left: 0;
-    /* right: 25px; */
-    width: 100%;
+  position: relative;
+  width: 100%;
   content: "";
   display: block;
   height: 1px;
@@ -863,6 +859,7 @@ ARTICLE BYLINE
 }
 
 .article .byline .author {
+  padding: 1rem;
   font-size: 16px;
   font-weight: 500;
   text-transform: capitalize;
@@ -881,7 +878,7 @@ ARTICLE BYLINE
 }
 
 .article .byline .author>a:hover {
-  border-bottom-color: var(--border-color);
+  border-bottom-color: var(--border-color-hover);
 }
 
 .article .byline .publish {

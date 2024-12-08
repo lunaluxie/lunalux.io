@@ -58,6 +58,7 @@ body_fields = [
 article_fields = basic_fields + [
     ("ImageDivider", ImageDividerBlock()),
     ("JumbotronImageBlock", JumbotronImageBlock()),
+    ("Gallery", GalleryBlock()),
     ("DescriptionBlock", DescriptionBlock(group="basic")),
     ("alert", AlertBlock(group="basic")),
     ("HorizontalCardList", HorizontalCardList(group="List")),

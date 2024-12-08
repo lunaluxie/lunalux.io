@@ -2299,3 +2299,34 @@ a:has(> .popover):hover>.popover {
 .grecaptcha-badge {
   display: none;
 }
+
+
+/* Gallery */
+/* from https: //birming.com/image-gallery-blog/ */
+.gallery {
+  margin: 0 auto;
+  max-width: 1000px;
+
+}
+.gallery ul {
+  display: grid;
+  /* grid-template-columns: repeat(3, 1fr); */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-auto-rows: 200px;
+  grid-gap: 12px;
+  padding: 20px 0;
+  list-style: none;
+  margin: 0 1rem;
+}
+
+.gallery li {
+  position: relative;
+  flex-basis: calc(50% - 20px);
+}
+
+.gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1.5;
+}

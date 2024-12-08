@@ -1,14 +1,21 @@
 from django.db.models import Count
-
 from django.urls import reverse
-
-from wagtail import blocks
-from wagtail.images.blocks import ImageChooserBlock
-from wagtail.contrib.table_block.blocks import TableBlock
-
 from taggit.models import Tag
+from wagtail import blocks
+from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.images.blocks import ImageChooserBlock
 
 # BASIC BLOCKS
+
+
+class GalleryBlock(blocks.StructBlock):
+    images = blocks.ListBlock(ImageChooserBlock())
+
+    class Meta:
+        # icon = ""
+        label = "Gallery"
+        admin_text = "gallery."
+        template = "blocks/gallery.html"
 
 class CodeBlock(blocks.StructBlock):
     choices = (
@@ -295,6 +302,7 @@ class ContainerBlock(blocks.StructBlock):
         ("text", blocks.RichTextBlock(group="basic")),
         ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
         ('table', TableBlock(group="basic")),
+        ('gallery', GalleryBlock(group="section")),
 
         ('section_header', SectionHeaderBlock(group="section")),
     ])
@@ -306,16 +314,17 @@ class ContainerBlock(blocks.StructBlock):
 
 
 class ColumnBlock(blocks.StructBlock):
-    content = blocks.StreamBlock([
-        ("text", blocks.RichTextBlock(group="basic")),
-        ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
-        ('table', TableBlock(group="basic")),
-
-        ('section_header', SectionHeaderBlock(group="section")),
-
-        ("lines_list", LinesListBlock(group="components")),
-        ('horizontal_card_list', HorizontalCardList(group="components")),
-    ])
+    content = blocks.StreamBlock(
+        [
+            ("text", blocks.RichTextBlock(group="basic")),
+            ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
+            ("table", TableBlock(group="basic")),
+            ("section_header", SectionHeaderBlock(group="section")),
+            ("gallery", GalleryBlock(group="section")),
+            ("lines_list", LinesListBlock(group="components")),
+            ("horizontal_card_list", HorizontalCardList(group="components")),
+        ]
+    )
 
     class Meta:
         template = "blocks/column.html"
@@ -333,14 +342,17 @@ class ColumnsBlock(blocks.StructBlock):
         label = 'Columns: (Use this for multi-column layouts)'
 
 class CenteredTextContentBlock(blocks.StructBlock):
-    body = blocks.StreamBlock([
-        ("text", blocks.RichTextBlock(group="basic")),
-        ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
-        ('table', TableBlock(group="basic")),
-        ('code', CodeBlock(group="basic")),
-        ('alert', AlertBlock(group="basic")),
-        ('section_header', SectionHeaderBlock(group="section")),
-    ])
+    body = blocks.StreamBlock(
+        [
+            ("text", blocks.RichTextBlock(group="basic")),
+            ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
+            ("table", TableBlock(group="basic")),
+            ("code", CodeBlock(group="basic")),
+            ("alert", AlertBlock(group="basic")),
+            ("section_header", SectionHeaderBlock(group="section")),
+            ("gallery", GalleryBlock()),
+        ]
+    )
 
     class Meta:
         template = "blocks/centered_text_content.html"

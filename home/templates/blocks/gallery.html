@@ -1,0 +1,19 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="gallery">
+    <ul>
+        {% for im in value.images %}
+            <li>
+                {% image im fill-500x400 as tmp_photo %}
+                {% image im width-1000 as large_photo%}
+                <a href="{{large_photo.url}}" target="_blank" style="text-decoration: none; border:none;"><img src="{{tmp_photo.url}}" alt="{{ im.title }}" {% if tmp_photo.focal_point %}
+                    data-focus-x="{{ tmp_photo.focal_point.centroid.x }}" data-focus-y="{{ tmp_photo.focal_point.centroid.y }}"
+                    data-focus-width="{{ tmp_photo.focal_point.width }}" data-focus-height="{{ tmp_photo.focal_point.height }}" {% endif%}
+                    %}
+                />
+                </a>
+
+            </li>
+        {% endfor %}
+    </ul>
+</div>

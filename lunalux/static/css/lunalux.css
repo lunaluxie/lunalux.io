@@ -1026,6 +1026,31 @@ footer a {
   border-radius: 0;
 }
 
+.link {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--link-color-hover);
+  text-decoration: underline;
+}
+
+.link .link-text {
+  display: inline-block;
+  color: var(--body-color);
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.link .link-text:hover {
+  text-decoration: underline;
+}
+
 /*
   HERO CARD
 */

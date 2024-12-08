@@ -1,10 +1,16 @@
 {% load wagtailcore_tags wagtailimages_tags %}
-{% image value.image fill-1200x200 as image %}
-{% image value.cover fill-1200x200 as cover %}
+{% if self.large %}
+{% image value.image fill-1000x500 as image %}
+{% image value.cover fill-1000x500 as cover %}
+{% else %}
+{% image value.image fill-1000x200 as image %}
+{% image value.cover fill-1000x200 as cover %}
+{% endif %}
+
 <style>
     .image-header{
         display:flex;
-        align-items: center;
+        align-items: {% if value.large%}flex-end{% else %}center{% endif %};
         color:white;
         margin-bottom: 3rem;
 
@@ -15,11 +21,24 @@
         {% endif%}
         background-size:cover !important;
     }
-    .image-header h1 {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
+
+    .image-header .title{
+        padding: 15px 20px 0;
+        width: 700px;
+        font-size: 1.3rem;
+        margin: 0 auto;
+    }
+
+    .image-header .title.large{
+        margin-bottom: 5rem;
     }
 </style>
-<section class="image-header" style="background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url({% if image %}{{image.url}}{% else %}{{cover.url}}{%endif%});">
-    {% if value.title %}<h1>{{value.title}}</h1>{% endif %}
+<section class="image-header"
+    style="{%if value.title%} background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url({% if image %}{{image.url}}{% else %}{{cover.url}}{%endif%});{%else%}background:url({% if image %}{{image.url}}{% else %}{{cover.url}}{%endif%});{%endif%} {{ image.background_position_style }}">
+
+    {% if value.title %}
+    <div class="title {% if value.large %}large{%endif%}">
+        <h1>{{value.title}}</h1>
+    </div>
+    {% endif %}
 </section>

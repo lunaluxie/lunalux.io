@@ -1,9 +1,10 @@
 from tokenize import group
-from wagtail import blocks
-from wagtail.fields import StreamField
 
-from wagtail.images.blocks import ImageChooserBlock
+from wagtail import blocks
 from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.fields import StreamField
+from wagtail.images.blocks import ImageChooserBlock
+
 from .blocks import *
 from .oneoff_blocks import *
 
@@ -54,14 +55,12 @@ body_fields = [
 
 ]
 
-article_fields =  basic_fields + [
+article_fields = basic_fields + [
     ("ImageDivider", ImageDividerBlock()),
-
-    ('DescriptionBlock', DescriptionBlock(group="basic")),
-    ('alert', AlertBlock(group="basic")),
-
-    ("HorizontalCardList",HorizontalCardList(group="List")),
-
+    ("JumbotronImageBlock", JumbotronImageBlock()),
+    ("DescriptionBlock", DescriptionBlock(group="basic")),
+    ("alert", AlertBlock(group="basic")),
+    ("HorizontalCardList", HorizontalCardList(group="List")),
     ("GradientDescentWidget", GradientDescentWidget(group="oneoff")),
     ("StatisticalMurderWidget", StatisticalMurderWidget(group="oneoff")),
     ("IRTWidget", IRTWidget(group="oneoff")),

@@ -54,5 +54,6 @@ def search(request):
             "articles": search_results,
             "is_search": True,
             "description_text": "Can (currently) only search Notes and Essays",
+            "object_name": "Search",
         },
     )

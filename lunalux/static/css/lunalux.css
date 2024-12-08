@@ -1608,8 +1608,8 @@ section.newsletter .form>form button:hover {
 }
 
 .series.sidebar .title {
-  font-size: 12px;
-  margin: 45px 0 20px;
+  font-size: 1.2rem;
+  margin: 0 0 1rem;
   padding: 0;
 }
 
@@ -1619,7 +1619,7 @@ section.newsletter .form>form button:hover {
   bottom: 0;
   border-bottom: 1px solid var(--body-color);
   width: 100%;
-  margin: 0 auto;
+  margin: 0.5rem auto;
 }
 
 .series.sidebar .title a {

@@ -627,9 +627,13 @@ spacer {
 */
 
 .article .title {
-  padding: 15px 20px 0;
   max-width: 700px;
   margin: 0 auto;
+  margin-bottom: 1rem;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .article .title .garden-status{
@@ -832,11 +836,9 @@ ARTICLE BYLINE
 
 .article .byline {
   --byline-text-color: var(--color-muted);
-  margin-top: 4rem;
-  padding-top: 2rem;
-  padding-left: 25px;
-  padding-right: 25px;
-  max-width: 680px;
+  margin-top: 2rem;
+    padding: 1rem;
+    max-width: 700px;
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -851,19 +853,13 @@ ARTICLE BYLINE
 .article .byline:before {
   position: absolute;
   top: 0;
-  left: 25px;
-  right: 25px;
+  left: 0;
+    /* right: 25px; */
+    width: 100%;
   content: "";
   display: block;
   height: 1px;
   background: var(--body-color);
-}
-
-@media only screen and (max-width: 776.25px) {
-  .article .byline {
-    margin-top: 4rem;
-    padding-top: 3rem;
-  }
 }
 
 .article .byline .author {
@@ -871,6 +867,9 @@ ARTICLE BYLINE
   font-weight: 500;
   text-transform: capitalize;
   color: var(--byline-text-color);
+  display: flex;
+    gap: 0.25rem;
+    align-items: center;
 }
 
 .article .byline .author>a {

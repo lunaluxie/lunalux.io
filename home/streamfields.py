@@ -69,9 +69,17 @@ article_fields = basic_fields + [
 ]
 
 article_header_fields = [
+    # image headers
     ("JumbotronImageBlock", JumbotronImageBlock(group="ImageHeader")),
-    ("ImageHeader", ImageHeaderBlock()),
-    ("ImageDivider", ImageDividerBlock()),
-    ("spacer", SpacerBlock()),
-    ("skipNavMargin", NavMarginBlock()),
+    ("ImageHeader", ImageHeaderBlock(group="ImageHeader")),
+    ("ImageDivider", ImageDividerBlock(group="ImageHeader")),
+
+    # spacers
+    ("skipNavMargin", NavMarginBlock(group="spacers")),
+    ("spacer", SpacerBlock(group="spacers")),
+    ("s_spacer", SpacerBlock(group="spacers")),
+    ("m_spacer", SpacerBlock(group="spacers")),
+    ("l_spacer", SpacerBlock(group="spacers")),
+    ("xl_spacer", SpacerBlock(group="spacers")),
+    ("xxl_spacer", SpacerBlock(group="spacers")),
 ]

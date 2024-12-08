@@ -1,26 +1,25 @@
-from wagtail import blocks
+import datetime
+import urllib
+from collections import Counter
+
+from bs4 import BeautifulSoup
+from django.conf import settings as SETTINGS
 from django.db import models
-from wagtail.fields import StreamField
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.models import Page
-from taggit.models import TaggedItemBase
+from django.db.models import Case, Count, F, Q, When
+from django.shortcuts import redirect
+from django.utils import timezone
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
-from django.shortcuts import redirect
-from wagtail.search import index
-from home.streamfields import body_fields, article_fields, article_header_fields
-from bs4 import BeautifulSoup
-import datetime
-from django.utils import timezone
-from collections import Counter
-from wagtail.search import index
-from django.db.models import Count, F, Q
-from django.db.models import Case, When
+from taggit.models import Tag, TaggedItemBase
+from wagtail import blocks
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.documents import get_document_model
-from taggit.models import Tag
-import urllib
-from django.conf import settings as SETTINGS
-from home.models.helper_models import PageTag, InterPageLink, PageHit, Contact
+from wagtail.fields import StreamField
+from wagtail.models import Page
+from wagtail.search import index
+
+from home.models.helper_models import Contact, InterPageLink, PageHit, PageTag
+from home.streamfields import article_fields, article_header_fields, body_fields
 
 
 class AbstractPage(Page):

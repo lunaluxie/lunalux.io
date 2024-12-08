@@ -1,11 +1,11 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import render
 from django.template.response import TemplateResponse
-
 from wagtail.models import Page
-from home.models.page_models import AbstractPage, Article,Series
-from home.filtering import filter_on_abstract_page_properties
-
 from wagtail.search.backends import get_search_backend
+
+from home.filtering import filter_on_abstract_page_properties
+from home.models.page_models import AbstractPage, Article, Series
 
 
 def search(request):
@@ -46,13 +46,13 @@ def search(request):
             },
         )
 
-    return TemplateResponse(
+    return render(
         request,
         "article_list.html",
         {
             "search_query": search_query,
             "articles": search_results,
             "is_search": True,
-            "description_text": "Can (currently) only search Notes and Essays"
+            "description_text": "Can (currently) only search Notes and Essays",
         },
     )

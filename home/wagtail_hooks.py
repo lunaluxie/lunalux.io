@@ -1,16 +1,20 @@
-from wagtail.snippets.models import register_snippet
-from wagtail.snippets.views.snippets import SnippetViewSet
-from wagtail.signals import page_published
+import wagtail.admin.rich_text.editors.draftail.features as draftail_features
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from taggit.models import Tag
 from wagtail import hooks
 from wagtail.admin.panels import FieldPanel
-import wagtail.admin.rich_text.editors.draftail.features as draftail_features
 from wagtail.admin.rich_text.converters.html_to_contentstate import (
     InlineStyleElementHandler,
 )
-from taggit.models import Tag
-from home.models.page_models import Article, Series, AbstractPage
-from home.models.helper_models import InterPageLink, Contact, PageHit
+from wagtail.search import index
+from wagtail.search.signal_handlers import register_signal_handlers
+from wagtail.signals import page_published
+from wagtail.snippets.models import register_snippet
+from wagtail.snippets.views.snippets import SnippetViewSet
 
+from home.models.helper_models import Contact, InterPageLink, PageHit
+from home.models.page_models import AbstractPage, Article, Series
 
 
 class ContactAdmin(SnippetViewSet):
@@ -88,3 +92,6 @@ def register_strong_feature(features):
 
     # Call register_converter_rule to register the content transformation conversion.
     features.register_converter_rule('contentstate', feature_name, db_conversion)
+
+
+register_signal_handlers()

@@ -164,6 +164,7 @@ WAGTAIL_SITE_NAME = "lunalux"
 WAGTAILSEARCH_BACKENDS = {
     "default": {
         "BACKEND": "wagtail.search.backends.database",
+        "AUTO_UPDATE": True,
     }
 }
 

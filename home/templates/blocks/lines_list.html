@@ -135,11 +135,19 @@
   {% if group_by_year %}
     {% regroup pages by year as pages_ordered %}
     {% for group in pages_ordered %}
-        <h2 id="{{ group.grouper | date:"Y"}}">{{ group.grouper | date:"Y"}}</h2>
+        <h2 style="font-size: 1.8rem; margin-top: 3rem;" id="{{ group.grouper | date:"Y"}}">{{ group.grouper | date:"Y"}}</h2>
         <div style="margin-bottom: 0.8rem"><span style="color:var(--color-muted);">{{group.list | length}} {{object_name}}</span></div>
         {% for obj in group.list %}
           {% include 'blocks/line.html' with obj=obj include_images=include_images show_garden_status=show_garden_status hide_page_type=hide_page_type %}
         {% endfor %}
+        <hr style="opacity: 0.0875;
+            border: 0;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 1px;
+            background-color: currentColor;
+            max-width: none;">
     {%empty%}
     {% if show_empty %}
     <hr style="opacity: 0.0875;
@@ -179,15 +187,15 @@
       </div>
       {% endif %}
     {% endfor %}
+    <hr style="opacity: 0.0875;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 1px;
+        background-color: currentColor;
+        max-width: none;">
   {% endif %}
-  <hr style="opacity: 0.0875;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 1px;
-    background-color: currentColor;
-    max-width: none;">
 
 
   {% if link_to_blog %}

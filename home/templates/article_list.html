@@ -79,9 +79,11 @@
   </ul>
   {% endif %}
   </div>
+  {% if not group_by_year %}
   <div class="" style="margin-bottom: 0.8em;">
     <span class="" id="article_count" style="color: var(--body-color);">{{ articles|length }} articles</span>
   </div>
+  {% endif %}
 </div>
 
 <section id="articles">

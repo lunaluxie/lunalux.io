@@ -136,7 +136,7 @@
     {% regroup pages by year as pages_ordered %}
     {% for group in pages_ordered %}
         <h2 style="font-size: 1.8rem; margin-top: 3rem;" id="{{ group.grouper | date:"Y"}}">{{ group.grouper | date:"Y"}}</h2>
-        <div style="margin-bottom: 0.8rem"><span style="color:var(--color-muted);">{{group.list | length}} {{object_name}}</span></div>
+        <div style="margin-bottom: 0.8rem"><span style="color:var(--body-color);">{{group.list | length}} {{object_name}}</span></div>
         {% for obj in group.list %}
           {% include 'blocks/line.html' with obj=obj include_images=include_images show_garden_status=show_garden_status hide_page_type=hide_page_type %}
         {% endfor %}

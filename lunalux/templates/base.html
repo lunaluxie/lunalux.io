@@ -144,50 +144,53 @@
             document.querySelectorAll('.block-text a:not(.heading-anchor)').forEach((el) => {
                 // add popover
                 if (el.href.includes(window.location.origin)){
-                    el.addEventListener("mouseover", (e) => {
-                        if (!el.querySelector(".popover")){
-                            let popover = document.createElement("div")
-                            popover.classList.add("popover")
+                    // only add popover to links to other internal pages
+                    if (el.href.match(window.location) == null){
+                        el.addEventListener("mouseover", (e) => {
+                            if (!el.querySelector(".popover")){
+                                let popover = document.createElement("div")
+                                popover.classList.add("popover")
 
-                            if(!el.querySelector(".popover")){
-                                // avoid loading multiple popovers when loading
-                                // a better way would be insert a lock into the dom immediately,
-                                // but that would render the popover when the page is still loading
-                                // and I would have to add some loading element
-                                // TODO: later.
-                                el.appendChild(popover)
-                            }
+                                if(!el.querySelector(".popover")){
+                                    // avoid loading multiple popovers when loading
+                                    // a better way would be insert a lock into the dom immediately,
+                                    // but that would render the popover when the page is still loading
+                                    // and I would have to add some loading element
+                                    // TODO: later.
+                                    el.appendChild(popover)
+                                }
 
-                            fetch(`{% url 'home:hover-preview' %}?url=${encodeURIComponent(el.href)}`).then(function(response) {
-                                if (response.ok){
-                                    popover.innerHTML = response.text().then(function(text){
-                                        popover.innerHTML = text
+                                fetch(`{% url 'home:hover-preview' %}?url=${encodeURIComponent(el.href)}`).then(function(response) {
+                                    if (response.ok){
+                                        popover.innerHTML = response.text().then(function(text){
+                                            popover.innerHTML = text
 
-                                        let movePopover = () => {
-                                            let leftOffset = el.getBoundingClientRect().left
-                                            let popoverMaxWidth = 300;
+                                            let movePopover = () => {
+                                                let leftOffset = el.getBoundingClientRect().left
+                                                let popoverMaxWidth = 300;
 
-                                            let rem = 16;
+                                                let rem = 16;
 
-                                            if (leftOffset + popoverMaxWidth > window.innerWidth){
-                                                leftOffset = window.innerWidth - popoverMaxWidth - 1*rem;
+                                                if (leftOffset + popoverMaxWidth > window.innerWidth){
+                                                    leftOffset = window.innerWidth - popoverMaxWidth - 1*rem;
+                                                }
+
+                                                popover.style.left = leftOffset + "px"
                                             }
 
-                                            popover.style.left = leftOffset + "px"
-                                        }
-
-                                        movePopover()
-
-                                        window.addEventListener('resize', function(){
                                             movePopover()
+
+                                            window.addEventListener('resize', function(){
+                                                movePopover()
+                                            })
+
                                         })
+                                    }
+                                })
 
-                                    })
-                                }
-                            })
-
-                        }
-                    })
+                            }
+                        })
+                    }
                 }
             })
         })

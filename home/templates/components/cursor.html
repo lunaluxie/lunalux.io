@@ -1,0 +1,104 @@
+<style>
+.cursor {
+  width: 0.8rem;
+  transition: all ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+</style>
+
+<template id="cursor">
+    <svg viewBox="0 0 16.3 24.7" class="cursor">
+        <path stroke="var(--border-color-hover)" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+            d="M15.6 15.6L.6.6v20.5l4.6-4.5 3.2 7.5 3.4-1.3-3-7.2z" />
+    </svg>
+</template>
+
+
+<script>
+(async function () {
+    const ws = await connectToServer();
+
+    let cursorData = {
+        screen_x: 0,
+        screen_y: 0,
+        scrollY: 0,
+    }
+
+    let prepareMessageBody = (cursorData) => {
+        return {
+            x: cursorData.screen_x / window.screen.width,
+            y: (cursorData.screen_y + cursorData.scrollY) / document.body.scrollHeight,
+            path: window.location.pathname,
+        };
+    }
+
+    document.body.onmousemove = (evt) => {
+        cursorData.screen_x = evt.clientX
+        cursorData.screen_y = evt.clientY
+        const messageBody = prepareMessageBody(cursorData);
+        ws.send(JSON.stringify(messageBody));
+    };
+
+    document.body.onscroll = (evt) => {
+        cursorData.scrollY = window.pageYOffset
+        const messageBody = prepareMessageBody(cursorData);
+        ws.send(JSON.stringify(messageBody));
+    };
+
+    ws.onmessage = (webSocketMessage) => {
+        const messageBody = JSON.parse(webSocketMessage.data);
+        const cursor = getCursorFor(messageBody);
+        cursor.style.transform = `translate(${messageBody.x * window.screen.width}px, ${(messageBody.y) * document.body.scrollHeight}px)`;
+        setCursorColor(cursor, messageBody.color);
+    };
+
+    async function connectToServer() {
+        console.log("Connecting to server");
+        let server = 'wss://api.lunalux.io/cursor';
+        const ws = new WebSocket(server);
+
+        console.log(ws);
+
+        return new Promise((resolve, reject) => {
+            const timer = setInterval(() => {
+                if (ws.readyState === 1) {
+                    clearInterval(timer)
+                    resolve(ws);
+                }
+            }, 10);
+        });
+    }
+
+    function setCursorColor(cursor, color){
+        const svgPath = cursor.getElementsByTagName("path")[0];
+        if (! window.matchMedia('(prefers-color-scheme: dark)').matches){
+            // light mode
+            svgPath.setAttribute("fill", `hsl(${color}, 50%, 80%)`);
+        } else {
+            // dark mode
+            svgPath.setAttribute("fill", `hsl(${color}, 50%, 30%)`);
+        }
+
+    }
+
+    function getCursorFor(messageBody) {
+        const sender = messageBody.sender;
+        const existing = document.querySelector(`[data-sender="${sender}"]`);
+
+        if (existing) {
+            return existing;
+        }
+
+        const template = document.getElementById("cursor");
+        const cursor = template.content.firstElementChild.cloneNode(true);
+        setCursorColor(cursor, messageBody.color);
+        cursor.setAttribute("data-sender", sender);
+
+        document.body.appendChild(cursor);
+
+        return cursor;
+    }
+})();
+</script>

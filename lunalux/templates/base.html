@@ -59,6 +59,8 @@
     <body class="{% block body_class %}{% endblock %}" hx-ext="head-support">
         {% wagtailuserbar %}
 
+        {% include 'components/cursor.html' %}
+
         {% block navbar %}
         {% include 'navbar.html' %}
         {% endblock navbar %}

@@ -24,27 +24,35 @@
         screen_x: 0,
         screen_y: 0,
         scrollY: 0,
+        hasMoved: false,
     }
 
     let prepareMessageBody = (cursorData) => {
         return {
             x: cursorData.screen_x / window.screen.width,
             y: (cursorData.screen_y + cursorData.scrollY) / document.body.scrollHeight,
-            path: window.location.pathname,
+            path: `${window.location.hostname}${window.location.pathname}`,
         };
     }
 
     document.body.onmousemove = (evt) => {
         cursorData.screen_x = evt.clientX
         cursorData.screen_y = evt.clientY
+        cursorData.hasMoved = true;
         const messageBody = prepareMessageBody(cursorData);
+
         ws.send(JSON.stringify(messageBody));
+
     };
 
     document.body.onscroll = (evt) => {
         cursorData.scrollY = window.pageYOffset
         const messageBody = prepareMessageBody(cursorData);
-        ws.send(JSON.stringify(messageBody));
+        // avoid sending cursors scrolling at the edge
+        // from touch devices before a correct touch.
+        if (cursorData.hasMoved) {
+            ws.send(JSON.stringify(messageBody));
+        }
     };
 
     ws.onmessage = (webSocketMessage) => {

@@ -2,8 +2,9 @@
 
 The code that runs my personal website, [lunalux.io](https://lunalux.io). Feel free to inspect, use, or be inspired by the code, but keep in mind, it was made to fit my needs and may not be suitable for your use case.
 
-## ToC
+## Table of Contents
 - [Overview](#overview)
+    - [Guest Cursors](#guest-cursors) 
     - [Dynamic Feeds](#dynamic-feeds)
     - [Bidirectional Linking](#bidirectional-linking)
     - [Hover Preview](#hover-preview)
@@ -22,6 +23,11 @@ Each page is an instance of the `Page` model, and the content is created in the 
 The main content pages are `HomePage`, and `Article` which are located in [home/models/page_models.py](home/models/page_models.py). `HomePage` is meant to be flexible enough to create a wide range of layouts whereas `Article` is constrained to be in a blog-post format. However, since most pages are `Article` instances, I have developed more components for that. The most notable use of `HomePage` is the index page.
 
 For a more thorough documentation of the features and changelog of the website, you can read the [colophon](http://lunalux.io/colophon) page.
+
+### Guest Cursors
+[<img src="https://cdn.lunalux.io/media/images/guest-cursors.original.png" width=372 height=121/>](https://cdn.lunalux.io/media/images/guest-cursors.original.png)
+
+When multiple people are simultaneously viewing the same page, they can see each other's cursors. I have written about [how and why I implemented it](https://cdn.lunalux.io/media/images/guest-cursors.original.png), and you can inspect the client code in [home/templates/components/cursor.html](home/templates/components/cursor.html), and the server code at [lunaluxie/guest-cursor](http://github.com/lunaluxie/guest-cursor). 
 
 ### Dynamic Feeds
 The [Feed class](home/feeds.py) is able to generate different dynamic RSS feeds based on the parameters submitted. Combined with the [user interface](https://lunalux.io/about/feeds/), it is easy for visitors to generate a personal feed with the content types, tags, and content maturity they're interested in. 

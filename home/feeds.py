@@ -1,10 +1,15 @@
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
-
+from requests import PreparedRequest
 from taggit.models import Tag
 
-from home.filtering import filter_on_abstract_page_properties, filter_page_with_any_of_tags, filter_on_child_page_properties
-from home.models.page_models import Page, Article, AbstractPage
+from home.filtering import (
+    filter_on_abstract_page_properties,
+    filter_on_child_page_properties,
+    filter_page_with_any_of_tags,
+)
+from home.models.page_models import AbstractPage, Article, Page
+
 
 class RSSFeed(Feed):
     def get_object(self, request, type):
@@ -76,7 +81,15 @@ class RSSFeed(Feed):
         return item.search_description
 
     def item_link(self, item):
-        return item.get_full_url()
+        utm_params = {
+            "utm_source": "rss",
+            "utm_medium": "feed"
+        }
+        req = PreparedRequest()
+        req.prepare_url(item.get_full_url(), utm_params)
+        print(req.url)
+        return req.url
+
 
     def item_categories(self, item):
         if isinstance(item.specific, AbstractPage):

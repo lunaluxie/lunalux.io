@@ -35,6 +35,8 @@ class AbstractPage(Page):
     is_project = models.BooleanField(default=False, help_text="Will show up in projects section")
     unlisted = models.BooleanField(default=False, help_text="If unlisted, the article will be publically accessible, and indexable by search engine, but will not show up in search, or in the list of articles on the homepage")
 
+    starred = models.BooleanField(default=False, null=False, blank=False, help_text="If starred, a star will be displayed next to the page in the list of articles")
+
 
     garden_status = [
         ("na", "None"),
@@ -60,6 +62,7 @@ class AbstractPage(Page):
                                      FieldPanel("garden_status"),
                                      FieldPanel("is_project"),
                                      FieldPanel("unlisted"),
+                                     FieldPanel("starred"),
                                      FieldPanel("show_in_menus"),
                                      FieldPanel('tags', heading="Tags", help_text="Tags to categorize the page"),
                                      ],

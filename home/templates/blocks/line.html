@@ -27,7 +27,7 @@
                 href="{% pageurl obj %}" style="text-decoration: none;">
                 <p class="asdf" style="">
                     {% if not hide_page_type %}{% include 'components/article_type.html' with page_type=obj.get_page_type%}{%endif%}
-                    {{ obj.title }}
+                    {{ obj.title }}{% if obj.starred %}<span style="margin-left:0.3rem" title="This {{obj.get_page_type|lower}} has been selected by the author">⭐</span>{% endif %}
                 </p>
 
                 {% if include_images and obj.image and obj.include_image_in_article_list %}<p

@@ -23,7 +23,7 @@ DATABASES = {
 
 
 # change these to fit.
-HOME = os.environ.get("HOME")
+HOME = os.environ.get("HOME", "")
 root = os.path.join(HOME,"cdn.lunalux.io/public")
 STATIC_ROOT = os.path.join(root, "static")
 MEDIA_ROOT = os.path.join(root, "media")

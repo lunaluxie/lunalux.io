@@ -1,8 +1,10 @@
 *sqlite3
 venv
+.venv
 __pycache__
 .mypy_cache
 .env
 /static
 media
 .DS_Store
+.pytest_cache

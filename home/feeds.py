@@ -1,4 +1,5 @@
 from django.contrib.syndication.views import Feed
+from django.db.models.functions import Coalesce
 from django.utils.feedgenerator import Atom1Feed
 from requests import PreparedRequest
 from taggit.models import Tag
@@ -31,7 +32,11 @@ class RSSFeed(Feed):
         match type:
             case "timeline":
                 if not tags:
-                    obj['objects'] = Page.objects.live().filter(filter_on_abstract_page_properties(unlisted=False)).order_by("-first_published_at")
+                    obj["objects"] = (
+                        Page.objects.live()
+                        .filter(filter_on_abstract_page_properties(unlisted=False))
+                        .order_by(Coalesce("go_live_at", "first_published_at")).reverse()
+                    )
 
                 if garden_status:
                     obj['objects'] = obj['objects'].filter(filter_on_abstract_page_properties(garden_status=garden_status))
@@ -43,7 +48,11 @@ class RSSFeed(Feed):
                     if garden_status:
                         obj['objects'] = obj['objects'].filter(filter_on_child_page_properties(Article, garden_status=garden_status))
                 else:
-                    obj['objects'] = Article.objects.live().filter(unlisted=False, article_type="article").order_by("-first_published_at")
+                    obj["objects"] = (
+                        Article.objects.live()
+                        .filter(unlisted=False, article_type="article")
+                        .order_by(Coalesce("go_live_at", "first_published_at")).reverse()
+                    )
                     if garden_status:
                         obj['objects'] = obj['objects'].filter(garden_status=garden_status)
 
@@ -54,7 +63,11 @@ class RSSFeed(Feed):
                     if garden_status:
                         obj['objects'] = obj['objects'].filter(filter_on_child_page_properties(Article, garden_status=garden_status))
                 else:
-                    obj['objects'] = Article.objects.live().filter(unlisted=False, article_type="note").order_by("-first_published_at")
+                    obj["objects"] = (
+                        Article.objects.live()
+                        .filter(unlisted=False, article_type="note")
+                        .order_by(Coalesce("go_live_at", "first_published_at")).reverse()
+                    )
                     if garden_status:
                         obj['objects'] = obj['objects'].filter(garden_status=garden_status)
 
@@ -106,7 +119,7 @@ class RSSFeed(Feed):
         return item.owner.get_full_name()
 
     def item_pubdate(self, item):
-        return item.first_published_at
+        return item.effective_published_at
 
     def item_updateddate(self, item):
         return item.last_published_at

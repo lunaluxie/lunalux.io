@@ -54,8 +54,8 @@
 
             </style>
             <div class="timestamps">
-                <span title="Created: {{ page.first_published_at  |date:"F d Y" }}">
-                    <i class="fas fa-pen" style="padding-right: 0.5rem;"></i>{{ page.first_published_at  |date:"N Y" }}
+                <span title="Created: {{ page.effective_published_at  |date:"F d Y" }}">
+                    <i class="fas fa-pen" style="padding-right: 0.5rem;"></i>{{ page.effective_published_at  |date:"N Y" }}
                 </span>
                 <span title="Updated: {{ page.last_published_at  |date:"F d Y" }}">
                     <i class="fas fa-spell-check" style="padding-right: 0.5rem;"></i>{{ page.last_published_at  |date:"N Y" }}

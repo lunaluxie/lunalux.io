@@ -78,6 +78,13 @@ class AbstractPage(Page):
     class Meta:
         abstract = True
 
+    @property
+    def effective_published_at(self):
+        if self.go_live_at:
+            return self.go_live_at
+        else:
+            return self.first_published_at
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["HTMX"] = request.META.get('HTTP_HX_REQUEST')

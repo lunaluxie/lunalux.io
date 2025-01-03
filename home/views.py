@@ -1,10 +1,8 @@
-import datetime
-from collections import Counter
+
 from itertools import chain
-from urllib import parse
 from urllib.parse import unquote, urlparse
 
-from django.db.models.functions import Trunc
+from django.db.models.functions import Coalesce, Trunc
 from django.http import Http404, HttpRequest, QueryDict
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
@@ -78,7 +76,7 @@ def garden_list(request):
         queryset3 = queryset3.filter(garden_status=garden_status)
 
     def time(instance):
-        return instance.last_published_at
+        return instance.effective_published_at
 
     queryies_combined = sorted(
         chain(queryset, queryset2, queryset3),
@@ -115,17 +113,17 @@ def garden_list(request):
 def timeline(request):
     # TODO Change to single queryset on page???
     queryset = HomePage.objects.filter(live=True, unlisted=False).annotate(
-        year=Trunc("first_published_at", "year")
+        year=Trunc(Coalesce("go_live_at", "first_published_at"), "year")
     )
     queryset2 = Article.objects.filter(live=True, unlisted=False).annotate(
-        year=Trunc("first_published_at", "year")
+        year=Trunc(Coalesce("go_live_at", "first_published_at"), "year")
     )
     queryset3 = Series.objects.filter(live=True, unlisted=False).annotate(
-        year=Trunc("first_published_at", "year")
+        year=Trunc(Coalesce("go_live_at", "first_published_at"), "year")
     )
 
     def time(instance):
-        return instance.first_published_at
+        return instance.effective_published_at
 
     queryies_combined = sorted(
         chain(queryset, queryset2, queryset3),
@@ -148,7 +146,12 @@ def timeline(request):
                   context=context)
 
 def notes_list(request):
-    queryset = Article.objects.all().filter(live=True, article_type="note").filter(unlisted=False).order_by("-first_published_at")
+    queryset = (
+        Article.objects.all()
+        .filter(live=True, article_type="note")
+        .filter(unlisted=False)
+        .order_by(Coalesce("go_live_at", "first_published_at")).reverse()
+    )
 
     context = {"articles": queryset, "tag": "Notes", 'hide_other_tags':True, "object_name": "Notes"}
 
@@ -163,7 +166,7 @@ def article_list(request):
 
     def time(instance):
         try:
-            return instance.first_published_at
+            return instance.effective_published_at
         except:
             return instance.timestamp
 
@@ -209,7 +212,7 @@ def project_list(request):
     queryset3 = Series.objects.filter(live=True, unlisted=False).filter(is_project=True)
 
     def time(instance):
-        return instance.first_published_at
+        return instance.effective_published_at
 
     queryies_combined = sorted(
         chain(queryset, queryset2, queryset3),

@@ -1,4 +1,5 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db.models.functions import Coalesce
 from django.shortcuts import render
 from django.template.response import TemplateResponse
 from wagtail.models import Page
@@ -18,7 +19,11 @@ def search(request):
         # problem now is that I cannot filter on the abstract page properties
         search_results = get_search_backend().search(search_query, Article.objects.filter(unlisted=False).live())
     else:
-        search_results = Article.objects.filter(unlisted=False).live().order_by('-first_published_at')
+        search_results = (
+            Article.objects.filter(unlisted=False)
+            .live()
+            .order_by(Coalesce("go_live_at", "first_published_at")).reverse()
+        )
 
     # Pagination
     paginator = Paginator(search_results, 10)

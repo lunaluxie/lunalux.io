@@ -1,9 +1,9 @@
 from django.db.models import Q
+from django.db.models.functions import Coalesce
 from wagtail.models import Page
-from home.models.page_models import AbstractPage
+
 from home.models.helper_models import PageTag
-
-
+from home.models.page_models import AbstractPage
 
 abstract_page_subclasses = AbstractPage.__subclasses__()
 
@@ -57,5 +57,10 @@ def filter_page_with_any_of_tags(tags):
 
     queryset = Page.objects.type(AbstractPage).filter(id__in=page_ids)
     queryset = queryset.filter(filter_on_abstract_page_properties(unlisted=False))
-    queryset = queryset.distinct().order_by('-first_published_at').specific()
+    queryset = (
+        queryset.distinct()
+        .order_by(Coalesce("go_live_at", "first_published_at"))
+        .reverse()
+        .specific()
+    )
     return queryset

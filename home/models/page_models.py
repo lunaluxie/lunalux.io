@@ -317,7 +317,7 @@ class Series(AbstractPage):
                 interlink = InterPageLink.objects.get_or_create(from_page=self, to_page=a)
 
 
-class DocumentPage(Page):
+class DocumentPage(AbstractPage):
     page_description = "Document page only for giving documents a permanent url."
 
     document = models.ForeignKey(

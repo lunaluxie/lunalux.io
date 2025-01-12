@@ -567,6 +567,40 @@ navbar>.links>div {
   background-repeat: no-repeat;
 }
 
+.article .content>.block-details {
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 700px;
+}
+
+summary::-webkit-details-marker {
+  display: none
+}
+
+details>:not(summary) {
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+summary {
+  cursor: pointer;
+  transition: 100ms ease-in-out;
+}
+
+summary:before {
+  content: "+";
+  color: var(--color-muted);
+  float: left;
+  margin-right: 10px;
+  transition: 300ms ease-in-out;
+}
+
+summary:hover:before {
+  color: var--color-muted);
+  transform: rotate(90deg);
+}
+
 @media screen and (max-width: 400px) {
   .article-header .image {
     height: 300px;

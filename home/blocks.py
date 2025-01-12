@@ -7,6 +7,14 @@ from wagtail.images.blocks import ImageChooserBlock
 
 # BASIC BLOCKS
 
+class DetailsBlock(blocks.StructBlock):
+    summary = blocks.RichTextBlock()
+    body = blocks.RichTextBlock()
+
+    class Meta:
+        icon = "list-ul"
+        template = "blocks/details.html"
+
 
 class GalleryBlock(blocks.StructBlock):
     images = blocks.ListBlock(ImageChooserBlock())
@@ -295,17 +303,18 @@ class ImageDividerBlock(blocks.StructBlock):
 ### META BLOCKS
 
 class ContainerBlock(blocks.StructBlock):
-    content = blocks.StreamBlock([
-        # structure
-        ("spacer", SpacerBlock(group="layout")),
-
-        ("text", blocks.RichTextBlock(group="basic")),
-        ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
-        ('table', TableBlock(group="basic")),
-        ('gallery', GalleryBlock(group="section")),
-
-        ('section_header', SectionHeaderBlock(group="section")),
-    ])
+    content = blocks.StreamBlock(
+        [
+            # structure
+            ("spacer", SpacerBlock(group="layout")),
+            ("text", blocks.RichTextBlock(group="basic")),
+            ("details", DetailsBlock(group="basic")),
+            ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
+            ("table", TableBlock(group="basic")),
+            ("gallery", GalleryBlock(group="section")),
+            ("section_header", SectionHeaderBlock(group="section")),
+        ]
+    )
 
     class Meta:
         template = "blocks/container.html"
@@ -316,7 +325,9 @@ class ContainerBlock(blocks.StructBlock):
 class ColumnBlock(blocks.StructBlock):
     content = blocks.StreamBlock(
         [
+            ("spacer", SpacerBlock(group="layout")),
             ("text", blocks.RichTextBlock(group="basic")),
+            ("details", DetailsBlock(group="basic")),
             ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
             ("table", TableBlock(group="basic")),
             ("section_header", SectionHeaderBlock(group="section")),
@@ -345,6 +356,7 @@ class CenteredTextContentBlock(blocks.StructBlock):
     body = blocks.StreamBlock(
         [
             ("text", blocks.RichTextBlock(group="basic")),
+            ("details", DetailsBlock(group="basic")),
             ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
             ("table", TableBlock(group="basic")),
             ("code", CodeBlock(group="basic")),

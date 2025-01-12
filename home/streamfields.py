@@ -11,8 +11,9 @@ from .oneoff_blocks import *
 # utility blocks
 basic_fields = [
     ("text", blocks.RichTextBlock(group="basic")),
+    ("details", DetailsBlock(group="basic")),
     ("image", ImageChooserBlock(template="blocks/image.html", group="basic")),
-    ('table', TableBlock(group="basic")),
+    ("table", TableBlock(group="basic")),
     ("code", CodeBlock(group="basic")),
 ]
 

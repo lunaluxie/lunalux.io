@@ -1,13 +1,29 @@
 {% load wagtailcore_tags wagtailimages_tags static my_tags %}
 
+<style>
+  .hero-image {
+    margin:3rem 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-image img{
+    height: 407px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .hero-image{
+      margin: 1.5rem; 1rem;
+    }
+
+  }
+</style>
 <div class="single-col">
   <section>
 
       {% image self.image fill-1048x407 as tmp_photo %}
-      <div style="
-                margin:3rem 1rem;
-                position: relative;
-                overflow: hidden;">
+      <div class="hero-image">
                 <img src="{{tmp_photo.url}}"
                      alt="{{ self.image.title }}"
                      {% if tmp_photo.focal_point %}
@@ -16,10 +32,6 @@
                      data-focus-width="{{ tmp_photo.focal_point.width }}"
                      data-focus-height="{{ tmp_photo.focal_point.height }}"
                      {% endif %}
-                     style="
-                            height: 407px;
-                            object-fit: cover;
-                            border-radius: 5px;"
                 />
 
       </div>
